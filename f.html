@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrated Studio & Amazon Style Footer</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f7f6f0; /* Top light cream background */
+        }
+
+        /* --- Main Footer Section (Pure Black) --- */
+        .footer-container {
+            background-color: #131921; /* Amazon-style dark/black shade */
+            min-height: 80vh;
+            margin-top: 150px; /* Space for the overlapping green box */
+            position: relative;
+            padding-top: 150px;
+            padding-bottom: 40px;
+            text-align: center;
+        }
+
+        /* --- The Green Box Container (From Image 1) --- */
+        .hover-card {
+            position: absolute;
+            top: -100px; /* Overlaps between light and dark sections */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            height: 220px;
+            border-radius: 16px;
+            background-color: #98b3d1; /* Initial light green */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        /* Curtain/Circle Effect Layer */
+        .hover-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 140px;
+            height: 140px;
+            background-color: #a7b8e8; /* Brighter green on hover */
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 1;
+        }
+
+        /* Hover Trigger: Circle expands like an opening curtain */
+        .hover-card:hover::before {
+            transform: translate(-50%, -50%) scale(6);
+        }
+
+        /* Text inside the Card */
+        .card-content {
+            position: relative;
+            z-index: 2;
+            padding: 20px 40px;
+            text-align: center;
+            color: #000000;
+        }
+
+        .card-content h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .card-content p {
+            font-size: 0.65rem;
+            line-height: 1.4;
+            max-width: 400px;
+            margin: 0 auto;
+            font-weight: 500;
+        }
+
+        /* Heading inside Black Section */
+        .bottom-heading {
+            color: #ffffff;
+            font-size: 2.2rem;
+            font-weight: 600;
+            max-width: 600px;
+            margin: 0 auto 80px auto;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        /* --- 4-Column Amazon Links Layout (From Image 2) --- */
+        .footer-links-grid {
+            width: 85%;
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            text-align: left;
+            padding-bottom: 60px;
+            border-bottom: 1px solid #232f3e; /* Divider line */
+        }
+
+        .footer-column h3 {
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #dddddd;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s, text-decoration 0.2s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        /* --- Bottom Logo & Settings Row --- */
+        .footer-settings-bar {
+            width: 100%;
+            max-width: 600px;
+            margin: 40px auto 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .footer-logo {
+            color: #ffffff;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+        }
+
+        .footer-logo span {
+            color: #ff9900; /* Amazon style orange touch */
+        }
+
+        .settings-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-select {
+            background-color: transparent;
+            border: 1px solid #848688;
+            color: #cccccc;
+            padding: 6px 18px;
+            font-size: 0.8rem;
+            border-radius: 3px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-select:hover {
+            border-color: #ffffff;
+        }
+
+        /* Responsive Setup for Smaller Screens */
+        @media (max-width: 768px) {
+            .footer-links-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 40px;
+            }
+            .footer-settings-bar {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="footer-container">
+        
+        <div class="hover-card">
+            <div class="card-content">
+                <h2>Own it all—not just the app</h2>
+                <p>Every vertical application you create on Vertical Studio is truly yours. White-label your app and domain, set pricing that fits your business model, and sell it directly to your customers.</p>
+            </div>
+        </div>
+
+
+        <div class="footer-links-grid">
+            <div class="footer-column">
+                <h3>Get to Know Us</h3>
+                <ul>
+                    <li><a href="#">About Amazon</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press Releases</a></li>
+                    <li><a href="#">Amazon Science</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Connect with Us</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Make Money with Us</h3>
+                <ul>
+                    <li><a href="#">Sell on Amazon</a></li>
+                    <li><a href="#">Sell under Amazon Accelerator</a></li>
+                    <li><a href="#">Protect and Build Your Brand</a></li>
+                    <li><a href="#">Amazon Global Selling</a></li>
+                    <li><a href="#">Supply to Amazon</a></li>
+                    <li><a href="#">Amazon Pay on Merchants</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Let Us Help You</h3>
+                <ul>
+                    <li><a href="#">Your Account</a></li>
+                    <li><a href="#">Returns Centre</a></li>
+                    <li><a href="#">Recalls and Product Safety Alerts</a></li>
+                    <li><a href="#">100% Purchase Protection</a></li>
+                    <li><a href="#">Amazon App Download</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-settings-bar">
+            <div class="footer-logo">amazon<span>.</span></div>
+            <div class="settings-buttons">
+                <button class="btn-select">🌐 English ↕</button>
+                <button class="btn-select">🇮🇳 India</button>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
