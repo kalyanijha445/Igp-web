@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IGP by Sparklehood</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-black: #000000;
+            --bg-white: #ffffff;
+            --igp-blue: #2171C1; 
+            --success-green: #00ffa3;
+            --text-white: #ffffff;
+            --text-dim: #888888;
+            --nav-glass: rgba(8, 9, 12, 0.85);
+            --border: rgba(255, 255, 255, 0.08);
+            --btn-glow: rgba(33, 113, 193, 0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body { 
+            width: 100%; background-color: var(--bg-black); 
+            color: var(--text-white); font-family: 'Poppins', sans-serif;
+            overflow-x: hidden; scroll-behavior: smooth;
+        }
+
+        .grid-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px; z-index: -1;
+        }
+
+        /* --- 1. NAVBAR --- */
+        .navbar-wrapper {
+            position: fixed; top: 0; width: 100%; z-index: 2000; padding: 25px 5%;
+        }
+        nav {
+            background: var(--nav-glass); backdrop-filter: blur(25px);
+            border: 1px solid var(--border); border-radius: 100px;
+            padding: 10px 30px; display: flex; justify-content: space-between; align-items: center;
+            max-width: 1400px; margin: 0 auto;
+        }
+/* --- CLEAN BRAND LOGO (Pill Style) --- */
+.nav-logo-custom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px; /* Space between pill and text */
+    text-decoration: none;
+}
+
+.logo-white-pill {
+    background-color: #ffffff;
+    color: #2171C1; /* Using your brand blue */
+    padding: 5px 22px;
+    border-radius: 100px; /* Perfect pill shape */
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.nav-logo-custom:hover .logo-white-pill {
+    transform: scale(1.05); /* Subtle growth on hover */
+}
+
+.logo-tagline-text {
+    color: #ffffff; /* White text for visibility on black bg */
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: none;
+}
+
+/* Control the size of your logo here */
+.nav-logo-img {
+    height: 50px; /* Adjust this value to make the logo look right in your bar */
+    width: auto;  /* Maintains aspect ratio */
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.nav-logo-img:hover {
+    transform: scale(1.05); /* Slight hover effect for polish */
+}
+
+        .nav-links { display: flex; list-style: none; gap: 40px; }
+        .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 13px; font-weight: 400; transition: 0.3s; }
+        .nav-links a:hover { color: var(--text-white); font-weight: 700; }
+        .btn-consult { background: var(--igp-blue); color: white; padding: 12px 28px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 12px; transition: 0.3s; border: none; cursor: pointer; }
+        .btn-consult:hover { background: var(--text-white); color: var(--igp-blue); transform: scale(1.05); }
+
+        /* --- 2. HERO SECTION --- */
+        .hero { 
+            position: relative; 
+            height: 95vh; 
+            display: flex; 
+            align-items: center; 
+            padding: 120px 10% 0; 
+            margin-bottom: 50px; 
+        }
+        .hero-text { position: relative; z-index: 100; width: 700px; flex-shrink: 0; }
+        .hero-text h1 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(65px, 8vw, 110px); line-height: 1.1; margin-bottom: 30px; color: var(--text-white); }
+        #dynamicText { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--igp-blue); display: inline-block; white-space: nowrap; min-width: 600px; margin-top: 15px; transition: all 0.7s ease; }
+        .hero-text p { font-size: 18px; color: var(--text-dim); line-height: 1.6; margin-bottom: 50px; max-width: 520px; font-weight: 300; }
+        
+        .hero-btn { 
+            background: var(--igp-blue); 
+            color: white; 
+            padding: 18px 45px; 
+            border-radius: 100px; 
+            text-decoration: none; 
+            font-weight: 700; 
+            font-size: 14px; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            display: inline-block;
+            border: 1px solid transparent;
+        }
+        .hero-btn:hover { 
+            background: #ffffff; 
+            color: var(--igp-blue); 
+            transform: scale(1.1) translateY(-5px); 
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
+        }
+
+        .visual-stage { position: absolute; right: 0; top: 0; width: 50%; height: 100%; display: flex; justify-content: center; align-items: center; pointer-events: none; overflow: hidden; }
+        .circle-guide { position: absolute; border: 1px dashed rgba(255, 255, 255, 0.05); border-radius: 50%; animation: spin 45s linear infinite; }
+        .guide-1 { width: 340px; height: 340px; }
+        .guide-2 { width: 520px; height: 520px; animation-direction: reverse; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        /* .hub-node { width: 140px; height: 140px; background: #0c0d12; border: 1px solid var(--border); border-radius: 40px; display: flex; justify-content: center; align-items: center; z-index: 10; box-shadow: 0 0 80px rgba(0,0,0,1); }
+        .s-logo { width: 65px; height: 65px; background: var(--igp-blue); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 36px; box-shadow: 0 0 35px var(--btn-glow); } */
+
+        /* --- 3. DASHBOARD SECTION --- */
+        .laptop-section {
+            position: relative;
+            background: #ffffff;
+            padding: 50px 0 40px; 
+            text-align: center;
+            overflow: visible;
+        }
+
+        .laptop-section::before {
+            content: "";
+            position: absolute; top: -140px; 
+            left: 0; width: 100%; height: 200px;
+            background: var(--bg-black);
+            border-radius: 0 0 50% 50% / 0 0 100% 100%;
+            z-index: 1;
+        }
+
+        .laptop-container {
+            position: relative;
+            z-index: 10;
+            max-width: 950px;
+            margin: -160px auto 0; 
+            padding: 0 20px;
+        }
+
+        .laptop-frame {
+            position: relative;
+            width: 100%;
+            filter: drop-shadow(0 40px 100px rgba(0,0,0,0.2));
+        }
+
+        .play-button {
+            position: absolute;
+            top: 42%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px; height: 80px;
+            background: #f03e3e;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 50;
+            box-shadow: 0 10px 40px rgba(240, 62, 62, 0.4);
+            transition: 0.3s ease;
+        }
+        .play-button:hover { transform: translate(-50%, -50%) scale(1.1); background: #ff4d6d; }
+        .play-button::after {
+            content: ""; border-style: solid; border-width: 15px 0 15px 22px;
+            border-color: transparent transparent transparent white;
+            margin-left: 5px;
+        }
+
+        .laptop-img { width: 100%; display: block; border-radius: 10px; }
+
+        /* --- VIDEO MODAL --- */
+        .video-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.96); backdrop-filter: blur(15px);
+            z-index: 5000; display: none; align-items: center; justify-content: center;
+        }
+        .video-modal.show { display: flex; }
+        .video-content { width: 85%; max-width: 1100px; position: relative; }
+        .video-content video { width: 100%; border-radius: 20px; border: 1px solid var(--border); }
+        .close-btn { position: absolute; top: -50px; right: 0; color: white; cursor: pointer; font-weight: 800; font-size: 16px; }
+
+        @media (max-width: 1250px) {
+            .hero { flex-direction: column; text-align: center; height: auto; padding-top: 150px; }
+            .hero-text { width: 100%; min-width: 0; }
+            #dynamicText { min-width: 0; white-space: normal; margin-top: 5px; }
+            .visual-stage { position: relative; width: 100%; height: 350px; margin-top: 20px; }
+            .laptop-container { margin: -100px auto 0; }
+        }
+
+        /* --- TRUST SECTION STYLING --- */
+        .trust-section {
+            background: #ffffff; 
+            padding: 10px 0;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            z-index: 5;
+        }
+
+        .trust-label {
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #4e4747; 
+            margin-bottom: 60px;
+        }
+
+        .logo-slider {
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+        }
+
+        .logo-track {
+            display: flex;
+            width: calc(250px * 14); 
+            animation: scrollAnimation 30s linear infinite;
+        }
+
+        .logo-item {
+            width: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            filter: grayscale(1); 
+            opacity: 0.5;
+            transition: 0.4s ease-in-out;
+        }
+
+        .logo-item:hover {
+            filter: grayscale(0); 
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .logo-item img {
+            height: 40px; 
+            width: auto;
+            object-fit: contain;
+        }
+
+        @keyframes scrollAnimation {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-250px * 7)); } 
+        }
+
+        .logo-slider:hover .logo-track {
+            animation-play-state: paused;
+        }
+
+        /* --- OFFERINGS V2 REFINED --- */
+        .offerings-v2 {
+            background: #ffffff;
+            padding: 120px 8% 150px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .offering-wrapper { max-width: 1400px; margin: 0 auto; }
+        .header-center { text-align: center; margin-bottom: 80px; }
+        .header-center h2 { font-family: 'Instrument Serif', serif; font-size: 64px; color: #111; line-height: 1; letter-spacing: 1px; word-spacing: 12px; }
+        .header-center h2 span { font-style: italic; color: #104479; }
+        .mini-label { color: #549cdb; font-weight: 800; font-size: 11px; letter-spacing: 3px; display: block; margin-bottom: 20px; }
+
+       .workflow-section {
+            width: 100%;
+            max-width: 1300px;
+            margin: 100px auto;
+            padding: 120px 40px;
+            position: relative;
+            background: #ffffff; 
+        }
+
+        .workflow-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* STEP CARDS - REFINED ARCHITECTURE */
+        .step-card { 
+            background-color: #f8f8f4; /* Sophisticated off-white */
+            border-radius: 20px; 
+            padding: 70px 35px 50px; 
+            width: 31%; 
+            min-height: 310px; 
+            position: relative; 
+            border: 1px solid #f1f1f1; 
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+        }
+
+        /* PREMIUM HOVER STATE */
+        .step-card:hover { 
+            transform: translateY(-12px); 
+            border-color: #2171C1; 
+            background-color: #ffffff;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.05); 
+        }
+
+        /* EXACT STAGGERED WAVE POSITIONS */
+        .step-ideate { margin-top: 110px; }
+        .step-build { margin-top: 30px; }
+        .step-launch { margin-top: 160px; }
+
+        /* ILLUSTRATION ANCHORING (FIXED) */
+        .illustration-box { 
+            position: absolute; 
+            z-index: 20; 
+            width: 140px; 
+            height: 140px; 
+            transition: 0.4s ease; 
+            pointer-events: none;
+        }
+        .illustration-box img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; 
+            filter: drop-shadow(0 15px 35px rgba(0,0,0,0.1)); 
+        }
+
+        /* Precise Corner Overlap */
+        .box-ideate { top: -75px; right: -5px; }
+        .box-build { top: -70px; right: -10px; }
+        .box-launch { top: -95px; right: -5px; }
+
+        /* EDITORIAL TYPOGRAPHY */
+        .step-title { 
+            font-family: 'Instrument Serif', serif; 
+            font-style: italic; 
+            font-size: 3.1rem; 
+            font-weight: 400; 
+            color: #0c0c0c; 
+            margin-bottom: 22px; 
+            letter-spacing: -1.5px;
+            line-height: 1;
+        }
+
+        .step-description { 
+            font-size: 1.05rem; 
+            line-height: 1.6; 
+            color: #6a6a6a; 
+            font-weight: 400; 
+            max-width: 90%;
+        }
+
+        /* BACKGROUND DASHED PATH & AEROPLANE */
+        .canvas-bg-line { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            z-index: 1; 
+            pointer-events: none; 
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 991px) {
+            .workflow-container { flex-direction: column; align-items: center; gap: 140px; }
+            .step-card { width: 90%; margin-top: 0 !important; }
+            .canvas-bg-line { display: none; }
+            .step-title { font-size: 2.5rem; }
+        }
+        @media (max-width: 1024px) {
+            .offering-grid { grid-template-columns: 1fr; }
+        }
+
+        /* --- IMPACT METRICS SECTION --- */
+        .metrics-section {
+            background: #ffffff;
+            padding: 120px 10%;
+            border-top: 1px solid #f2f2f2;
+        }
+
+        .metrics-container { max-width: 1400px; margin: 0 auto; }
+        .metrics-header { text-align: left; margin-bottom: 90px; }
+
+        .impact-tag {
+            color: #1a30de;
+            font-family: 'Poppins', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            display: block;
+            margin-bottom: 25px;
+        }
+
+        .metrics-title {
+            font-family: 'Instrument Serif', sans-serif;
+            word-spacing: 12px;
+            font-size: clamp(40px, 5.5vw, 68px);
+            font-weight: 600; 
+            color: #0f0e0e; 
+            line-height: 1.1;
+            letter-spacing: 3px;
+        }
+
+        .luxury-italic {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-weight: 400;
+            color: #bbb; 
+            letter-spacing: -1px;
+            display: inline-block;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .metric-card { text-align: left; padding: 0; }
+        .num-wrapper { display: flex; align-items: flex-start; }
+
+        .metric-card h2.counter {
+            font-family: 'Instrument Serif', serif; 
+            font-size: 85px; 
+            font-weight: 400;
+            color: #111;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .metric-card .plus {
+            font-family: sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--igp-blue);
+            margin-left: 8px;
+            margin-top: 10px; 
+            white-space: nowrap;
+        }
+
+        .metric-card p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            color: #999;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1100px) {
+            .metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 60px; }
+        }
+
+        /* ==========================================================
+           INTEGRATED LAST SECTION: BUILD APPS INTERACTIVE TABS
+           ========================================================== */
+        .interactive-section {
+            background-color: #ffffff;
+            padding: 120px 8%;
+            border-top: 1px solid #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tabs-container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .interactive-left {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            min-height: 520px;
+        }
+
+        .interactive-left h1 {
+            font-size: 2.8rem;
+            font-weight: 750;
+            color: #111111;
+            letter-spacing: -0.5px;
+            font-family: 'instrunment serif', serif;
+        }
+
+        .content-display-area {
+            position: relative;
+            width: 100%;
+            height: 420px;
+        }
+
+        .view-state {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            transform: scale(0.98);
+        }
+
+        /* Body class controllers mapped down */
+        body.show-verticals .view-state.verticals-grid,
+        body.show-personas .view-state.personas-grid {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+        }
+
+        /* View 1: Colored Grid System */
+        .verticals-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(12, 1fr);
+            gap: 12px;
+        }
+
+        .feature-card {
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .feature-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #000000;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .feature-card ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .feature-card ul li {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #333333;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .feature-card ul li::before {
+            content: ""; width: 5px; height: 5px; border-radius: 50%; display: inline-block;
+        }
+
+        .card-mfg { grid-column: 2 / 7; grid-row: 2 / 8; background-color: #f7d4cc; }
+        .card-mfg ul li::before { background-color: #e07a63; }
+
+        .card-bldg { grid-column: 7 / 12; grid-row: 3 / 8; background-color: #d7cdfa; }
+        .card-bldg ul li::before { background-color: #8c72e6; }
+
+        .card-util { grid-column: 1 / 6; grid-row: 8 / 13; background-color: #fdf0cd; }
+        .card-util ul li::before { background-color: #dca725; }
+
+        .card-cities { grid-column: 8 / 13; grid-row: 8 / 13; background-color: #cff0cc; }
+        .card-cities ul li::before { background-color: #69c262; }
+
+        .card-trans { grid-column: 5 / 9; grid-row: 10 / 14; background-color: #c7cefa; height: fit-content; }
+        .card-trans ul li::before { background-color: #6d7be3; }
+
+        .accent-block { background-color: #eef2ff; border-radius: 8px; }
+        .acc-1 { grid-column: 1 / 2; grid-row: 2 / 5; max-width: 25px; }
+        .acc-2 { grid-column: 6 / 9; grid-row: 1 / 3; max-height: 40px; }
+        .acc-3 { grid-column: 5 / 8; grid-row: 8 / 10; max-height: 50px; margin-top: 10px; }
+        .acc-4 { grid-column: 3 / 5; grid-row: 13 / 15; max-height: 55px; max-width: 55px; }
+
+        /* View 2: Abstract Image Grid */
+        .personas-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-auto-rows: 60px;
+            gap: 12px;
+            max-width: 500px;
+        }
+
+        .img-item {
+            border-radius: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center;
+        }
+
+        .img-item img { width: 100%; height: 100%; object-fit: cover; }
+
+        .shape { background-color: #f1f5f9; display: flex; align-items: center; justify-content: center; }
+        .shape svg { width: 24px; height: 24px; stroke: #cbd5e1; fill: none; stroke-width: 1.5; }
+
+        .item-crown { grid-column: 1 / 2; grid-row: 2 / 4; max-width: 45px; height: 90px; margin-top: auto; }
+        .item-crown svg { stroke: #a5b4fc; }
+        .item-factory { grid-column: 2 / 3; grid-row: 1 / 2; background: none; justify-content: flex-start; align-items: flex-end; }
+        .item-man-suit { grid-column: 2 / 4; grid-row: 2 / 5; }
+        .item-engineer { grid-column: 4 / 7; grid-row: 2 / 4; }
+        .item-gear { grid-column: 4 / 6; grid-row: 4 / 5; max-height: 45px; }
+        .item-avatar { grid-column: 6 / 7; grid-row: 4 / 5; max-height: 45px; max-width: 45px; }
+        .item-tech-woman { grid-column: 1 / 4; grid-row: 5 / 7; }
+        .item-laptop { grid-column: 4 / 7; grid-row: 5 / 8; }
+        .item-wrench { grid-column: 1 / 3; grid-row: 7 / 8; max-height: 45px; max-width: 100px; margin-top: 5px; }
+        .item-wrench svg { stroke: #3b82f6; }
+        .item-man-gray { grid-column: 3 / 5; grid-row: 7 / 9; }
+
+        /* Control Blue Panel Card */
+        .interactive-blue-card {
+            background-color: #123d93;
+            color: #ffffff;
+            border-radius: 16px;
+            padding: 35px 30px;
+            max-width: 440px;
+            justify-self: end;
+            width: 100%;
+        }
+
+        .interactive-tab {
+            border-left: 2px solid rgba(255, 255, 255, 0.25);
+            padding: 12px 14px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .interactive-tab h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            line-height: 1.3;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        body.show-verticals .tab-verticals,
+        body.show-personas .tab-personas {
+            border-left: 2px solid #ffffff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.show-verticals .tab-verticals h2,
+        body.show-personas .tab-personas h2 {
+            color: #ffffff;
+        }
+
+        .list-container {
+            display: none;
+            margin-top: 25px;
+            animation: tabFadeIn 0.3s ease;
+        }
+
+        body.show-verticals .list-verticals,
+        body.show-personas .list-personas {
+            display: block;
+        }
+
+        .card-subtitle {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .ui-list { list-style: none; display: flex; flex-direction: column; gap: 12px; font-family: 'poppins'; }
+        .ui-list li { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 600; }
+        .ui-list li::before {
+            content: ""; display: inline-block; width: 7px; height: 7px; background-color: #89e4f4; border-radius: 50%; flex-shrink: 0;
+        }
+
+        @keyframes tabFadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .tabs-container { grid-template-columns: 1fr; gap: 40px; }
+            .interactive-blue-card { max-width: 100%; }
+            .content-display-area { height: auto; min-height: 450px; }
+        }
+
+
+         :root {
+            --grid-color: rgba(226, 232, 240, 0.4);
+            --text-primary: #0f172a;
+            --text-accent: #0284c7;
+            --line-default: #4199ea;
+            --line-hover: #0284c7;
+            --line-dimmed: rgba(65, 153, 234, 0.15);
+            --team-accent: #0ea5e9;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+       
+
+        /* ==========================================================================
+           SECTION 1: ECOSYSTEM INTERACTIVE GRID
+           ========================================================================== */
+        .ecosystem-section {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 80px 20px;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .ecosystem-section .heading-container {
+            text-align: center;
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+
+        .ecosystem-section .main-heading {
+            font-size: 2.2rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .ecosystem-section .main-heading span {
+            color: var(--text-accent);
+        }
+
+        .network-container {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            grid-template-rows: repeat(8, 76px);
+            width: 100%;
+            background-image: 
+                linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+            background-size: calc(100% / 15) 76px;
+            border-left: 1px solid var(--grid-color);
+            border-top: 1px solid var(--grid-color);
+        }
+
+        .grid-cell {
+            position: relative;
+            border-right: 1px solid var(--grid-color);
+            border-bottom: 1px solid var(--grid-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .network-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .app-card {
+            width: calc(100% - 16px);
+            height: calc(100% - 16px);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
+            z-index: 5;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #64748b;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .app-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--text-accent);
+            box-shadow: 0 10px 20px rgba(2, 132, 199, 0.1);
+            color: var(--text-accent);
+        }
+
+        .central-hub {
+            grid-column: 8;
+            grid-row: 5;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hub-core {
+            width: 60px;
+            height: 60px;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+            transition: transform 0.4s ease;
+        }
+
+        .module-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: #64748b;
+            text-transform: uppercase;
+            z-index: 6;
+            background: #ffffff;
+            padding: 4px 8px;
+            white-space: nowrap;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .module-label:hover, .module-label.active {
+            color: var(--text-accent);
+            background-color: rgba(2, 132, 199, 0.05);
+        }
+
+        .anchor-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: var(--line-default);
+            border-radius: 50%;
+            transition: background-color 0.2s ease;
+        }
+        .module-label:hover + .anchor-dot, 
+        .module-label.active + .anchor-dot {
+            background-color: var(--text-accent);
+            scale: 1.3;
+        }
+        .anchor-left { right: -3px; }
+        .anchor-right { left: -3px; }
+
+
+        /* ==========================================================================
+           SECTION 2: PREMIUM TEAM SHOWCASE (PURE WHITE BACKGROUND)
+           ========================================================================== */
+        .team-section {
+            width: 100%;
+            min-height: 100vh;
+            padding: 110px 7%;
+            position: relative;
+            overflow: hidden;
+            background: #ffffff; /* Blue side reflections completely removed */
+        }
+
+        .small-title {
+            text-align: center;
+            color: var(--team-accent);
+            letter-spacing: 4px;
+            font-size: 13px;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2;
+        }
+
+        .team-section .main-heading {
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 80px;
+            line-height: 1;
+            font-weight: 700;
+            margin-bottom: 120px;
+            color: #020617;
+            position: relative;
+            z-index: 2;
+        }
+
+        .team-section .main-heading span {
+            color: var(--team-accent);
+            font-style: italic;
+        }
+
+        .team-timeline {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 70px;
+            z-index: 2;
+            padding-top: 40px;
+        }
+
+        .flow-line {
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 88%;
+            height: 220px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .team-card {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: 0.4s ease;
+        }
+
+        .connect-dot {
+            position: absolute;
+            top: 78px;
+            left: -38px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--team-accent);
+            box-shadow:
+                0 0 0 8px rgba(14,165,233,0.08),
+                0 0 25px rgba(14,165,233,0.35);
+        }
+
+        .team-card:first-child .connect-dot {
+            display: none;
+        }
+
+        .team-img {
+            width: 190px;
+            height: 190px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            background: white;
+            box-shadow: 0 15px 40px rgba(15,23,42,0.08);
+            transition: 0.45s ease;
+        }
+
+        .team-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: 0.45s ease;
+        }
+
+        .team-card:hover .team-img {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 25px 60px rgba(14,165,233,0.18);
+        }
+
+        .team-card:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.08);
+        }
+
+        .role-tag {
+            position: absolute;
+            bottom: 8px;
+            right: -10px;
+            background: linear-gradient(135deg, var(--team-accent), #38bdf8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 2px solid white;
+            box-shadow: 0 8px 25px rgba(14,165,233,0.25);
+        }
+
+        .team-info {
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .team-info h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #020617;
+            margin-bottom: 4px;
+        }
+
+        .team-info p {
+            font-size: 14px;
+            color: #64748b;
+            letter-spacing: 0.2px;
+        }
+
+        .linkedin-box {
+            position: absolute;
+            bottom: -62px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(18px);
+            transition: 0.35s ease;
+        }
+
+        .team-card:hover .linkedin-box {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .linkedin-box a {
+            text-decoration: none;
+            background: white;
+            color: #0f172a;
+            border: 1px solid rgba(14,165,233,0.15);
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.3s ease;
+            box-shadow: 0 12px 30px rgba(15,23,42,0.08);
+        }
+
+        .linkedin-box a:hover {
+            background: var(--team-accent);
+            color: white;
+            border-color: var(--team-accent);
+            box-shadow: 0 15px 35px rgba(14,165,233,0.30);
+        }
+
+
+        /* ==========================================================================
+           SECTION 3: STUDIO & AMAZON STYLE OVERLAPPING FOOTER
+           ========================================================================== */
+        .footer-container {
+            background-color: #131921; 
+            min-height: 80vh;
+            margin-top: 150px; 
+            position: relative;
+            padding-top: 150px;
+            padding-bottom: 40px;
+            text-align: center;
+        }
+
+        .hover-card {
+            position: absolute;
+            top: -100px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            height: 220px;
+            border-radius: 16px;
+            background-color: #98b3d1; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .hover-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 140px;
+            height: 140px;
+            background-color: #a7b8e8; 
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 1;
+        }
+
+        .hover-card:hover::before {
+            transform: translate(-50%, -50%) scale(6);
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 2;
+            padding: 20px 40px;
+            text-align: center;
+            color: #000000;
+        }
+
+        .card-content h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .card-content p {
+            font-size: 13px;
+            line-height: 1.4;
+            max-width: 400px;
+            margin: 0 auto;
+            font-weight: 500;
+        }
+
+        .footer-links-grid {
+            width: 85%;
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            text-align: left;
+            padding-bottom: 60px;
+            border-bottom: 1px solid #232f3e; 
+        }
+
+        .footer-column h3 {
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #dddddd;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s, text-decoration 0.2s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .footer-settings-bar {
+            width: 100%;
+            max-width: 600px;
+            margin: 40px auto 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .footer-logo {
+            color: #ffffff;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+        }
+
+        .footer-logo span {
+            color: #ff9900; 
+        }
+
+        .settings-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-select {
+            background-color: transparent;
+            border: 1px solid #848688;
+            color: #cccccc;
+            padding: 6px 18px;
+            font-size: 0.8rem;
+            border-radius: 3px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-select:hover {
+            border-color: #ffffff;
+        }
+
+        /* ==========================================================================
+           GLOBAL RESPONSIVE MEDIA BREAKPOINTS
+           ========================================================================== */
+        @media (max-width: 1200px) {
+            .team-section .main-heading {
+                font-size: 60px;
+            }
+            .team-timeline {
+                gap: 45px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .flow-line, .connect-dot {
+                display: none;
+            }
+            .team-section .main-heading {
+                font-size: 42px;
+            }
+            .team-section {
+                padding: 90px 20px;
+            }
+            .team-img {
+                width: 160px;
+                height: 160px;
+            }
+            .team-info h3 {
+                font-size: 21px;
+            }
+            .footer-links-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 40px;
+            }
+            .footer-settings-bar {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        .section-wrapper {
+            width: 100%;
+            max-width: 1000px; 
+            background: transparent; /* White background hata diya gaya hai */
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .arrow-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .arrow-btn:hover { background: #000; color: #fff; border-color: #000; }
+
+        /* GRID STRUCTURE */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            height: 580px; 
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .img-container {
+            position: relative;
+            border-radius: 22px;
+            overflow: hidden; /* Ye zoom ko container ke bahar jane se rokta hai */
+            background: #eee;
+            cursor: pointer;
+        }
+
+        /* Zig-Zag Pattern */
+        .col-odd .top, .col-even .bottom { flex: 1.6; } 
+        .col-odd .bottom, .col-even .top { flex: 1; }   
+
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            /* Transition for Fade and Zoom both */
+            transition: opacity 0.7s ease-in-out, transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* ZOOM EFFECT ON HOVER */
+        .img-container:hover img {
+            transform: scale(1.15); /* 15% Zoom window */
+        }
+
+        @media (max-width: 768px) {
+            .grid-layout { grid-template-columns: repeat(2, 1fr); height: auto; }
+            .img-container { height: 280px; }
+        }
+    </style>
+</head>
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%232171C1%22/><text x=%2250%22 y=%2255%22 font-family=%22Arial, sans-serif%22 font-size=%2245%22 font-weight=%22900%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>IGP</text></svg>">
+
+<body class="show-verticals">
+
+    <div class="grid-bg"></div>
+
+    <div class="navbar-wrapper">
+        <nav>
+            <a href="#" class="nav-logo-custom">
+                <div class="logo-white-pill">IGP</div>
+                <div class="logo-tagline-text">By Sparklehood</div>
+           </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#dashboard">About us</a></li>
+                <li><a href="#soln">Solution</a></li>
+                <li><a href="#srvc">Service's</a></li>
+                <li><a href="#team">Our Team</a></li>
+                <li><a href="#cntct">Contact Us</a></li>
+            </ul>
+            <a href="#" class="btn-consult">Connect Us</a>
+        </nav>
+    </div>
+
+    <section class="hero" id="home">
+        <div class="hero-text">
+            <h1>The Intelligence of <br><span id="dynamicText">EV Revolution.</span></h1>
+            <p>Real-time monitoring and uniquely crafted infrastructure operations designed to amplify revenue and scale your fleet.</p>
+            <div style="display: flex; justify-content: inherit;">
+                <a href="#dashboard" class="hero-btn">See Live Demo</a>
+            </div>
+        </div>
+        <div class="visual-stage">
+            <div class="circle-guide guide-1"></div>
+            <img height="500px" src="image.png" alt="">
+            <div class="circle-guide guide-2"></div>
+        </div>
+    </section>
+
+    <section class="laptop-section" id="dashboard">
+        <div class="laptop-container">
+            <div class="laptop-frame">
+                <div class="play-button" id="playTrigger"></div>
+                <img src="laptop.png" class="laptop-img" alt="Dashboard">
+            </div>
+        </div>
+    </section>
+
+    <div class="video-modal" id="videoModal">
+        <div class="video-content">
+            <span class="close-btn" id="closeModal">CLOSE ✕</span>
+            <video id="player" controls>
+                <source src="ev.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <section class="trust-section">
+        <p class="trust-label">Strategic Alliances & Trusted Partners</p>
+        
+        <div class="logo-slider">
+            <div class="logo-track" id="logoTrack">
+                <div class="logo-item"><img src="logo/amazon.png" alt="Amazon"></div>
+                <div class="logo-item"><img src="logo/honda.png" alt="Hero"></div>
+                <div class="logo-item"><img src="logo/flipkart.png" alt="Honda"></div>
+                <div class="logo-item"><img src="/logo/kpmg.png" alt="Tata"></div>
+                <div class="logo-item"><img src="/logo/paytm.png" alt="Paytm"></div>
+                <div class="logo-item"><img src="/logo/zoho.png" alt="Flipkart"></div>
+                <div class="logo-item"><img src="/logo/aws.png" alt="AWS"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- feature section -->
+    <section class="offerings-v2 " id="soln">
+        <div class="offering-wrapper">
+            <div class="header-center">
+                <span class="mini-label">• OUR Process</span>
+                <h2> Innovative Solutions for <span>Global Scale.</span></h2>
+            </div>
+
+            <div class="workflow-container">
+
+                <!-- Step 1 -->
+                <div class="step-card step-ideate">
+                    <div class="illustration-box box-ideate">
+                        <img src="light.svg" alt="Ideate Icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2987/2987998.png'">
+                    </div>
+                    <h2 class="step-title">Ideate.</h2>
+                    <p class="step-description">Decode unique operational needs and map legal feasibility to create a high-impact, revenue-driving execution blueprint.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step-card step-build">
+                    <div class="illustration-box box-build">
+                        <img src="arrow.svg" alt="Build Icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10044/10044810.png'">
+                    </div>
+                    <h2 class="step-title">Build.</h2>
+                    <p class="step-description">Transform the blueprint into reality with rapid infrastructure deployment, Grade-A installations, and tech-integrated workflows.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step-card step-launch">
+                    <div class="illustration-box box-launch">
+                        <img src="rocket.svg" alt="Launch Icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1356/1356479.png'">
+                    </div>
+                    <h2 class="step-title">Launch.</h2>
+                    <p class="step-description"> Scale nationally with 24/7 technical surveillance, proactive maintenance, and strategic marketing to amplify revenue and growth.</p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <section class="">
+        
+        <div class="section-wrapper">
+            <div class="header">
+                <h1>Real Connections. Real Impact.</h1>
+                <div class="controls">
+                    <button class="arrow-btn" onclick="shuffleImages()">←</button>
+                    <button class="arrow-btn" onclick="shuffleImages()">→</button>
+                </div>
+            </div>
+
+            <div class="grid-layout">
+                <!-- Column 1 -->
+                <div class="column col-odd">
+                    <div class="img-container top"><img class="slide" src="https://picsum.photos/400/700?random=21"></div>
+                    <div class="img-container bottom"><img class="slide" src="https://picsum.photos/400/400?random=22"></div>
+                </div>
+
+                <!-- Column 2 -->
+                <div class="column col-even">
+                    <div class="img-container top"><img class="slide" src="https://picsum.photos/400/400?random=23"></div>
+                    <div class="img-container bottom"><img class="slide" src="https://picsum.photos/400/700?random=24"></div>
+                </div>
+
+                <!-- Column 3 -->
+                <div class="column col-odd">
+                    <div class="img-container top"><img class="slide" src="https://picsum.photos/400/700?random=25"></div>
+                    <div class="img-container bottom"><img class="slide" src="https://picsum.photos/400/400?random=26"></div>
+                </div>
+
+                <!-- Column 4 -->
+                <div class="column col-even">
+                    <div class="img-container top"><img class="slide" src="https://picsum.photos/400/400?random=27"></div>
+                    <div class="img-container bottom"><img class="slide" src="https://picsum.photos/400/700?random=28"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="metrics-section">
+        <div class="metrics-container">
+            <div class="metrics-header">
+                <span class="impact-tag">• THE IGP IMPACT</span>
+                <h2 class="metrics-title">
+                    Measurable results delivered <br>
+                    <span class="luxury-italic">at absolute scale.</span>
+                </h2>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="num-wrapper">
+                        <h2 class="counter" data-target="1000">0</h2>
+                        <span class="plus">+</span>
+                    </div>
+                    <p> EV Chargers Installed</p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="num-wrapper">
+                        <h2 class="counter" data-target="300">0</h2>
+                        <span class="plus">+</span>
+                    </div>
+                    <p>Trained Field Staff</p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="num-wrapper">
+                        <h2 class="counter" data-target="50">0</h2>
+                        <span class="plus">+</span>
+                    </div>
+                    <p>Cities Covered</p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="num-wrapper">
+                        <h2 class="counter" data-target="24">X7</h2>
+                        <span class="plus">X 7</span>
+                    </div>
+                    <p>Support Operations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="interactive-section" id="srvc">
+        <div class="tabs-container">
+            
+            <div class="interactive-left">
+                <h1>Accelerating EV Infrastructure Across India</h1>
+                
+                <div class="content-display-area">
+                    
+                    <div class="view-state verticals-grid">
+                        <div class="accent-block acc-1"></div>
+                        <div class="accent-block acc-2"></div>
+                        
+                        <div class="feature-card card-mfg">
+                            <h3>⚡EV Infrastructure</h3>
+                            <ul>
+                                <li>Site scouting & acquisition</li>
+                                <li>EV charger installation</li>
+                                <li>Smart energy integration</li>
+                                <li>DC fast charging solutions</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card card-bldg">
+                            <h3>🛠️Smart EV Operations</h3>
+                            <ul>
+                                <li>Preventive maintenance</li>
+                                <li>24/7 on-ground manpower</li>
+                                <li>Rapid issue resolution</li>
+                                <li>Spare parts management</li>
+                            </ul>
+                        </div>
+
+                        <div class="accent-block acc-3"></div>
+
+                        <div class="feature-card card-util">
+                            <h3>📞 AMC & Support</h3>
+                            <ul>
+                                <li>Annual maintenance contracts</li>
+                                <li>Real-time monitoring</li>
+                                <li>Call center support</li>
+                                <li>SLA-based service management</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card card-trans">
+                            <h3>🏙️ Smart Deployment</h3>
+                            <ul>
+                                <li>Regulatory compliance</li>
+                                <li>Cluster-based accessibility</li>
+                                <li>Faster deployment timelines</li>
+                                <li>Tier 1 & Tier 2 coverage</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card card-cities">
+                            <h3>👨‍🔧 Execution Workforce</h3>
+                            <ul>
+                                <li>Certified technicians</li>
+                                <li>Multi-city operations</li>
+                                <li>Skilled deployment teams</li>
+                                <li>End-to-end execution support</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="accent-block acc-4"></div>
+                    </div>
+
+                    <div class="view-state personas-grid">
+                        <div class="img-item shape item-crown"><svg viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z"/></svg></div>
+                        <div class="img-item shape item-factory"><svg viewBox="0 0 24 24"><path d="M2 22V10l5 4V10l5 4V10l10 5v7H2z"/></svg></div>
+                        <div class="img-item item-man-suit"><img src="ev.png" alt="Owner"></div>
+                        <div class="img-item item-engineer"><img src="support.png" alt="Engineer"></div>
+                        <div class="img-item shape item-gear"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
+                        <div class="img-item shape item-avatar"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
+                        <div class="img-item item-tech-woman"><img src="teams.png" alt="Manager"></div>
+                        <div class="img-item item-laptop"><img src="car.png" alt="Laptop"></div>
+                        <div class="img-item shape item-wrench"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+                        <div class="img-item item-man-gray"><img src="technician.png" alt="Executive"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-blue-card">
+                
+                <div class="interactive-tab tab-verticals" onmouseenter="switchView('verticals')">
+                    <h2>Smart Solutions for EV Businesses</h2>
+                </div>
+                
+                <div class="interactive-tab tab-personas" onmouseenter="switchView('personas')">
+                    <h2>Built for Scalable EV Businesses.</h2>
+                </div>
+
+                <div class="list-container list-verticals">
+                    <p class="card-subtitle">Smart EV solutions across India.</p>
+                    <ul class="ui-list">
+                        <li>EV Infrastructure</li>
+                        <li>Charger Installation</li>
+                        <li>Operations & Maintenance</li>
+                        <li>AMC Support</li>
+                        <li>Site Acquisition</li>
+                        <li>Smart Energy Solutions</li>
+                        <li>Call Center Support</li>
+                        <li>Compliance & Safety</li>
+                    </ul>
+                </div>
+
+                <div class="list-container list-personas">
+                    <p class="card-subtitle">Faster deployment & seamless support.</p>
+                    <ul class="ui-list">
+                        <li>EV Infrastructure Companies</li>
+                        <li>O&M Teams</li>
+                        <li>Facility Managers</li>
+                        <li>Energy Consultants</li>
+                        <li>EV Network Operators</li>
+                        <li>System Integrators</li>
+                        <li>Technical Support Teams</li>
+                        <li>Smart Mobility Partners</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: TEAM SHOWCASE (PURE WHITE) -->
+    <section class="team-section">
+        <div class="small-title">• OUR TEAM</div>
+
+        <h1 class="main-heading">
+            Built by an <span>Innovative Team.</span>
+        </h1>
+
+        <div class="team-timeline">
+            <!-- SVG CONNECTOR PATH -->
+            <svg class="flow-line" viewBox="0 0 1200 240" fill="none">
+                <path d="M20 120 C140 20, 240 20, 360 120 S580 220, 700 120 S940 20, 1180 120"
+                      stroke="#7dd3fc" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="8 10" opacity="0.75"/>
+            </svg>
+
+            <!-- Card 1 -->
+            <div class="team-card">
+                <div class="connect-dot"></div>
+                <div class="team-img">
+                    <img src="img/ceo.png" alt="Anchal Taatya">
+                    <div class="role-tag">CEO</div>
+                </div>
+                <div class="team-info">
+                    <h3>Anchal Taatya</h3>
+                    <p>Founder & CEO</p>
+                </div>
+                <div class="linkedin-box">
+                    <a href="#">linkedin.com/anchal</a>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="team-card">
+                <div class="connect-dot"></div>
+                <div class="team-img">
+                    <img src="img/lead.png" alt="Manish Kumar">
+                    <div class="role-tag">Lead</div>
+                </div>
+                <div class="team-info">
+                    <h3>Manish Kumar</h3>
+                    <p>Project Lead</p>
+                </div>
+                <div class="linkedin-box">
+                    <a href="#">linkedin.com/manish</a>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="team-card">
+                <div class="connect-dot"></div>
+                <div class="team-img">
+                    <img src="img/hr.png" alt="Divyanshu Gupta">
+                    <div class="role-tag">HRBP</div>
+                </div>
+                <div class="team-info">
+                    <h3>Divyanshu Gupta</h3>
+                    <p>Senior HRBP</p>
+                </div>
+                <div class="linkedin-box">
+                    <a href="#">linkedin.com/divyanshu</a>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="team-card">
+                <div class="connect-dot"></div>
+                <div class="team-img">
+                    <img src="img/bhaskar.png" alt="Bhaskar Saurabh">
+                    <div class="role-tag">Manager</div>
+                </div>
+                <div class="team-info">
+                    <h3>Bhaskar Saurabh</h3>
+                    <p>Project Manager</p>
+                </div>
+                <div class="linkedin-box">
+                    <a href="#">linkedin.com/bhaskar</a>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="team-card">
+                <div class="connect-dot"></div>
+                <div class="team-img">
+                    <img src="img/chetan.png" alt="Chetan">
+                    <div class="role-tag">EV</div>
+                </div>
+                <div class="team-info">
+                    <h3>Chetan</h3>
+                    <p>Electrical Engineer - EV</p>
+                </div>
+                <div class="linkedin-box">
+                    <a href="#">linkedin.com/chetan</a>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="team-card">
+                <div class="connect-dot"></div>
+                <div class="team-img">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=700" alt="Vanshika">
+                    <div class="role-tag">Marketing</div>
+                </div>
+                <div class="team-info">
+                    <h3>Vanshika</h3>
+                    <p>Digital Marketing</p>
+                </div>
+                <div class="linkedin-box">
+                    <a href="#">linkedin.com/vanshika</a>
+                </div>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="team-card">
+                <div class="connect-dot"></div>
+                <div class="team-img">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=700" alt="Nihafr Sharma">
+                    <div class="role-tag">Web Dev</div>
+                </div>
+                <div class="team-info">
+                    <h3>Nihafr Sharma</h3>
+                    <p>Web Developer</p>
+                </div>
+                <div class="linkedin-box">
+                    <a href="#">linkedin.com/nihafr</a>
+                </div>
+            </div>
+
+            <!-- Card 8 -->
+            <div class="team-card">
+                <div class="connect-dot"></div>
+                <div class="team-img">
+                    <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?q=80&w=700" alt="Sharma">
+                    <div class="role-tag">Data</div>
+                </div>
+                <div class="team-info">
+                    <h3>Sharma</h3>
+                    <p>Data Operator</p>
+                </div>
+                <div class="linkedin-box">
+                    <a href="#">linkedin.com/sharma</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: OVERLAPPING STUDIO & AMAZON FOOTER -->
+    <div class="footer-container">
+        
+        <!-- Overlapping Card Trigger Layer -->
+        <div class="hover-card">
+            <div class="card-content">
+                <h2>Powering India's EV Future</h2>
+                <p>From Site Surveys to Commissioning and 24/7 O&M—IGP provides end-to-end execution for EV chargers and battery swapping stations. With 1000+ installations and 300+ field professionals, we’ve got your infrastructure covered.</p>
+            </div>
+        </div>
+
+        <div class="footer-links-grid">
+            <div class="footer-column">
+                <h3>Get to Know Us</h3>
+                <ul>
+                    <li><a href="#">About IGP</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Case Study</a></li>
+                    <li><a href="#">Our Service</a></li>
+                    <li><a href="#">Contact us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Connect with Us</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Linkedin</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Our sevice's</h3>
+                <ul>
+                    <li><a href="#">EV Infrastructure</a></li>
+                    <li><a href="#">Site Acquisition</a></li>
+                    <li><a href="#">Installation of Ev</a></li>
+                    <li><a href="#">Operation</a></li>
+                    <li><a href="#">Maintanace</a></li>
+                    <li><a href="#">AMC</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Let Connect with Us</h3>
+                <ul>
+                    <li><a href="#">Email</a></li>
+                    <li><a href="#">Phone</a></li>
+                    <li><a href="#">Linkedin</a></li>
+                    <li><a href="#">IGP App Download</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-settings-bar">
+            <div class="footer-logo">IGP BY Sparklehood<span>.</span></div>
+            <div class="settings-buttons">
+                <button class="btn-select">🌐 English ↕</button>
+                <button class="btn-select">🇮🇳 India</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hero Dynamic Text Script
+        const dynamicText = document.getElementById('dynamicText');
+        function rotateText() {
+            setTimeout(() => {
+                dynamicText.style.opacity = 0; dynamicText.style.transform = "translateY(15px)";
+                setTimeout(() => {
+                    dynamicText.innerText = "EV Revolution."; dynamicText.style.color = "var(--igp-blue)";
+                    dynamicText.style.opacity = 1; dynamicText.style.transform = "translateY(0)";
+                }, 600);
+            }, 0);
+            setTimeout(() => {
+                dynamicText.style.opacity = 0; dynamicText.style.transform = "translateY(15px)";
+                setTimeout(() => {
+                    dynamicText.innerText = "Smart Swapping."; dynamicText.style.color = "var(--success-green)";
+                    dynamicText.style.opacity = 1; dynamicText.style.transform = "translateY(0)";
+                }, 600);
+            }, 5000);
+        }
+        setInterval(rotateText, 10000); rotateText();
+
+        // Video Modal Script
+        const modal = document.getElementById('videoModal');
+        const playBtn = document.getElementById('playTrigger');
+        const closeBtn = document.getElementById('closeModal');
+        const player = document.getElementById('player');
+
+        playBtn.onclick = () => { modal.classList.add('show'); player.play(); };
+        closeBtn.onclick = () => { modal.classList.remove('show'); player.pause(); player.currentTime = 0; };
+
+        // Infinite Loop Logo Marquee Script
+        document.addEventListener("DOMContentLoaded", () => {
+            const track = document.getElementById("logoTrack");
+            const clone = track.innerHTML;
+            track.innerHTML = clone + clone; 
+
+            let scrollPos = 0;
+            const speed = 0.5; 
+
+            function animate() {
+                scrollPos -= speed;
+                if (Math.abs(scrollPos) >= track.scrollWidth / 2) {
+                    scrollPos = 0;
+                }
+                track.style.transform = `translateX(${scrollPos}px)`;
+                requestAnimationFrame(animate);
+            }
+            animate();
+        });
+
+        // Numeric Impact Counter Script
+        const counters = document.querySelectorAll('.counter');
+        const counterSpeed = 100; 
+
+        const startCounters = () => {
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const inc = target / counterSpeed;
+
+                    if (count < target) {
+                        counter.innerText = (count + inc).toFixed(target % 1 === 0 ? 0 : 1);
+                        setTimeout(updateCount, 20);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCount();
+            });
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    startCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.metrics-section').forEach(section => observer.observe(section));
+
+                // Fixed Interactive Tab Switching System Controller
+        function switchView(targetState) {
+            const body = document.body;
+            if(targetState === 'verticals') {
+                body.classList.remove('show-personas');
+                body.classList.add('show-verticals');
+            } else if (targetState === 'personas') {
+                body.classList.remove('show-verticals');
+                body.classList.add('show-personas');
+            }
+        }
+
+        // image section
+    const allImages = document.querySelectorAll('.slide');
+
+    function shuffleImages() {
+        allImages.forEach((img, i) => {
+            img.style.opacity = '0'; 
+            
+            setTimeout(() => {
+                const newId = Math.floor(Math.random() * 1000);
+                img.src = `https://picsum.photos/500/800?sig=${newId + i}`;
+                img.style.opacity = '1'; 
+            }, 600);
+        });
+    }
+
+    // Har 5 second mein auto-change
+    setInterval(shuffleImages, 5000);
+    </script>
+</body>
+</html>
