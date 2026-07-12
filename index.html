@@ -7,7 +7,6 @@
     <link rel="icon" type="image/png" href="./favicon.png">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%232171C1%22/><text x=%2250%22 y=%2255%22 font-family=%22Arial, sans-serif%22 font-size=%2245%22 font-weight=%22900%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>IGP</text></svg>">
 
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -53,7 +52,6 @@
             margin: 0; 
             padding: 0; 
             box-sizing: border-box; 
-            
             -webkit-font-smoothing: antialiased; 
         }
 
@@ -73,10 +71,13 @@
         /* --- Premium GSAP Track Cursor Styles --- */
         #cursor-dot {
             position: fixed;
-            width: 8px; height: 8px;
-            background: white;
-            border-radius: 50%;
-            z-index: 10000;
+            top: 0; left: 0;
+            width: 20px; height: 20px;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            color: #ffffff;              
+            z-index: 99999;
             pointer-events: none;
             mix-blend-mode: difference;
             display: none;
@@ -86,13 +87,14 @@
             width: 40px; height: 40px;
             border: 1px solid rgba(255,255,255,0.3);
             border-radius: 50%;
-            z-index: 9999;
+            z-index: 99998;
             pointer-events: none;
             transition: background 0.3s, border 0.3s;
             display: none;
         }
         @media (min-width: 1101px) {
-            #cursor-dot, #cursor-ring { display: block; }
+            #cursor-dot { display: flex; }
+            #cursor-ring { display: block; }
         }
 
         /* --- Classic IGP Navbar --- */
@@ -127,26 +129,18 @@
             padding-right: 16px;
         }
 
-        .logo-pill {
-            background: #FFFFFF;
-            padding: 4px 20px;
-            border-radius: 50px;
-            margin-bottom: 2px;
-        }
-        .logo-pill span { color: #1a5dab; font-weight: 800; font-size: 1.2rem; letter-spacing: 0.8px; }
-        .tagline {font-size: 8px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; opacity: 1; color:white;}
-
         .nav-menu { display: flex; position: relative; gap: 4px; align-items: center; }
         .nav-link {
             text-decoration: none;
-            color: var(--text-dim);
-            font-size: 14px;
+            /* color: var(--text-dim); */
+            color: #FFFFFF;
+            font-size: 15px;
             font-weight: 500;
-            padding: 12px 20px;
+            padding: 11px 20px;
             border-radius: 100px;
             transition: color 0.4s var(--ease-pro);
         }
-        .nav-link.active, .nav-link:hover { color: #FFFFFF; }
+        .nav-link.active, .nav-link:hover { color: #1a5dab; }
 
         .nav-indicator {
             position: absolute;
@@ -240,7 +234,9 @@
             font-family: var(--font-serif);
             font-style: italic;
             display: block;
-            padding-bottom: 0.1em; 
+            line-height: 1.15;          
+            padding-bottom: 0.15em;
+            overflow: visible;
             background: linear-gradient(to right, #ffffff 10%, var(--blue-light) 40%, var(--blue-deep) 100%);
             -webkit-background-clip: text;
             background-clip: text;
@@ -285,7 +281,7 @@
         .btn-outline { background: rgba(255,255,255,0.03); color: #fff; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
         .btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255, 255, 255, 0.3); }
 
-        /* --- SECTION 2: Responsive Laptop Showcase Area --- */
+        /* --- SECTION 2: About section --- */
         .showcase-section {
             position: relative;
             background-color: #ffffff;
@@ -293,7 +289,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 80px 24px 10px 24px; 
+            padding: 220px 24px 140px 24px; 
             overflow: hidden;
             width: 100%;
         }
@@ -322,76 +318,320 @@
             }
         }
 
-        .laptop-wrapper {
+        .about-grid-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
             position: relative;
             z-index: 10;
-            width: 100%; 
-            max-width: 950px; 
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 48px;
+            align-items: center;
+            padding-top: 100px; 
+            padding-bottom: 0%;
+        }
+
+        @media (min-width: 992px) {
+            .about-grid-container {
+                grid-template-columns: 1.1fr 1fr;
+                gap: 60px;
+                padding-top: 80px;
+            }
+        }
+
+        /* --- Left Side Typography --- */
+        .about-text-column {
+            text-align: left;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            transition: filter 0.4s var(--ease-pro);
+            justify-content: center;
         }
 
-        .laptop-img {
-            width: 100%;
-            height: auto;
-            display: block;
+        .about-heading {
+            font-family: var(--font-serif);
+            font-size: clamp(2.2rem, 3.8vw, 3rem);
+            font-weight: 560;
+            line-height: 1.15;
+            letter-spacing: -1px; 
+            color: #0f172a;
+            margin-bottom: 24px;
+        }
+
+        /* --- Premium Pillars List Design --- */
+        .about-pillars-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .about-pillar-item {
+            display: flex;
+            gap: 16px;
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.04);
+            padding: 20px;
+            border-radius: 16px;
             position: relative;
-            z-index: 3;
+            overflow: hidden;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                        border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                        box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                        background-color 0.5s ease;
         }
 
-        .laptop-shadow {
+        /* Left Accent Gradient Bar on Hover */
+        .about-pillar-item::before {
+            content: '';
             position: absolute;
-            bottom: -25px; 
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            height: 450px;
-            background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.08) 50%, rgba(0, 0, 0, 0) 75%);
-            border-radius: 50%;
-            filter: blur(16px); 
-            z-index: 2;
-            pointer-events: none;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(to bottom, #2575c0, #3b82f6);
+            transform: scaleY(0);
+            transform-origin: center;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .video-bar {
-            position: absolute;
-            top: 43%; 
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #e62121;
+        .about-pillar-item:hover {
+            transform: translateY(-4px);
+            border-color: rgba(37, 117, 192, 0.15);
+            background: #fbfdff;
+            box-shadow: 0 12px 30px rgba(37, 117, 192, 0.04);
+        }
+
+        .about-pillar-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        /* Pillar Icons with Smooth Hover Color Swap */
+        .pillar-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: rgba(37, 117, 192, 0.06);
+            color: var(--brand-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+            transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        }
+
+        .about-pillar-item:hover .pillar-icon {
+            background: var(--brand-blue);
             color: #ffffff;
-            width: clamp(50px, 8vw, 76px);
-            height: clamp(50px, 8vw, 76px);
-            border-radius: 50%;
+            transform: scale(1.05);
+        }
+
+        .pillar-content h4 {
+            font-family: var(--font-serif);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .pillar-content p {
+            font-size: 0.85rem;
+            line-height: 1.45;
+            color: #64748b;
+            margin-bottom: 0;
+            max-width: 100%;
+        }
+
+        /* --- Right Side Layered Media Elements --- */
+        .about-media-column {
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 0 0 0 rgba(230, 33, 33, 0.6), 0 8px 25px rgba(0,0,0,0.25);
-            animation: pulse-animation 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            z-index: 4;
+            width: 100%;
         }
 
-        .video-bar i {
-            font-size: clamp(16px, 2.5vw, 24px);
-            margin-left: 4px;
+        .dashboard-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 540px;
+            perspective: 1200px; /* Enables 3D perspective space */
         }
 
-        .video-bar:hover {
-            background-color: #cc1111;
-            transform: translate(-50%, -50%) scale(1.08);
-            box-shadow: 0 0 0 18px rgba(230, 33, 33, 0), 0 12px 30px rgba(0,0,0,0.35);
+        /* Layered Live Status Badge */
+        .media-live-badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 8px 16px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 20;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
-        @keyframes pulse-animation {
-            0% { box-shadow: 0 0 0 0 rgba(230, 33, 33, 0.6), 0 8px 25px rgba(0,0,0,0.25); }
-            70% { box-shadow: 0 0 0 16px rgba(230, 33, 33, 0), 0 8px 25px rgba(0,0,0,0.15); }
-            100% { box-shadow: 0 0 0 0 rgba(230, 33, 33, 0), 0 8px 25px rgba(0,0,0,0.25); }
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10b981;
+            animation: badgePulse 2s infinite;
         }
 
-        /* --- SECTION 3: Integrated Marquee Partners Section --- */
+        @keyframes badgePulse {
+            0% { transform: scale(0.9); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.5; }
+        }
+
+/* Floating Info Card */
+.media-floating-card {
+    position: absolute;
+    bottom: -15px;
+    left: -10px;
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 12px;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 20;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    transition: transform 0.6s var(--ease-pro), box-shadow 0.6s var(--ease-pro);
+}
+
+.media-floating-card h5 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+}
+
+.media-floating-card p {
+    font-size: 0.72rem;
+    color: #64748b;
+    margin: 0;
+    max-width: 100%;
+}
+
+/* --- Premium 3D Wrapper Layering --- */
+.about-wrapper {
+    position: relative;
+    z-index: 10;
+    width: 100%; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: perspective(1000px) translateZ(0);
+    transform-style: preserve-3d;
+    transition: transform 0.6s var(--ease-pro), filter 0.6s var(--ease-pro);
+}
+
+.about-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    position: relative;
+    z-index: 3;
+}
+
+.about-shadow {
+    position: absolute;
+    bottom: 25px; 
+    left: 50%;
+    transform: translateX(-50%) scale(1);
+    width: 98%;
+    height: 450px;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.08) 50%, rgba(0, 0, 0, 0) 75%);
+    border-radius: 50%;
+    filter: blur(16px); 
+    z-index: 2;
+    pointer-events: none;
+    transition: transform 0.6s var(--ease-pro), opacity 0.6s var(--ease-pro), filter 0.6s var(--ease-pro);
+    opacity: 0.85;
+}
+
+/* --- Premium Hover Animation States --- */
+
+.about-wrapper:hover {
+    transform: translateY(-14px) scale(1.03) perspective(1000px);
+}
+
+.about-wrapper:hover .about-shadow {
+    transform: translateX(-50%) scale(0.9) scaleY(0.8);
+    opacity: 0.45;
+    filter: blur(24px);
+}
+
+/* Floating Card lifts and drifts on hover */
+.dashboard-wrapper:hover .media-floating-card {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 18px 35px rgba(15, 23, 42, 0.12);
+}
+
+/* --- Upgraded Glassmorphic Video Play Button --- */
+.video-bar {
+    position: absolute;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 4;
+}
+
+.video-bar i {
+    font-size: 1.15rem;
+    margin-left: 4px; /* Centering visual offset */
+    transition: transform 0.3s ease;
+}
+
+/* Outer Pulsing Wave Ripple */
+.video-bar::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid rgba(37, 117, 192, 0.4);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-wrapper:hover .video-bar {
+    background: var(--brand-blue);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translate(-50%, -50%) scale(1.08);
+    box-shadow: 0 20px 40px rgba(37, 117, 192, 0.35);
+}
+
+.about-wrapper:hover .video-bar::after {
+    inset: -14px;
+    opacity: 1;
+}
+
+.about-wrapper:hover .video-bar i {
+    transform: scale(1.05);
+}        /* --- SECTION 3: Integrated Marquee Partners Section --- */
         .partners-section-fixed {
             background: radial-gradient(120% 120% at 50% 0%, #fbfcfd 0%, #ffffff 100%);
             padding: 10px 0 65px 0; 
@@ -502,7 +742,7 @@
         body.modal-open .content-box,
         body.modal-open .navbar,
         body.modal-open .black-oval-background,
-        body.modal-open .laptop-wrapper,
+        body.modal-open .about-wrapper,
         body.modal-open .partners-section-fixed,
         body.modal-open #ev-section {
             filter: blur(10px);
@@ -619,7 +859,7 @@
                 pointer-events: auto;
                 transform: translateX(-50%) scale(1);
             }
-            .nav-link { width: 100%; text-align: center; padding: 14px; font-family: 'Lora', serif;  }
+            .nav-link { width: 100%; text-align: center; padding: 14px; font-family: sans-serif;  }
             .hero-section { text-align: center; justify-content: center; }
             .content-box { display: flex; flex-direction: column; align-items: center; }
             p { margin-left: auto; margin-right: auto; }
@@ -639,12 +879,12 @@
             .marquee-track-fixed { gap: 28px; padding-right: 28px; animation-duration: 18s; }
         }
 
-        /* ==========================================================================
-           M.HTML MERGED STYLES (Restored to White Format/Light Theme)
+        
+       /* ==========================================================================
+           UPGRADED INTERACTIVE EDITORIAL EV SECTION WITH BLUISH CLOUDY MASK
            ========================================================================== */
         
         #ev-section {
-            /* Restored to original light theme values */
             --ev-primary-blue: var(--brand-blue); 
             --ev-text-dark: #0f172a;
             --ev-text-muted: #64748b;
@@ -664,7 +904,7 @@
             --impact-transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 
             font-family: var(--ev-font-sans);
-            background-color: #ffffff; /* Restored white background */
+            background-color: #ffffff; 
             color: var(--ev-text-dark);
             padding: 80px 30px;
             display: flex;
@@ -689,7 +929,7 @@
             font-size: 2.4rem;
             font-weight: 700;
             line-height: 1.2;
-            color: var(--ev-text-dark);
+            color: var(--text-dark);
             letter-spacing: -0.02em;
         }
 
@@ -795,8 +1035,7 @@
             z-index: 1;
             transform-style: preserve-3d;
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
-                        box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1),
-                        background-image 0.3s ease;
+                        box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .ev-bento-card.ev-span-6 { grid-column: span 6; }
@@ -806,6 +1045,7 @@
 
         .ev-bento-card:hover {
             box-shadow: var(--ev-shadow-hover);
+            transform: translateY(-4px);
         }
 
         .ev-bento-visual-zone {
@@ -854,6 +1094,7 @@
             width: 100%;
             max-width: 190px;
         }
+        
         .ev-node-row-item {
             background: #ffffff;
             border: 1px solid rgba(15, 23, 42, 0.05);
@@ -911,6 +1152,7 @@
 
         .ev-image-card-wrapper:hover {
             box-shadow: var(--ev-shadow-hover);
+            transform: translateY(-4px);
         }
 
         .ev-image-card-wrapper img {
@@ -978,6 +1220,7 @@
             border: 1px solid rgba(255,255,255,0.6);
             z-index: 2;
             transform: translateZ(10px);
+            transition: opacity 0.3s ease;
         }
 
         .ev-right-sidebar-panel {
@@ -988,8 +1231,8 @@
             display: flex;
             flex-direction: column;
             position: sticky;
-            top: 100px; /* Offset for nav */
-            box-shadow: 0 20px 40px rgba(37, 117, 192, 0.12); /* Branded shadow */
+            top: 100px; 
+            box-shadow: 0 20px 40px rgba(37, 117, 192, 0.12); 
         }
 
         .ev-menu-trigger-heading {
@@ -1049,37 +1292,74 @@
             color: rgba(255, 255, 255, 0.55);
         }
 
-        .ev-sidebar-links-ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        /* --- Branded Icon List Interaction Styles --- */
 
-        .ev-sidebar-links-ul li {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.9);
-            transition: transform 0.2s ease, color 0.2s;
-            cursor: pointer;
-        }
+.ev-sidebar-links-ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Clean spacing between buttons */
+    padding: 0;
+    margin: 0;
+}
 
-        .ev-sidebar-links-ul li:hover {
-            color: #3ae2ff;
-            transform: translateX(4px);
-        }
+.ev-sidebar-li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                color 0.3s ease, 
+                background-color 0.3s ease;
+}
 
-        .ev-sidebar-links-ul li::before {
-            content: "";
-            width: 4px;
-            height: 4px;
-            background-color: #3ae2ff;
-            border-radius: 50%;
-            box-shadow: 0 0 6px #3ae2ff;
-        }
+/* Removes standard list dot */
+.ev-sidebar-li::before {
+    display: none !important;
+}
+
+/* Semi-transparent Glass Icon Box */
+.ev-icon-box {
+    width: 10px;
+    height: 10px;
+    border-radius: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ev-link-text {
+    line-height: 1.3;
+    transition: color 0.3s ease;
+}
+
+/* Hover and Active Select States */
+.ev-sidebar-li:hover,
+.ev-active-item {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(4px); /* Moves card slightly right for 3D feedback */
+}
+
+/* Icon rotates and lights up white/blue on hover */
+.ev-sidebar-li:hover .ev-icon-box,
+.ev-active-item .ev-icon-box {
+    background: #ffffff;
+    color: var(--ev-primary-blue);
+    transform: scale(1.08) rotate(6deg);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.25);
+}
 
         @keyframes ev-paneFadeIn {
             from { opacity: 0; transform: translateY(4px); }
@@ -1097,8 +1377,64 @@
         }
 
         /* ==========================================================================
-           NEW IMPACT SECTION STYLES
+           EDITORIAL HOVER TRANSITIONS (Image zoom & Bluish Cloudy Masks)
            ========================================================================== */
+
+        /* Image scaling transitions */
+        .ev-bento-img {
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .ev-bento-card:hover .ev-bento-img,
+        .ev-image-card-wrapper:hover .ev-bento-img {
+            transform: scale(1.06);
+        }
+
+        /* Ambient bottom mask gradient (Rich Deep Bluish / Cloudy Sky theme) */
+        .ev-bento-gradient-mask {
+            pointer-events: none;
+            background: linear-gradient(
+                to top, 
+                rgba(10, 25, 47, 0.98) 0%, 
+                rgba(15, 32, 67, 0.55) 45%, 
+                rgba(15, 32, 67, 0) 100%
+            );
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+
+        .ev-bento-card:hover .ev-bento-gradient-mask,
+        .ev-image-card-wrapper:hover .ev-bento-gradient-mask {
+            opacity: 1 !important;
+        }
+
+        /* Slide-up typography text overlays */
+        .ev-bento-text-overlay {
+            pointer-events: none;
+            transform: perspective(1000px) translateY(12px) translateZ(0);
+            backface-visibility: hidden;
+            -webkit-font-smoothing: subpixel-antialiased;
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+
+        .ev-bento-card:hover .ev-bento-text-overlay,
+        .ev-image-card-wrapper:hover .ev-bento-text-overlay {
+            opacity: 1 !important;
+            transform: translateY(0) translateZ(0) !important;
+        }
+
+        /* Subtle float badge fadeout */
+        .ev-bento-card:hover .ev-floating-badge,
+        .ev-image-card-wrapper:hover .ev-floating-badge {
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+
+        /* IMPACT SECTION */
         .impact-section-wrapper { 
             padding: 80px 20px; 
             background-color: #ffffff; 
@@ -1162,13 +1498,8 @@
         }
         .impact-card:hover::after { opacity: 1; left: 0; right: 0; }
 
-
-
-        /* ==========================================================================
-           2. INTEGRATED TEAM SECTION (Project B classes prefixed)
-           ========================================================================== */
+        /* team section */
         .team-section-wrapper { padding: 80px 20px; max-width: 840px; margin: 0 auto; }
-        
         .team-header-custom { margin-bottom: 45px; }
         .team-title-custom { font-family: 'Playfair Display', serif; font-size: 2.4rem; margin-bottom: 12px; }
         .team-subtitle-custom { font-size: 0.9rem; color: var(--text-body); }
@@ -1218,14 +1549,12 @@
         .member-role-custom { font-size: 0.72rem; color: var(--text-body); margin-bottom: 10px; }
         .member-socials-custom a { color: var(--text-body); margin-right: 10px; }
 
-        /* ==========================================================================
-           SECTION.HTML MERGED STYLES
-           ========================================================================== */
+
+        /* footer */
         
         .premium-canvas-section {
             font-family: 'Playfair Display', serif; 
-            background: #fafafa; /* Crisp light base background */
-            /* Soft, ambient multi-color backdrop glows */
+            background: #fafafa; 
             background-image: 
                 radial-gradient(at 10% 10%, rgba(59, 130, 246, 0.04) 0px, transparent 40%),
                 radial-gradient(at 90% 10%, rgba(219, 39, 119, 0.03) 0px, transparent 40%),
@@ -1239,7 +1568,6 @@
             width: 100%;
         }
 
-        /* Clean Master Dashboard Container */
         .canvas-premium-board {
             background: #ffffff;
             border: 1px solid #f1f5f9;
@@ -1247,7 +1575,6 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01), 0 16px 48px rgba(15, 23, 42, 0.04);
         }
 
-        /* Premium Minimalist Card Custom Design */
         .canvas-feature-card {
             background: #ffffff;
             border: 1px solid #f3f4f6;
@@ -1261,7 +1588,6 @@
             box-shadow: 0 12px 30px rgba(59, 130, 246, 0.06);
         }
 
-        /* Soft Icon Radial Blur Background */
         .icon-glow-blue {
             background: rgba(59, 130, 246, 0.06);
             box-shadow: 0 0 20px 4px rgba(59, 130, 246, 0.1);
@@ -1275,7 +1601,6 @@
             box-shadow: 0 0 20px 4px rgba(99, 102, 241, 0.1);
         }
 
-        /* Responsive Crossfade Image Gallery Slots */
         .canvas-img-slot { 
             position: relative; 
             overflow: hidden; 
@@ -1300,293 +1625,276 @@
             transform: scale(1);
         }
 
-        /* Standard Grid Structural Heights */
         .h-tall { height: 240px; }
         .h-short { height: 160px; }
         .h-full-v { height: 416px; } 
         
         /* Base Footer Styles */
-.masika-footer {
-  background-color: #050505; /* Deep black background */
-  color: #e0e0e0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  padding: 60px 40px 20px 40px;
-  border-top-left-radius: 40px; /* Matching the rounded top corners */
-  border-top-right-radius: 40px;
-}
+        .masika-footer {
+          background-color: #050505; 
+          color: #e0e0e0;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          padding: 60px 40px 20px 40px;
+          border-top-left-radius: 40px; 
+          border-top-right-radius: 40px;
+        }
 
-.footer-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 25px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
+        .footer-container {
+          display: grid;
+          grid-template-columns: 1.1fr 1fr;
+          gap: 25px;
+          max-width: 1400px;
+          margin: 0 auto;
+        }
 
-/* Card Styling */
-.footer-card {
-  background-color: #111111;
-  border: 1px solid #1f1f1f;
-  border-radius: 16px;
-  padding: 35px;
-  display: flex;
-  flex-direction: column;
-}
+        .footer-card {
+          background-color: #111111;
+          border: 1px solid #1f1f1f;
+          border-radius: 16px;
+          padding: 35px;
+          display: flex;
+          flex-direction: column;
+        }
 
-.right-column-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-}
+        .right-column-wrapper {
+          display: flex;
+          flex-direction: column;
+          gap: 25px;
+        }
 
-/* Typography */
-.accent-title {
-  color: #4463d6; /* Red accent color */
-  font-size: 0.75rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  font-weight: 600;
-}
+        .accent-title {
+          color: #4463d6; 
+          font-size: 0.75rem;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          margin-bottom: 20px;
+          font-weight: 600;
+        }
 
-.main-title {
-  font-size: 2rem;
-  font-family: 'Times New Roman', Times, serif; /* Or a specific serif font if preferred */
-  color: #ffffff;
-  margin-bottom: 30px;
-  font-weight: normal;
-}
+        .main-title {
+          font-size: 2rem;
+          font-family: 'Times New Roman', Times, serif; 
+          color: #ffffff;
+          margin-bottom: 30px;
+          font-weight: normal;
+        }
 
-/* Form Styles */
-.dark-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
+        .dark-form {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+        }
 
-.dark-form input,
-.dark-form textarea {
-  background-color: #1a1a1a;
-  border: 1px solid #2a2a2a;
-  border-radius: 6px;
-  padding: 16px;
-  color: #ffffff;
-  font-size: 0.9rem;
-  transition: border-color 0.3s;
-}
+        .dark-form input,
+        .dark-form textarea {
+          background-color: #1a1a1a;
+          border: 1px solid #2a2a2a;
+          border-radius: 6px;
+          padding: 16px;
+          color: #ffffff;
+          font-size: 0.9rem;
+          transition: border-color 0.3s;
+        }
 
-.dark-form input:focus,
-.dark-form textarea:focus {
-  outline: none;
-  border-color: #555;
-}
+        .dark-form input:focus,
+        .dark-form textarea:focus {
+          outline: none;
+          border-color: #555;
+        }
 
-.dark-form button {
-  align-self: flex-start;
-  background-color: #ffffff;
-  color: #000000;
-  border: none;
-  border-radius: 30px;
-  padding: 14px 30px;
-  font-weight: 700;
-  font-size: 0.9rem;
-  margin-top: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+        .dark-form button {
+          align-self: flex-start;
+          background-color: #ffffff;
+          color: #000000;
+          border: none;
+          border-radius: 30px;
+          padding: 14px 30px;
+          font-weight: 700;
+          font-size: 0.9rem;
+          margin-top: 10px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
 
-.dark-form button:hover {
-  background-color: #e0e0e0;
-}
+        .dark-form button:hover {
+          background-color: #e0e0e0;
+        }
 
-/* Map Section */
-.map-section {
-  padding: 0;
-  position: relative;
-  overflow: hidden;
-}
+        .nav-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+        }
 
-.map-section iframe {
-  filter: grayscale(100%) invert(90%) contrast(1.2); /* Creates the dark map effect */
-}
+        .nav-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
 
-.map-overlay {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  right: 20px;
-  background-color: rgba(10, 10, 10, 0.9);
-  backdrop-filter: blur(5px);
-  padding: 20px;
-  border-radius: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid #2a2a2a;
-}
+        .nav-list li {
+          margin-bottom: 15px;
+        }
 
-.map-info h5 {
-  color: #ffffff;
-  margin: 0 0 5px 0;
-  font-size: 0.9rem;
-}
+        .nav-list a {
+          color: #aaaaaa;
+          text-decoration: none;
+          font-size: 0.95rem;
+          font-weight: 500;
+          transition: color 0.3s;
+        }
 
-.map-info p {
-  color: #888;
-  margin: 0;
-  font-size: 0.8rem;
-}
+        .nav-list a:hover {
+          color: #ffffff;
+        }
 
-.map-link-btn {
-  width: 35px;
-  height: 35px;
-  background-color: #222;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  text-decoration: none;
-  transition: background-color 0.3s;
-}
+        .social-icons {
+          display: flex;
+          gap: 15px;
+          margin-bottom: 25px;
+        }
 
-.map-link-btn:hover {
-  background-color: #444;
-}
+        .social-icons a {
+          width: 40px;
+          height: 40px;
+          border: 1px solid #333;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #aaaaaa;
+          text-decoration: none;
+          transition: all 0.3s;
+        }
 
-/* Navigation System */
-.nav-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
+        .social-icons a:hover {
+          border-color: #ffffff;
+          color: #ffffff;
+        }
 
-.nav-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
+        .email-link {
+          color: #aaaaaa;
+          text-decoration: none;
+          font-size: 0.95rem;
+          transition: color 0.3s;
+        }
 
-.nav-list li {
-  margin-bottom: 15px;
-}
+        .email-link:hover {
+          color: #ffffff;
+        }
 
-.nav-list a {
-  color: #aaaaaa;
-  text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 500;
-  transition: color 0.3s;
-}
+        .footer-bottom {
+          max-width: 1400px;
+          margin: 40px auto 0 auto;
+          padding-top: 25px;
+          border-top: 1px solid #1f1f1f;
+          display: flex;
+          justify-content: space-between;
+          color: #666666;
+          font-size: 0.85rem;
+          font-weight: 500;
+        }
 
-.nav-list a:hover {
-  color: #ffffff;
-}
+        @media (max-width: 1024px) {
+          .footer-container {
+            grid-template-columns: 1fr;
+          }
+          .right-column-wrapper {
+            flex-direction: row;
+          }
+          .nav-section, .social-section {
+            flex: 1;
+          }
+        }
 
-/* Social & Contact */
-.social-icons {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 25px;
-}
+        @media (max-width: 768px) {
+          .masika-footer {
+            padding: 40px 20px 20px 20px;
+          }
+          .right-column-wrapper {
+            flex-direction: column;
+          }
+          .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+            gap: 15px;
+          }
+        }
 
-.social-icons a {
-  width: 40px;
-  height: 40px;
-  border: 1px solid #333;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #aaaaaa;
-  text-decoration: none;
-  transition: all 0.3s;
-}
+        /* ==========================================================================
+           PHONE RESPONSIVE ENHANCEMENTS
+           ========================================================================== */
+        @media (max-width: 600px) {
+            .navbar { top: 12px; padding: 6px 10px; width: 94%; }
+            .brand-stack { padding-right: 8px; }
+            .logo-pill { padding: 3px 14px; }
+            .logo-pill span { font-size: 1rem; }
+            .tagline { font-size: 7px; letter-spacing: 1.5px; }
+            .nav-right { gap: 8px; }
+            .cta-nav { padding: 9px 16px; font-size: 12px; }
 
-.social-icons a:hover {
-  border-color: #ffffff;
-  color: #ffffff;
-}
+            .hero-section { padding: 100px 6% 60px 6%; }
+            .content-box { margin-top: 20px; }
+            .btn-premium { padding: 16px 28px; }
 
-.email-link {
-  color: #aaaaaa;
-  text-decoration: none;
-  font-size: 0.95rem;
-  transition: color 0.3s;
-}
+            .partners-section-fixed { padding: 8px 0 40px 0; }
 
-.email-link:hover {
-  color: #ffffff;
-}
+            #ev-section { padding: 48px 16px; }
+            .ev-header-block h2 { font-size: 1.8rem; }
+            .ev-right-sidebar-panel { padding: 24px 18px; }
+            .ev-metric-display { font-size: 1.9rem; }
+            .ev-white-square-box { flex: 1; min-width: 0; padding: 0 8px; }
+            .ev-white-square-box svg { width: 100%; max-width: 140px; height: 16px; }
 
-/* Footer Bottom Bar */
-.footer-bottom {
-  max-width: 1400px;
-  margin: 40px auto 0 auto;
-  padding-top: 25px;
-  border-top: 1px solid #1f1f1f;
-  display: flex;
-  justify-content: space-between;
-  color: #666666;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
+            .impact-section-wrapper { padding: 56px 16px; }
+            .impact-header { margin-bottom: 32px; }
+            .impact-header h2 { font-size: 1.7rem; }
+            .impact-card { padding: 22px 12px; }
+            .impact-stat-number { font-size: 2rem; }
 
-/* Responsive Breakpoints */
-@media (max-width: 1024px) {
-  .footer-container {
-    grid-template-columns: 1fr 1fr;
-  }
-  .right-column-wrapper {
-    grid-column: span 2;
-    flex-direction: row;
-  }
-  .nav-section, .social-section {
-    flex: 1;
-  }
-}
+            .premium-canvas-section { padding: 56px 16px; }
 
-@media (max-width: 768px) {
-  .masika-footer {
-    padding: 40px 20px 20px 20px;
-  }
-  .footer-container {
-    grid-template-columns: 1fr;
-  }
-  .right-column-wrapper {
-    grid-column: span 1;
-    flex-direction: column;
-  }
-  .map-section {
-    min-height: 350px;
-  }
-  .footer-bottom {
-    flex-direction: column;
-    text-align: center;
-    gap: 15px;
-  }
-}
+            .team-section-wrapper { padding: 56px 16px; }
+            .team-title-custom { font-size: 1.8rem; }
+            .team-grid-custom { grid-template-columns: repeat(2, 1fr); gap: 14px; }
 
+            .masika-footer { padding: 36px 16px 16px 16px; border-top-left-radius: 28px; border-top-right-radius: 28px; }
+            .footer-card { padding: 26px 22px; }
+            .main-title { font-size: 1.6rem; }
+
+            .about-grid-container { padding-left: 12px; padding-right: 12px; }
+            .about-text-column { align-items: center; text-align: center; }
+            .about-heading { text-align: center; }
+            .about-pillar-item { text-align: left; }
+            .media-floating-card { left: 10px; }
+        }
+
+        @media (max-width: 380px) {
+            .cta-nav { padding: 8px 12px; font-size: 11px; }
+            .logo-pill span { font-size: 0.9rem; }
+            h1 { letter-spacing: -1px; }
+            .team-grid-custom { gap: 10px; }
+            .impact-stat-number { font-size: 1.7rem; }
+            .impact-grid { grid-template-columns: repeat(2, 1fr); }
+        }
     </style>
 </head>
 <body>
 
-    <div id="cursor-dot"></div>
+    <div id="cursor-dot"><i class="fa-solid fa-bolt"></i></div>
     <div id="cursor-ring"></div>
 
     <nav class="navbar" id="main-nav">
         <div class="brand-stack">
-            <div class="logo-pill"><span>IGP</span></div>
-            <span class="tagline" style="color: white">By Sparklehood</span>
+            <div > <img height="38px"  src="igp logo.png" alt="logo"> </div>
         </div>
 
         <div class="nav-menu" id="nav-container">
             <div class="nav-indicator" id="indicator"></div>
-            <a href="#home"  class="nav-link active">Home</a>
+            <a href="#home"  class="nav-link ">Home</a>
             <a href="#about" class="nav-link">About</a>
             <a href="#service" class="nav-link">Service's</a>
-            <a href="#workflow" class="nav-link">Workflow</a>
-            <a href="#impact" class="nav-link">Impact</a>
+            <a href="career.html" class="nav-link">Career</a>
             <a href="#team" class="nav-link">Team</a>
         </div>
 
@@ -1611,286 +1919,88 @@
                     <span>See Live Demo</span>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                 </a>
-                <a href="#" class="btn-premium btn-outline magnetic" data-strength="15">Connect us</a>
             </div>
         </section>
     </main>
 
+    <!-- about section -->
     <section class="showcase-section" id="about">
-        <div class="black-oval-background"></div>
-        
-        <div class="laptop-wrapper">
-            <img src="laptop.png" alt="Laptop Dashboard Visual Asset" class="laptop-img">
-            <div class="laptop-shadow"></div>
-            <div class="video-bar" id="openVideoBtn">
-                <i class="fa-solid fa-play"></i>
-            </div>
-        </div>
-    </section>
-
-    <section class="partners-section-fixed">
-        <div class="partners-container-fixed">
-            <h2 class="partners-title-fixed">
-                Powering the World's Leading Brands
+    <div class="black-oval-background"></div>
+    
+    <div class="about-grid-container">
+        <!-- Left Column: Premium Dynamic Pillars (Mapped from Pitch Deck) -->
+        <div class="about-text-column">
+            <h2 class="about-heading text-slate-900" style="font-family: var(--font-serif); font-size: clamp(1.7rem, 3.6vw, 2.7rem); line-height: 1.3;">
+                Pioneering the Future of 
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#2575c0] via-[#3b82f6] to-[#5dade2]" style="display: block; margin-top: 8px;">
+                    Commercial EV Charging
+                </span>
             </h2>
-
-            <div class="marquee-wrapper-fixed">
-                <div class="marquee-track-fixed">
-                    <div class="partner-fixed-card">
-                        <div class="partner-fixed-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Airtel">
-                        </div>
-                    </div>
-                    <div class="partner-fixed-card">
-                        <div class="partner-fixed-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Honda_Logo.svg" alt="Honda">
-                        </div>
-                    </div>
-                    <div class="partner-fixed-card">
-                        <div class="partner-fixed-logo">
-                            <img src="https://w7.pngwing.com/pngs/317/60/png-transparent-flipkart-hd-logo.png" alt="Flipkart">
-                        </div>
-                    </div>
-                    <div class="partner-fixed-card">
-                        <div class="partner-fixed-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/KPMG_blue_logo.svg/1280px-KPMG_blue_logo.svg.png" alt="KPMG">
-                        </div>
-                    </div>
-                    <div class="partner-fixed-card">
-                        <div class="partner-fixed-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg" alt="Paytm">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="marquee-track-fixed" aria-hidden="true">
-                    <div class="partner-fixed-card">
-                        <div class="partner-fixed-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon">
-                        </div>
-                    </div>
-                    <div class="partner-fixed-card">
-                        <div class="partner-fixed-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Honda_Logo.svg" alt="Honda">
-                        </div>
-                    </div>
-                    <div class="partner-fixed-card">
-                        <div class="partner-fixed-logo">
-                            <img src="https://w7.pngwing.com/pngs/317/60/png-transparent-flipkart-hd-logo.png" alt="Flipkart">
-                        </div>
-                    </div>
-                    <div class="partner-fixed-card">
-                        <div class="partner-fixed-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/KPMG_blue_logo.svg/1280px-KPMG_blue_logo.svg.png" alt="KPMG">
-                        </div>
-                    </div>
-                    <div class="partner-fixed-card">
-                        <div class="partner-fixed-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg" alt="Paytm">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="ev-section" class="ev-infrastructure-section ev-show-part-1">
-        <div class="ev-container">
-            <div class="ev-header-block">
-                <h2 id="service">
-                    Accelerating EV Infrastructure
-                    <span class="ev-accent-text">Across India</span>
-                </h2>
-            </div>
             
-            <div class="ev-main-layout">
-                <div class="ev-left-content-stage">
-                    
-                    <div class="ev-view-state ev-view-part-1 ev-bento-grid-matrix">
-                        <div class="ev-bento-card ev-span-3 ev-dynamic-tilt">
-                            <div class="ev-bento-visual-zone">
-                                <div class="ev-pill-badge-element" style="border-left: 3px solid #7c3aed; text-align: left;">
-                                    <div style="color:#64748b; font-size:0.55rem; margin-bottom: 1px; font-weight: 500;">Deployment Hub</div>
-                                    <strong style="color:var(--ev-text-dark);">Active Chargers • Node 14</strong>
-                                </div>
-                            </div>
-                            <div class="ev-bento-meta-data">
-                                <h3>Skilled Deployment</h3>
-                                <p>Certified engineers trained on multi-city grid infrastructures and commercial operations.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="ev-bento-card ev-span-3 ev-dynamic-tilt">
-                            <div class="ev-bento-visual-zone">
-                                <div class="ev-bullet-nodes-container">
-                                    <div class="ev-node-row-item">Y1 - Grid Framework Mastered</div>
-                                    <div class="ev-node-row-item">Y2 - Cluster Fast Charging Realized</div>
-                                </div>
-                            </div>
-                            <div class="ev-bento-meta-data">
-                                <h3>Proven Experience</h3>
-                                <p>Years of active field optimizations and seamless regulatory clearance tracking.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="ev-bento-card ev-span-2 ev-dynamic-tilt">
-                            <div class="ev-bento-visual-zone">
-                                <div class="ev-colored-dot-group">
-                                    <div class="ev-dot-node" style="background:#ef4444;"></div>
-                                    <div class="ev-dot-node" style="background:#3b82f6;"></div>
-                                    <div class="ev-dot-node" style="background:#10b981;"></div>
-                                </div>
-                            </div>
-                            <div class="ev-bento-meta-data">
-                                <h3>Pre-screened Sites</h3>
-                                <p>Every commercial site is verified and scouted by local experts.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="ev-bento-card ev-span-2 ev-dynamic-tilt">
-                            <div class="ev-bento-visual-zone">
-                                <div class="ev-pill-badge-element" style="background: #ffffff; font-size:0.65rem; color: #475569;">
-                                    <span>🔸 Pre-Vetted Contracts</span>
-                                </div>
-                            </div>
-                            <div class="ev-bento-meta-data">
-                                <h3>Easy Asset Turnaround</h3>
-                                <p>Get matched with functional charger configurations instantly.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="ev-bento-card ev-span-2 ev-dynamic-tilt">
-                            <div class="ev-bento-visual-zone">
-                                <div class="ev-pill-badge-element" style="letter-spacing: 0.5px; font-weight: 700; color: var(--ev-primary-blue);">IN</div>
-                            </div>
-                            <div class="ev-bento-meta-data">
-                                <h3>Pan-India Network</h3>
-                                <p>Available across major tier-1 and tier-2 transport corridors.</p>
-                            </div>
-                        </div>
+            <div class="about-pillars-list">
+                <!-- Pillar 1: Site Scouting & Acquisition -->
+                <div class="about-pillar-item">
+                    <div class="pillar-icon">
+                        <i class="fa-solid fa-map-location-dot"></i>
                     </div>
-                    
-                    <div class="ev-view-state ev-view-part-2 ev-image-matrix-stage">
-                        <div class="ev-column-flex">
-                            <div class="ev-image-card-wrapper ev-h-left-top ev-dynamic-tilt">
-                                <span class="ev-floating-badge">⚡ Live Infrastructure</span>
-                                <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=500&q=80" alt="EV Infrastructure Hub">
-                            </div>
-                            <div class="ev-image-card-wrapper ev-h-left-bottom ev-dynamic-tilt">
-                                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=500&q=80" alt="Tech Hub Centers">
-                            </div>
-                        </div>
-                        
-                        <div class="ev-column-flex">
-                            <div class="ev-image-card-wrapper ev-h-right-top ev-dynamic-tilt">
-                                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=500&q=80" alt="Strategic Technical Analysis">
-                            </div>
-                            
-                            <div class="ev-middle-icon-bar">
-                                <div class="ev-white-square-box">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                    </svg>
-                                </div>
-                                <div class="ev-white-square-box">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 009 11V4.745c0-.738-.613-1.336-1.333-1.294a13.98 13.98 0 01-5.12 1.955.088.088 0 00-.052.029.088.088 0 00-.015.058V11c0 2.389.445 4.673 1.252 6.773M12 11c0-3.517 1.009-6.799 2.753-9.571m3.44 2.04l-.054.09A13.916 13.916 0 0015 11v6.255c0 .738.613 1.336 1.333 1.294a13.98 13.98 0 015.12-1.955.088.088 0 00.052-.029.088.088 0 00.015-.058V11c0-2.389-.445-4.673-1.252-6.773"/>
-                                    </svg>
-                                </div>
-                            </div>
-                            
-                            <div class="ev-image-card-wrapper ev-h-right-bottom ev-dynamic-tilt">
-                                <span class="ev-floating-badge">📊 Analytics Engine</span>
-                                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=500&q=80" alt="Central Monitoring Grid Graph">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="ev-view-state ev-view-part-3 ev-bento-grid-matrix">
-                        <div class="ev-bento-card ev-span-4 ev-dynamic-tilt">
-                            <div class="ev-metric-display">4,850+</div>
-                            <div class="ev-bento-meta-data">
-                                <h3>High-Speed Points Commissioned</h3>
-                                <p>Ensuring ultra-fast turnarounds and minimum charging grid bottlenecks nationwide.</p>
-                            </div>
-                        </div>
-                        <div class="ev-bento-card ev-span-2 ev-dynamic-tilt">
-                            <div class="ev-metric-display">99.4%</div>
-                            <div class="ev-bento-meta-data">
-                                <h3>Grid Uptime Ratio</h3>
-                                <p>Automated cloud diagnostic fail-safes operational 24/7.</p>
-                            </div>
-                        </div>
-                        <div class="ev-bento-card ev-span-6 ev-dynamic-tilt">
-                            <div class="ev-metric-display">₹12.5 Cr+</div>
-                            <div class="ev-bento-meta-data">
-                                <h3>Annualized Customer Fuel Savings</h3>
-                                <p>Direct economic relief generated via strategic cluster deployments across heavy transit lines.</p>
-                            </div>
-                        </div>
+                    <div class="pillar-content">
+                        <h4>Site Acquisition</h4>
+                        <p>Strategic site selection & feasibility analysis.</p>
                     </div>
                 </div>
                 
-                <div class="ev-right-sidebar-panel">
-                    <div class="ev-menu-trigger-heading ev-trigger-part-1" onclick="shiftUIPane(1)">
-                        <h2>Smart Solutions for EV Businesses</h2>
+                <!-- Pillar 2: Installation & Surge Security -->
+                <div class="about-pillar-item">
+                    <div class="pillar-icon">
+                        <i class="fa-solid fa-charging-station"></i>
                     </div>
-                    
-                    <div class="ev-panel-line-separator"></div>
-                    
-                    <div class="ev-menu-trigger-heading ev-trigger-part-2" onclick="shiftUIPane(2)">
-                        <h2>Built for Scalable EV Businesses.</h2>
+                    <div class="pillar-content">
+                        <h4>Secure EV Installation</h4>
+                        <p>Certified installation of residential, commercial & DC fast chargers.</p>
                     </div>
+                </div>
 
-                    <div class="ev-panel-line-separator"></div>
-
-                    <div class="ev-menu-trigger-heading ev-trigger-part-3" onclick="shiftUIPane(3)">
-                        <h2>Network Stats & Market Milestones</h2>
+                <!-- Pillar 3: End-To-End O&M / AMCs -->
+                <div class="about-pillar-item">
+                    <div class="pillar-icon">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
                     </div>
-                    
-                    <div class="ev-list-items-viewport ev-list-viewport-part-1">
-                        <p class="ev-list-subtitle-context">Smart EV solutions across India.</p>
-                        <ul class="ev-sidebar-links-ul">
-                            <li>EV Infrastructure</li>
-                            <li>Charger Installation</li>
-                            <li>Operations & Maintenance</li>
-                            <li>AMC Support</li>
-                            <li>Site Acquisition</li>
-                            <li>Smart Energy Solutions</li>
-                            <li>Call Center Support</li>
-                            <li>Compliance & Safety</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="ev-list-items-viewport ev-list-viewport-part-2">
-                        <p class="ev-list-subtitle-context">Faster deployment & seamless support.</p>
-                        <ul class="ev-sidebar-links-ul">
-                            <li>EV Infrastructure Companies</li>
-                            <li>O&M Teams</li>
-                            <li>Facility Managers</li>
-                            <li>Energy Consultants</li>
-                            <li>EV Network Operators</li>
-                            <li>System Integrators</li>
-                            <li>Technical Support Teams</li>
-                            <li>Smart Mobility Partners</li>
-                        </ul>
-                    </div>
-
-                    <div class="ev-list-items-viewport ev-list-viewport-part-3">
-                        <p class="ev-list-subtitle-context">Live footprint expansion indicators.</p>
-                        <ul class="ev-sidebar-links-ul">
-                            <li>Real-Time Grid Tracking</li>
-                            <li>Regional Revenue Analysis</li>
-                            <li>Carbon Credit Mapping</li>
-                            <li>Fleet Optimization Logs</li>
-                            <li>Substation Capacity Audits</li>
-                        </ul>
+                    <div class="pillar-content">
+                        <h4>Operations & Maintenance</h4>
+                        <p>Continuous O&M support with customizable AMC.</p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    
+        
+        <!-- Right Column: System Terminal Frame & Parallax Hover Visuals -->
+        <div class="about-media-column">
+            <div class="dashboard-wrapper">
+                
+                <!-- 3D Lift Container Wrapper -->
+                <div class="about-wrapper">
+                    <img src="image.png" alt="System Dashboard Mockup" class="about-img" loading="lazy">
+                    <div class="about-shadow"></div>
+                    
+                    <!-- Glassmorphic Video Trigger -->
+                    <div class="video-bar" id="openVideoBtn" role="button" aria-label="Open presentation video">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                </div>
+
+                <!-- Ambient Floating ISO Certification Card -->
+                <div class="media-floating-card">
+                    <i class="fa-solid fa-award text-blue-500"></i>
+                    <div>
+                        <h5>O&M Certified</h5>
+                        <p>ISO standard maintenance processes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+     
     <div class="video-modal" id="videoModal">
         <div class="modal-content">
             <button class="close-btn" id="closeVideoBtn" aria-label="Terminate display view">
@@ -1903,122 +2013,453 @@
         </div>
     </div>
 
-    <section id="impact" class="impact-section-wrapper">
-        <div class="impact-container">
-            <div class="impact-header">
-                <h2>Scaling impact across the nation.</h2>
-            </div>
-            
-            <div class="impact-grid">
-                <div class="impact-card">
-                    <div class="impact-stat-number">1000<span class="impact-stat-suffix">+</span></div>
-                    <p class="impact-stat-label">Chargers</p>
+    <section class="partners-section-fixed">
+        <div class="partners-container-fixed">
+            <h2 class="partners-title-fixed">
+                Powering the World's Leading Brands
+            </h2>
+
+            <div class="marquee-wrapper-fixed">
+                <div class="marquee-track-fixed">
+                    <div class="partner-fixed-card">
+                        <div class="partner-fixed-logo">
+                            <img src="logo/hondaeswap.png" alt="Airtel">
+                        </div>
+                    </div>
+                    <div class="partner-fixed-card">
+                        <div class="partner-fixed-logo">
+                            <img src="logo/indofast.png" alt="indofast">
+                        </div>
+                    </div>
+                    <div class="partner-fixed-card">
+                        <div class="partner-fixed-logo">
+                            <img src="logo/statiq.png" alt="statiq">
+                        </div>
+                    </div>
+                    <div class="partner-fixed-card">
+                        <div class="partner-fixed-logo">
+                            <img src="logo/hero.png" alt="Amazon">
+                        </div>
+                    </div>
+                    <div class="partner-fixed-card">
+                        <div class="partner-fixed-logo">
+                            <img src="logo/vida.png" alt="vida">
+                        </div>
+                    </div>
+                    <div class="partner-fixed-card">
+                        <div class="partner-fixed-logo">
+                            <img src="logo/uno.png" alt="uno">
+                        </div>
+                    </div>
+                    <div class="partner-fixed-card">
+                        <div class="partner-fixed-logo">
+                            <img src="logo/motorcop.png" alt=">motorocop">
+                        </div>
+                    </div>
                 </div>
-                <div class="impact-card">
-                    <div class="impact-stat-number">300<span class="impact-stat-suffix">+</span></div>
-                    <p class="impact-stat-label">Cities</p>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-stat-number">50<span class="impact-stat-suffix">M</span></div>
-                    <p class="impact-stat-label">kWh</p>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-stat-number">99<span class="impact-stat-suffix">%</span></div>
-                    <p class="impact-stat-label">Uptime</p>
+
+                <div class="marquee-track-fixed" aria-hidden="true">
+                    
+                    <div class="partner-fixed-card">
+                        <div class="partner-fixed-logo">
+                            <img src="logo/hondaeswap.png" alt="Amazon">
+                        </div>
+                    </div>
+                    <div class="partner-fixed-card">
+                        <div class="partner-fixed-logo">
+                            <img src="logo/hero.png" alt="Amazon">
+                        </div>
+                    </div>
+                    <div class="partner-fixed-card">
+                        <div class="partner-fixed-logo">
+                            <img src="logo/indofast.png" alt="Honda">
+                        </div>
+                    </div>
+                    <div class="partner-fixed-card">
+                        <div class="partner-fixed-logo">
+                            <img src="logo/statiq.png" alt="Flipkart">
+                        </div>
+                    </div>
+                    <div class="partner-fixed-card">
+                        <div class="partner-fixed-logo">
+                            <img src="logo/uno.png" alt="KPMG">
+                        </div>
+                    </div>
+                    <div class="partner-fixed-card">
+                        <div class="partner-fixed-logo">
+                           <img src="logo/vida.png" alt="vida">
+                        </div>
+                    </div>
+                    <div class="partner-fixed-card">
+                        <div class="partner-fixed-logo">
+                            <img src="logo/motorcop.png" alt="motorocop">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="workflow" class="premium-canvas-section">
-        <div class="text-center mb-16 w-full max-w-none mx-auto px-6">
-            <span>
-            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mt-4">
+  <section id="ev-section" class="ev-infrastructure-section ev-show-part-1">
+    <div class="ev-container">
+        <div class="ev-header-block">
+            <h2 id="service">
+                Accelerating EV Infrastructure
+                <span class="ev-accent-text">Across India</span>
+            </h2>
+        </div>
+        
+        <div class="ev-main-layout">
+            <div class="ev-left-content-stage">
+                
+                <!-- View Part 1: Bento Grid Matrix with Bluish/Cloudy Hover Overlays -->
+                <div class="ev-view-state ev-view-part-1 ev-bento-grid-matrix">
+                    
+                    <!-- Box 1 (Top Left - span-3) -->
+                    <div class="ev-bento-card ev-span-3 ev-dynamic-tilt relative overflow-hidden p-0" style="min-height: 220px;">
+                        <img src="evindia/1.png" alt="EV Infrastructure Hub" class="absolute inset-0 w-full h-full object-cover ev-bento-img">
+                        <div class="ev-bento-gradient-mask absolute inset-0 opacity-0"></div>
+                        
+                        <div class="ev-bento-text-overlay absolute bottom-5 left-5 text-white z-10 opacity-0 translate-y-3">
+                            <h4 class="font-serif italic text-lg md:text-xl font-light tracking-wide leading-tight">EV Infrastructure</h4>
+                        </div>
+                    </div>
+                    
+                    <!-- Box 2 (Top Right - span-3) -->
+                    <div class="ev-bento-card ev-span-3 ev-dynamic-tilt relative overflow-hidden p-0" style="min-height: 220px;">
+                        <img src="evindia/2.png" alt="Corporate Strategy" class="absolute inset-0 w-full h-full object-cover ev-bento-img">
+                        <div class="ev-bento-gradient-mask absolute inset-0 opacity-0"></div>
+                        
+                        <div class="ev-bento-text-overlay absolute bottom-5 left-5 text-white z-10 opacity-0 translate-y-3">
+                            <h4 class="font-serif italic text-lg md:text-xl font-light tracking-wide leading-tight">Human Proctoring</h4>
+                        </div>
+                    </div>
+                    
+                    <!-- Box 3 (Bottom Left - span-2) -->
+                    <div class="ev-bento-card ev-span-2 ev-dynamic-tilt relative overflow-hidden p-0" style="min-height: 190px;">
+                        <img src="evindia/3.png" alt="Global Talent" class="absolute inset-0 w-full h-full object-cover ev-bento-img">
+                        <div class="ev-bento-gradient-mask absolute inset-0 opacity-0"></div>
+                        
+                        <div class="ev-bento-text-overlay absolute bottom-5 left-5 text-white z-10 opacity-0 translate-y-3">
+                            <h4 class="font-serif italic text-lg md:text-xl font-light tracking-wide leading-tight">Talent Acquisition</h4>
+                        </div>
+                    </div>
+                    
+                    <!-- Box 4 (Bottom Middle - span-2) -->
+                    <div class="ev-bento-card ev-span-2 ev-dynamic-tilt relative overflow-hidden p-0" style="min-height: 190px;">
+                        <img src="evindia/4.png" alt="Technical Engineering" class="absolute inset-0 w-full h-full object-cover ev-bento-img">
+                        <div class="ev-bento-gradient-mask absolute inset-0 opacity-0"></div>
+                        
+                        <div class="ev-bento-text-overlay absolute bottom-5 left-5 text-white z-10 opacity-0 translate-y-3">
+                            <h4 class="font-serif italic text-lg md:text-xl font-light tracking-wide leading-tight">Business Development</h4>
+                        </div>
+                    </div>
+                    
+                    <!-- Box 5 (Bottom Right - span-2) -->
+                    <div class="ev-bento-card ev-span-2 ev-dynamic-tilt relative overflow-hidden p-0" style="min-height: 190px;">
+                        <img src="evindia/5.png" alt="Central Monitoring Dashboard" class="absolute inset-0 w-full h-full object-cover ev-bento-img">
+                        <div class="ev-bento-gradient-mask absolute inset-0 opacity-0"></div>
+                        
+                        <div class="ev-bento-text-overlay absolute bottom-5 left-5 text-white z-10 opacity-0 translate-y-3">
+                            <h4 class="font-serif italic text-lg md:text-xl font-light tracking-wide leading-tight">Performance Marketing</h4>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- View Part 2: Image Matrix Grid with Bluish/Cloudy Hover Overlays -->
+                <div class="ev-view-state ev-view-part-2 ev-image-matrix-stage">
+                    <div class="ev-column-flex">
+                        <!-- Left Top Card -->
+                        <div class="ev-image-card-wrapper ev-h-left-top ev-dynamic-tilt relative overflow-hidden p-0">
+                            <img src="evindia/4.png" alt="EV Infrastructure Hub" class="absolute inset-0 w-full h-full object-cover ev-bento-img">
+                            <div class="ev-bento-gradient-mask absolute inset-0 opacity-0"></div>
+                            
+                            <div class="ev-bento-text-overlay absolute bottom-5 left-5 text-white z-10 opacity-0 translate-y-3">
+                                <h4 class="font-serif italic text-lg md:text-xl font-light tracking-wide leading-tight">Site Scouting & Sourcing</h4>
+                            </div>
+                        </div>
+                        
+                        <!-- Left Bottom Card -->
+                        <div class="ev-image-card-wrapper ev-h-left-bottom ev-dynamic-tilt relative overflow-hidden p-0">
+                            <img src="evindia/1.png" alt="Tech Hub Centers" class="absolute inset-0 w-full h-full object-cover ev-bento-img">
+                            <div class="ev-bento-gradient-mask absolute inset-0 opacity-0"></div>
+                            
+                            <div class="ev-bento-text-overlay absolute bottom-5 left-5 text-white z-10 opacity-0 translate-y-3">
+                                <h4 class="font-serif italic text-lg md:text-xl font-light tracking-wide leading-tight">EV Charger Installation</h4>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ev-column-flex">
+                        <!-- Right Top Card -->
+                        <div class="ev-image-card-wrapper ev-h-right-top ev-dynamic-tilt relative overflow-hidden p-0">
+                            <img src="evindia/2.png" alt="Strategic Technical Analysis" class="absolute inset-0 w-full h-full object-cover ev-bento-img">
+                            <div class="ev-bento-gradient-mask absolute inset-0 opacity-0"></div>
+                            
+                            <div class="ev-bento-text-overlay absolute bottom-5 left-5 text-white z-10 opacity-0 translate-y-3">
+                                <h4 class="font-serif italic text-lg md:text-xl font-light tracking-wide leading-tight">Decommissioning & AMC</h4>
+                            </div>
+                        </div>
+                        
+                        <!-- Middle Icons Bar -->
+                        <div class="ev-middle-icon-bar">
+                            <div class="ev-white-square-box">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                            </div>
+                            <div class="ev-white-square-box">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 009 11V4.745c0-.738-.613-1.336-1.333-1.294a13.98 13.98 0 01-5.12 1.955.088.088 0 00-.052.029.088.088 0 00-.015.058V11c0 2.389.445 4.673 1.252 6.773M12 11c0-3.517 1.009-6.799 2.753-9.571m3.44 2.04l-.054.09A13.916 13.916 0 0015 11v6.255c0 .738.613 1.336 1.333 1.294a13.98 13.98 0 015.12-1.955.088.088 0 00.052-.029.088.088 0 00.015-.058V11c0-2.389-.445-4.673-1.252-6.773"/>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <!-- Right Bottom Card -->
+                        <div class="ev-image-card-wrapper ev-h-right-bottom ev-dynamic-tilt relative overflow-hidden p-0">
+                            <img src="evindia/3.png" alt="Central Monitoring Grid Graph" class="absolute inset-0 w-full h-full object-cover ev-bento-img">
+                            <div class="ev-bento-gradient-mask absolute inset-0 opacity-0"></div>
+                            
+                            <div class="ev-bento-text-overlay absolute bottom-5 left-5 text-white z-10 opacity-0 translate-y-3">
+                                <h4 class="font-serif italic text-lg md:text-xl font-light tracking-wide leading-tight">Operations, Maintenance & O&M</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View Part 3: Metrics List -->
+                <div class="ev-view-state ev-view-part-3 ev-bento-grid-matrix">
+                    <div class="ev-bento-card ev-span-4 ev-dynamic-tilt">
+                        <div class="ev-metric-display">4,850+</div>
+                        <div class="ev-bento-meta-data">
+                            <h3>High-Speed Points Commissioned</h3>
+                            <p>Ensuring ultra-fast turnarounds and minimum charging grid bottlenecks nationwide.</p>
+                        </div>
+                    </div>
+                    <div class="ev-bento-card ev-span-2 ev-dynamic-tilt">
+                        <div class="ev-metric-display">99.4%</div>
+                        <div class="ev-bento-meta-data">
+                            <h3>Grid Uptime Ratio</h3>
+                            <p>Automated cloud diagnostic fail-safes operational 24/7.</p>
+                        </div>
+                    </div>
+                    <div class="ev-bento-card ev-span-6 ev-dynamic-tilt">
+                        <div class="ev-metric-display">₹12.5 Cr+</div>
+                        <div class="ev-bento-meta-data">
+                            <h3>Annualized Customer Fuel Savings</h3>
+                            <p>Direct economic relief generated via strategic cluster deployments across heavy transit lines.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ev-right-sidebar-panel">
+                <div class="ev-menu-trigger-heading ev-trigger-part-1" onclick="shiftUIPane(1)">
+                    <h2>Smart Solutions for EV Businesses</h2>
+                </div>
+                
+                <div class="ev-panel-line-separator"></div>
+                
+                <div class="ev-menu-trigger-heading ev-trigger-part-2" onclick="shiftUIPane(2)">
+                    <h2>Built for Scalable EV Businesses.</h2>
+                </div>
+
+                <div class="ev-panel-line-separator"></div>
+                
+                <!-- Viewport Part 1 (Smart Solutions) -->
+                <div class="ev-list-items-viewport ev-list-viewport-part-1">
+                    <ul class="ev-sidebar-links-ul">
+                        <li data-service="ev-infra" data-mod="01" data-title="EV Infrastructure" class="ev-sidebar-li ev-active-item">
+                            <span class="ev-icon-box"><i class="fa-solid fa-charging-station"></i></span>
+                            <span class="ev-link-text">EV Infrastructure</span>
+                        </li>
+                        <li data-service="human-proctor" data-mod="02" data-title="Human Proctoring" class="ev-sidebar-li">
+                            <span class="ev-icon-box"><i class="fa-solid fa-user-shield"></i></span>
+                            <span class="ev-link-text">Human Proctoring</span>
+                        </li>
+                        <li data-service="talent-acq" data-mod="03" data-title="Talent Acquisition" class="ev-sidebar-li">
+                            <span class="ev-icon-box"><i class="fa-solid fa-users-viewfinder"></i></span>
+                            <span class="ev-link-text">Talent Acquisition</span>
+                        </li>
+                        <li data-service="biz-dev" data-mod="04" data-title="Business Development" class="ev-sidebar-li">
+                            <span class="ev-icon-box"><i class="fa-solid fa-briefcase"></i></span>
+                            <span class="ev-link-text">Business Development</span>
+                        </li>
+                        <li data-service="offline-mkt" data-mod="05" data-title="Offline Marketing" class="ev-sidebar-li">
+                            <span class="ev-icon-box"><i class="fa-solid fa-rectangle-ad"></i></span>
+                            <span class="ev-link-text">Off Line Marketing</span>
+                        </li>
+                        <li data-service="perf-mkt" data-mod="06" data-title="Performance Marketing" class="ev-sidebar-li">
+                            <span class="ev-icon-box"><i class="fa-solid fa-chart-line"></i></span>
+                            <span class="ev-link-text">Performance Marketing</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Viewport Part 2 (EV Lifecycle) -->
+                <div class="ev-list-items-viewport ev-list-viewport-part-2">
+                    <ul class="ev-sidebar-links-ul">
+                        <li data-service="site-scout" data-mod="07" data-title="Site Scouting & Sourcing" class="ev-sidebar-li">
+                            <span class="ev-icon-box"><i class="fa-solid fa-map-location-dot"></i></span>
+                            <span class="ev-link-text">Site Scouting & Acquisition</span>
+                        </li>
+                        <li data-service="charger-install" data-mod="08" data-title="EV Charger Installation" class="ev-sidebar-li">
+                            <span class="ev-icon-box"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+                            <span class="ev-link-text">EV Charger Installation</span>
+                        </li>
+                        <li data-service="charger-uninstall" data-mod="09" data-title="Charger Uninstallation" class="ev-sidebar-li">
+                            <span class="ev-icon-box"><i class="fa-solid fa-circle-minus"></i></span>
+                            <span class="ev-link-text">Charger Uninstallation</span>
+                        </li>
+                        <li data-service="site-restoration" data-mod="10" data-title="Site Restoration" class="ev-sidebar-li">
+                            <span class="ev-icon-box"><i class="fa-solid fa-recycle"></i></span>
+                            <span class="ev-link-text">Site Restoration</span>
+                        </li>
+                        <li data-service="om-support" data-mod="12" data-title="Operations & Maintenance (O&M)" class="ev-sidebar-li">
+                            <span class="ev-icon-box"><i class="fa-solid fa-gears"></i></span>
+                            <span class="ev-link-text">Operations & Maintenance (O&M)</span>
+                        </li>
+                        <li data-service="call-center" data-mod="14" data-title="Call Center Support" class="ev-sidebar-li">
+                            <span class="ev-icon-box"><i class="fa-solid fa-headset"></i></span>
+                            <span class="ev-link-text">Call Center Support</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+   <section id="impact" class="impact-section-wrapper">
+    <div class="impact-container">
+        <div class="impact-header">
+            <h2>Scaling impact across the nation.</h2>
+        </div>
+        
+        <div class="impact-grid">
+            <!-- Metric 1: Chargers -->
+            <div class="impact-card">
+                <div class="impact-stat-number" data-target="1000">
+                    0<span class="impact-stat-suffix">+</span>
+                </div>
+                <p class="impact-stat-label">Chargers</p>
+            </div>
+            
+            <!-- Metric 2: Cities -->
+            <div class="impact-card">
+                <div class="impact-stat-number" data-target="300">
+                    0<span class="impact-stat-suffix">+</span>
+                </div>
+                <p class="impact-stat-label">Cities</p>
+            </div>
+            
+            <!-- Metric 3: kWh -->
+            <div class="impact-card">
+                <div class="impact-stat-number" data-target="50">
+                    0<span class="impact-stat-suffix">M</span>
+                </div>
+                <p class="impact-stat-label">kWh</p>
+            </div>
+            
+            <!-- Metric 4: Uptime -->
+            <div class="impact-card">
+                <div class="impact-stat-number" data-target="99">
+                    0<span class="impact-stat-suffix">%</span>
+                </div>
+                <p class="impact-stat-label">Uptime</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+   <section  class="premium-canvas-section">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 w-full max-w-6xl mx-auto px-6">
+        <div>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight m-0">
                 Our EV Installation <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-pink-500">Across India</span>
             </h1>
-            <a class="mt-6 bg-slate-900 hover:bg-blue-600 text-white text-sm px-8 py-3.5 rounded-full font-semibold transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-blue-500/20 transform hover:-translate-y-0.5 magnetic" data-strength="15">
-                Join Our Impact
-            </a>
-            </span>
+        </div>
+        <a class="flex-shrink-0 bg-slate-900 hover:bg-blue-600 text-white text-sm px-8 py-3.5 rounded-full font-semibold transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-blue-500/20 transform hover:-translate-y-0.5 magnetic cursor-pointer" data-strength="15">
+            Join Our Impact
+        </a>
+    </div>
+
+    <div class="canvas-premium-board w-full max-w-6xl p-6 md:p-8 mb-12">
+        
+        <div class="flex justify-between items-center mb-8 border-b border-slate-100 pb-5">
+            <div>
+                <h2 class="text-lg font-bold text-slate-900 tracking-tight">Smart Solutions. Scalable EV Growth.</h2>
+            </div>
+            <div class="flex gap-2">
+                <button id="canvasPrevBtn" class="p-2.5 rounded-full border border-slate-200 hover:border-blue-500 hover:bg-blue-50 text-slate-500 hover:text-blue-600 transition-all active:scale-95 shadow-sm">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                </button>
+                <button id="canvasNextBtn" class="p-2.5 rounded-full border border-slate-200 hover:border-blue-500 hover:bg-blue-50 text-slate-500 hover:text-blue-600 transition-all active:scale-95 shadow-sm">
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
         </div>
 
-        <div class="canvas-premium-board w-full max-w-6xl p-6 md:p-8 mb-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             
-            <div class="flex justify-between items-center mb-8 border-b border-slate-100 pb-5">
-                <div>
-                    <h2 class="text-lg font-bold text-slate-900 tracking-tight">Real Connections. Real Impact.</h2>
-                    <p class="text-xs text-slate-400 font-medium mt-0.5">Synchronized asset metrics updated live across active nodes</p>
+            <div class="flex flex-col gap-4">
+                <div class="canvas-feature-card p-5 flex flex-col justify-between h-short">
+                    <div class="icon-glow-blue w-10 h-10 rounded-xl flex items-center justify-center">
+                        <i data-lucide="globe" class="w-5 h-5 text-blue-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-slate-800 leading-snug">EV Infrastructure</h3>
+                        <p class="text-xs text-slate-400 font-medium mt-1">End-to-end charging infrastructure planning, deployment, and maintenance.</p>
+                    </div>
                 </div>
-                <div class="flex gap-2">
-                    <button id="canvasPrevBtn" class="p-2.5 rounded-full border border-slate-200 hover:border-blue-500 hover:bg-blue-50 text-slate-500 hover:text-blue-600 transition-all active:scale-95 shadow-sm">
-                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                    </button>
-                    <button id="canvasNextBtn" class="p-2.5 rounded-full border border-slate-200 hover:border-blue-500 hover:bg-blue-50 text-slate-500 hover:text-blue-600 transition-all active:scale-95 shadow-sm">
-                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </button>
+                <div class="canvas-img-slot h-tall" data-interval="4000">
+                    <img src="evindia/4.png" class="active">
+                    <img src="evindia/7.png">
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                
-                <div class="flex flex-col gap-4">
-                    <div class="canvas-feature-card p-5 flex flex-col justify-between h-short">
-                        <div class="icon-glow-blue w-10 h-10 rounded-xl flex items-center justify-center">
-                            <i data-lucide="globe" class="w-5 h-5 text-blue-600"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-base font-bold text-slate-800 leading-snug">Multilingual Insights</h3>
-                            <p class="text-xs text-slate-400 font-medium mt-1">Personalized layout mapping in your native tongue.</p>
-                        </div>
+            <div class="flex flex-col gap-4">
+                <div class="canvas-img-slot h-tall" data-interval="4800">
+                    <img src="evindia/9.png" class="active">
+                    <img src="img/event.jpg">
+                </div>
+                <div class="canvas-feature-card p-5 flex flex-col justify-between h-short">
+                    <div class="icon-glow-pink w-10 h-10 rounded-xl flex items-center justify-center">
+                        <i data-lucide="zap" class="w-5 h-5 text-pink-600"></i>
                     </div>
-                    <div class="canvas-img-slot h-tall" data-interval="4000">
-                        <img src="img/ev.png" class="active">
-                        <img src="img/award.png">
+                    <div>
+                        <h3 class="text-base font-bold text-slate-800 leading-snug">Powering India's EV Future</h3>
+                        <p class="text-xs text-slate-400 font-medium mt-1">Smart EV infrastructure and scalable solutions for sustainable growth.</p>
                     </div>
                 </div>
-
-                <div class="flex flex-col gap-4">
-                    <div class="canvas-img-slot h-tall" data-interval="4800">
-                        <img src="img/car.png" class="active">
-                        <img src="img/image copy.png">
-                    </div>
-                    <div class="canvas-feature-card p-5 flex flex-col justify-between h-short">
-                        <div class="icon-glow-pink w-10 h-10 rounded-xl flex items-center justify-center">
-                            <i data-lucide="zap" class="w-5 h-5 text-pink-600"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-base font-bold text-slate-800 leading-snug">High Speed Grid</h3>
-                            <p class="text-xs text-slate-400 font-medium mt-1">Smart architectural performance optimization metrics.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex flex-col gap-4">
-                    <div class="canvas-img-slot h-full-v" data-interval="5500">
-                        <img src="img/support.png" class="active">
-                        <img src="img/technician.png">
-                    </div>
-                </div>
-
-                <div class="flex flex-col gap-4">
-                    <div class="canvas-feature-card p-5 flex flex-col justify-between h-short">
-                        <div class="icon-glow-indigo w-10 h-10 rounded-xl flex items-center justify-center">
-                            <i data-lucide="trending-up" class="w-5 h-5 text-indigo-600"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-base font-bold text-slate-800 leading-snug">Dynamic Scale</h3>
-                            <p class="text-xs text-slate-400 font-medium mt-1">Real-time localized deployment analytics frameworks.</p>
-                        </div>
-                    </div>
-                    <div class="canvas-img-slot h-tall" data-interval="6000">
-                        <img src="img/teams.png" class="active">
-                        <img src="img/evday.png">
-                    </div>
-                </div>
-
             </div>
+
+            <div class="flex flex-col gap-4">
+                <div class="canvas-img-slot h-full-v" data-interval="5500">
+                    <img src="evindia/6.png" class="active">
+                    <img src="evindia/8.png">
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <div class="canvas-feature-card p-5 flex flex-col justify-between h-short">
+                    <div class="icon-glow-indigo w-10 h-10 rounded-xl flex items-center justify-center">
+                        <i data-lucide="trending-up" class="w-5 h-5 text-indigo-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-slate-800 leading-snug">Built for India's EV Ecosystem</h3>
+                        <p class="text-xs text-slate-400 font-medium mt-1">Empowering EV businesses with smart infrastructure, skilled talent, and scalable growth.</p>
+                    </div>
+                </div>
+                <div class="canvas-img-slot h-tall" data-interval="6000">
+                    <img src="img/award.png" class="active">
+                    <img src="evindia/10.png">
+                </div>
+            </div>
+
         </div>
-    </section>
+    </div>
+</section>
 
     <section id="team" class="team-section-wrapper">
             <header class="team-header-custom">
@@ -2028,372 +2469,414 @@
             <div class="team-grid-custom" id="teamGrid"></div>
     </section>
 
-
     <footer class="masika-footer">
-  <div class="footer-container">
-    
-    <div class="footer-card form-section">
-      <h4 class="accent-title">Connect with us</h4>
-      <h2 class="main-title">Lets Connect with Igp</h2>
-      
-      <form id="dialogue-form" class="dark-form">
-        <input type="text" placeholder="Identity" required>
-        <input type="email" placeholder="Signal / Email" required>
-        <input type="tel" placeholder="Phone no">
-        <textarea placeholder="Any suggestion" rows="3" required></textarea>
-        <button type="submit" id="transmit-btn">Submit</button>
-      </form>
-    </div>
-
-    <div class="footer-card map-section">
-      <iframe src="https://www.google.com/maps/place/Gurugram,+Haryana/@28.4225019,76.8252691,49018m/data=!3m2!1e3!4b1!4m6!3m5!1s0x390d19d582e38859:0x2cf5fe8e5c64b1e!8m2!3d28.4594965!4d77.0266383!16zL20vMDNmeW1n!5m1!1e2?entry=ttu&g_ep=EgoyMDI2MDYyNC4wIKXMDSoASAFQAw%3D%3D" 
-              width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
-      
-      <div class="map-overlay">
-        <div class="map-info">
-          <h5>Igp by sparklehood</h5>
-          <p>Real-time monitoring and uniquely crafted infrastructure operations designed to amplify revenue and scale your fleet.</p>
+      <div class="footer-container">
+        
+        <div class="footer-card form-section">
+          <h4 class="accent-title">Trusted by Leading EV Brands</h4>
+          <h2 class="main-title">Connect with our experts for end-to-end EV infrastructure solutions across India.</h2>
+          
+          <form id="dialogue-form" class="dark-form">
+            <input type="text" placeholder="Name" required>
+            <input type="email" placeholder="Email-Id" required>
+            <input type="tel" placeholder="Phone no" required>
+            <textarea placeholder="Any suggestion" rows="3" required></textarea>
+            <button type="submit" id="transmit-btn"> Schedule a Free Consultation</button>
+          </form>
         </div>
-        <a href="#" class="map-link-btn"><i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-    </div>
 
-    <div class="right-column-wrapper">
-      
-      <div class="footer-card nav-section">
-        <h4 class="accent-title">Our IGP system</h4>
-        <div class="nav-grid">
-          <ul class="nav-list">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Feature's</a></li>
-            <li><a href="#">our Workflow</a></li>
-            <li><a href="#">Partners+</a></li>
-          </ul>
-          <ul class="nav-list">
-            <li><a href="#">About igp</a></li>
-            <li><a href="#">our Ev Installation</a></li>
-            <li><a href="#">ourTeam</a></li>
-          </ul>
-        </div>
-      </div>
+        <div class="right-column-wrapper">
+          
+          <div class="footer-card nav-section">
+            <h4 class="accent-title">Our IGP system</h4>
+            <div class="nav-grid">
+              <ul class="nav-list">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Feature's</a></li>
+                <li><a href="#">our Workflow</a></li>
+                <li><a href="#">Partners+</a></li>
+              </ul>
+              <ul class="nav-list">
+                <li><a href="#">About igp</a></li>
+                <li><a href="#">our Ev Installation</a></li>
+                <li><a href="#">ourTeam</a></li>
+              </ul>
+            </div>
+          </div>
 
-      <div class="footer-card social-section">
-        <h4 class="accent-title">CONNECT with igp</h4>
-        <div class="social-icons">
-          <a href="#"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-          <a href="#"><i class="fa-brands fa-youtube"></i></a>
-          <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+          <div class="footer-card social-section">
+            <h4 class="accent-title">CONNECT with igp</h4>
+            <div class="social-icons">
+              <a href="https://www.instagram.com/igp.sparklehood/"><i class="fa-brands fa-instagram"></i></a>
+              <a href="https://www.linkedin.com/company/igp-by-sparklehood/"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="https://www.facebook.com/sparklehoodteam/"><i class="fa-brands fa-facebook"></i></a>
+            </div>
+            <a href="mailto:info.igp@gmail.com" class="email-link"> team@sparklehood.com</a>
+          </div>
+
         </div>
-        <a href="mailto:info.igp@gmail.com" class="email-link">info.igpBySparklehood@gmail.com</a>
       </div>
 
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <p>&copy; 2026 India Growth Partner</p>
-    <p>Developed by Team IGP by sparklehood</p>
-  </div>
-</footer>
+      <div class="footer-bottom">
+        <p>&copy; 2026 India Growth Partner</p>
+        <p>Developed by Team IGP by sparklehood</p>
+      </div>
+    </footer>
 
     <script>
-        // --- Premium Custom Mouse Tracking (Desktop Only) ---
-        const dot = document.getElementById('cursor-dot');
-        const ring = document.getElementById('cursor-ring');
-
-        if (window.innerWidth > 1100) {
-            window.addEventListener('mousemove', (e) => {
-                gsap.to(dot, { x: e.clientX, y: e.clientY, duration: 0.1 });
-                gsap.to(ring, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.2 });
-            });
-
-            const hoverables = document.querySelectorAll('a, button, .brand-stack, .video-bar, .close-btn, .ev-bento-card, .ev-image-card-wrapper, .ev-menu-trigger-heading');
-            hoverables.forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    gsap.to(ring, { scale: 1.4, background: 'rgba(255,255,255,0.05)', border: '1px solid #fff', duration: 0.3 });
-                });
-                el.addEventListener('mouseleave', () => {
-                    gsap.to(ring, { scale: 1, background: 'transparent', border: '1px solid rgba(255,255,255,0.3)', duration: 0.3 });
-                });
-            });
-        }
-
-        // --- Mobile Menu Toggle logic ---
-        const menuToggle = document.getElementById('menuToggle');
-        const navMenu = document.getElementById('nav-container');
-        const toggleIcon = menuToggle.querySelector('i');
-
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('mobile-active');
-            if(navMenu.classList.contains('mobile-active')) {
-                toggleIcon.classList.remove('fa-bars');
-                toggleIcon.classList.add('fa-xmark');
-                gsap.fromTo(".nav-link", {opacity: 0, y: 10}, {opacity: 1, y: 0, stagger: 0.05, duration: 0.4, ease: "power2.out"});
-            } else {
-                toggleIcon.classList.remove('fa-xmark');
-                toggleIcon.classList.add('fa-bars');
-            }
-        });
-
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('mobile-active');
-                toggleIcon.classList.remove('fa-xmark');
-                toggleIcon.classList.add('fa-bars');
-            });
-        });
-
-        // --- Premium Magnetic Inertial Interaction (Desktop Only) ---
-        if (window.innerWidth > 576) {
-            const magnets = document.querySelectorAll('.magnetic');
-            magnets.forEach((el) => {
-                el.addEventListener('mousemove', (e) => {
-                    const rect = el.getBoundingClientRect();
-                    const x = e.clientX - rect.left - rect.width / 2;
-                    const y = e.clientY - rect.top - rect.height / 2;
-                    const str = el.getAttribute('data-strength');
-                    gsap.to(el, { x: x * (str / 100), y: y * (str / 100), duration: 0.6, ease: "power2.out" });
-                });
-                el.addEventListener('mouseleave', () => {
-                    gsap.to(el, { x: 0, y: 0, duration: 1, ease: "elastic.out(1, 0.3)" });
-                });
-            });
-        }
-
-        // --- Slide Tracker Navbar Indicator Interaction ---
-        const indicator = document.getElementById('indicator');
-        const links = document.querySelectorAll('.nav-link');
-        const container = document.getElementById('nav-container');
-
-        const moveIndicator = (target) => {
-            if(window.innerWidth > 1100) {
-                const rect = target.getBoundingClientRect();
-                const parentRect = container.getBoundingClientRect();
-                gsap.to(indicator, { x: rect.left - parentRect.left, width: rect.width, duration: 0.5, ease: "expo.out" });
-            }
-        };
-
-        links.forEach(link => {
-            link.addEventListener('mouseenter', () => moveIndicator(link));
-            if(link.classList.contains('active')) {
-                window.addEventListener('load', () => setTimeout(() => moveIndicator(link), 100));
-            }
-        });
-
-        // --- Interactive Media System Engines ---
-        const openBtn = document.getElementById('openVideoBtn');
-        const heroDemoBtn = document.getElementById('heroLiveDemoBtn');
-        const closeBtn = document.getElementById('closeVideoBtn');
-        const modal = document.getElementById('videoModal');
-        const videoPlayer = document.getElementById('videoPlayer');
-        const body = document.body;
-
-        const openModalMatrix = (e) => {
-            if(e) e.preventDefault();
-            modal.classList.add('active');
-            body.classList.add('modal-open'); 
-            
-            videoPlayer.currentTime = 0; 
-            setTimeout(() => {
-                const playPromise = videoPlayer.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        console.log("Local video stream started cleanly.");
-                    }).catch(error => {
-                        videoPlayer.muted = true;
-                        videoPlayer.play();
-                    });
-                }
-            }, 50);
-        };
-
-        const closeModalMatrix = () => {
-            modal.classList.remove('active');
-            body.classList.remove('modal-open');
-            videoPlayer.pause();       
-            videoPlayer.currentTime = 0; 
-        };
-
-        openBtn.addEventListener('click', openModalMatrix);
-        heroDemoBtn.addEventListener('click', openModalMatrix);
-        closeBtn.addEventListener('click', closeModalMatrix);
-        modal.addEventListener('click', (e) => { if (e.target === modal) closeModalMatrix(); });
-
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('active')) closeModalMatrix();
-        });
-
-        // --- Structural Entrance Intro Sequencer ---
-        window.addEventListener('DOMContentLoaded', () => {
-            const tl = gsap.timeline();
-            tl.from(".navbar", { y: -60, opacity: 0, duration: 1.2, ease: "power4.out" })
-              .from(".prefix-large", { opacity: 0, y: 20, duration: 0.8, ease: "power3.out" }, "-=0.6")
-              .from(".italic-gradient", { y: 40, opacity: 0, duration: 1, ease: "expo.out" }, "-=0.6")
-              .from("p", { y: 20, opacity: 0, duration: 0.8 }, "-=0.8")
-              .from(".hero-btns", { y: 15, opacity: 0, duration: 0.8 }, "-=0.6");
-        });
-
-        // =======================================================
-        //   M.HTML JAVASCRIPT & 3D INTERACTION LOGIC
-        // =======================================================
-        function shiftUIPane(paneIndex) {
-            const section = document.getElementById('ev-section');
-            
-            section.classList.remove('ev-show-part-1', 'ev-show-part-2', 'ev-show-part-3');
-            section.classList.add(`ev-show-part-${paneIndex}`);
-            
-            const activeElements = document.querySelectorAll('.ev-bento-card, .ev-image-card-wrapper, .ev-middle-icon-bar, .ev-bento-meta-data, .ev-metric-display, .ev-bento-visual-zone > *');
-            activeElements.forEach(el => {
-                el.style.animation = 'none';
-                el.offsetHeight; 
-                el.style.animation = '';
-            });
-        }
-
-        const tiltCards = document.querySelectorAll('.ev-dynamic-tilt');
-
-        tiltCards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left; 
-                const y = e.clientY - rect.top; 
-
-                const xc = rect.width / 2;
-                const yc = rect.height / 2;
-                const angleX = (yc - y) / 10;
-                const angleY = (x - xc) / 10;
-
-                card.style.transform = `translateY(-8px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale(1.015)`;
-                
-                if(card.classList.contains('ev-bento-card')) {
-                    card.style.backgroundImage = `radial-gradient(circle 120px at ${x}px ${y}px, rgba(11, 63, 163, 0.035), transparent 100%), var(--ev-bg-bento)`;
-                }
-            });
-
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0) rotateX(0) rotateY(0) scale(1)';
-                if(card.classList.contains('ev-bento-card')) {
-                    card.style.backgroundImage = 'none';
-                }
-            });
-        });
-
-        const teamData = [
-            { name: "Anchal Taatya", role: "Founder & CEO", img: "img/ceo.png" },
-            { name: "Manish Kumar", role: "Project Lead", img: "img/lead.png" },
-            { name: "Divyanshu Gupta", role: "Senior HRBP", img: "img/hr.png" },
-            { name: "Bhaskar Saurabh", role: "Project Manager", img: "img/bhaskar.png" },
-            { name: "Chetan", role: "Electrical Engineer - EV", img: "img/chetan.png" },
-            { name: "Vanshika", role: "Backend Developer", img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500" }   
-            
-        ];
-
-        const grid = document.getElementById('teamGrid');
-
-        const renderTeam = () => {
-            teamData.forEach(member => {
-                const card = document.createElement('div');
-                card.className = 'team-card-custom';
-                card.innerHTML = `
-                    <img src="${member.img}" alt="${member.name}" class="member-img-custom" loading="lazy">
-                    <div class="member-details-custom">
-                        <h3 class="member-name-custom">${member.name}</h3>
-                        <p class="member-role-custom">${member.role}</p>
-                        <div class="member-socials-custom">
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fas fa-envelope"></i></a>
-                        </div>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        };
-
-        document.addEventListener('DOMContentLoaded', renderTeam);
-
-        // =======================================================
-        //   SECTION.HTML MERGED JAVASCRIPT & LOGIC
-        // =======================================================
+    // --- Google Sheets Integration & Consultation Form Animation ---
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("dialogue-form");
+      const submitBtn = document.getElementById("transmit-btn");
+      
+      const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwVdCcqK9a09fe0WYY-jcQIT7hXhSVEN0c16MdEIG6aK4bhjNGC3L0b2SKGVbDDXtZp/exec";
+      form.addEventListener("submit", (e) => {
+        e.preventDefault(); 
         
-        // Init Lucide Vector Icons Assets
-        lucide.createIcons();
+        const originalText = submitBtn.innerText;
+        const originalBg = submitBtn.style.backgroundColor;
 
-        const slots = document.querySelectorAll('.canvas-img-slot');
+        // Button Visual Loading State
+        submitBtn.innerText = "Transmitting...";
+        submitBtn.style.backgroundColor = "#ff4a5a";
+        submitBtn.style.color = "#ffffff";
+        submitBtn.style.cursor = "wait";
 
-        function switchImage(slot, direction = 'next') {
-            const images = slot.querySelectorAll('img');
-            if (images.length <= 1) return;
+        const payload = {
+          formType: "consultation",
+          name: form.querySelector('input[placeholder="Name"]').value,
+          email: form.querySelector('input[placeholder="Email-Id"]').value,
+          phone: form.querySelector('input[placeholder="Phone no"]').value,
+          suggestion: form.querySelector('textarea').value
+        };
 
-            let currentActiveIndex = Array.from(images).findIndex(img => img.classList.contains('active'));
-            images[currentActiveIndex].classList.remove('active');
+        // Sending Data to Google Sheets Web App
+        fetch(GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors", 
+          cache: "no-cache",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        })
+        .then(() => {
+          // Success State Animation
+          submitBtn.innerText = "Transmitted";
+          submitBtn.style.backgroundColor = "#2ecc71"; 
+          
+          setTimeout(() => {
+            form.reset();
+            submitBtn.innerText = originalText;
+            submitBtn.style.backgroundColor = originalBg;
+            submitBtn.style.color = "#000000";
+            submitBtn.style.cursor = "pointer";
+          }, 3000);
+        })
+        .catch(error => {
+          console.error("Transmission Error: ", error);
+          // Error State Animation
+          submitBtn.innerText = "Error, Try Again";
+          submitBtn.style.backgroundColor = "#ff3333";
+          setTimeout(() => {
+            submitBtn.innerText = originalText;
+            submitBtn.style.backgroundColor = originalBg;
+            submitBtn.style.color = "#000000";
+            submitBtn.style.cursor = "pointer";
+          }, 3000);
+        });
+      });
+    });
 
-            if (direction === 'next') {
-                currentActiveIndex = (currentActiveIndex + 1) % images.length;
-            } else {
-                currentActiveIndex = (currentActiveIndex - 1 + images.length) % images.length;
-            }
+    // --- Premium Custom Mouse Tracking (Desktop Only) ---
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
 
-            images[currentActiveIndex].classList.add('active');
-        }
+    if (window.innerWidth > 1100) {
+        window.addEventListener('mousemove', (e) => {
+            gsap.to(dot, { x: e.clientX - 10, y: e.clientY - 10, duration: 0.1 });
+            gsap.to(ring, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.2 });
+        });
 
-        function startImageRotation() {
-            slots.forEach(slot => {
-                const intervalTime = parseInt(slot.getAttribute('data-interval')) || 4000;
-                setInterval(() => {
-                    switchImage(slot, 'next');
-                }, intervalTime);
+        const hoverables = document.querySelectorAll('a, button, .brand-stack, .video-bar, .close-btn, .ev-bento-card, .ev-image-card-wrapper, .ev-menu-trigger-heading');
+        hoverables.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                gsap.to(ring, { scale: 1.4, background: 'rgba(255,255,255,0.05)', border: '1px solid #fff', duration: 0.3 });
             });
+            el.addEventListener('mouseleave', () => {
+                gsap.to(ring, { scale: 1, background: 'transparent', border: '1px solid rgba(255,255,255,0.3)', duration: 0.3 });
+            });
+        });
+    }
+
+    // --- Mobile Menu Toggle logic ---
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('nav-container');
+    const toggleIcon = menuToggle.querySelector('i');
+
+    menuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('mobile-active');
+        if(navMenu.classList.contains('mobile-active')) {
+            toggleIcon.classList.remove('fa-bars');
+            toggleIcon.classList.add('fa-xmark');
+            gsap.fromTo(".nav-link", {opacity: 0, y: 10}, {opacity: 1, y: 0, stagger: 0.05, duration: 0.4, ease: "power2.out"});
+        } else {
+            toggleIcon.classList.remove('fa-xmark');
+            toggleIcon.classList.add('fa-bars');
+        }
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('mobile-active');
+            toggleIcon.classList.remove('fa-xmark');
+            toggleIcon.classList.add('fa-bars');
+        });
+    });
+
+    // --- Premium Magnetic Inertial Interaction (Desktop Only) ---
+    if (window.innerWidth > 576) {
+        const magnets = document.querySelectorAll('.magnetic');
+        magnets.forEach((el) => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                const str = el.getAttribute('data-strength');
+                gsap.to(el, { x: x * (str / 100), y: y * (str / 100), duration: 0.6, ease: "power2.out" });
+            });
+            el.addEventListener('mouseleave', () => {
+                gsap.to(el, { x: 0, y: 0, duration: 1, ease: "elastic.out(1, 0.3)" });
+            });
+        });
+    }
+
+    // --- Slide Tracker Navbar Indicator Interaction ---
+    const indicator = document.getElementById('indicator');
+    const links = document.querySelectorAll('.nav-link');
+    const container = document.getElementById('nav-container');
+
+    const moveIndicator = (target) => {
+        if(window.innerWidth > 1100) {
+            const rect = target.getBoundingClientRect();
+            const parentRect = container.getBoundingClientRect();
+            gsap.to(indicator, { x: rect.left - parentRect.left, width: rect.width, duration: 0.5, ease: "expo.out" });
+        }
+    };
+
+    links.forEach(link => {
+        link.addEventListener('mouseenter', () => moveIndicator(link));
+        if(link.classList.contains('active')) {
+            window.addEventListener('load', () => setTimeout(() => moveIndicator(link), 100));
+        }
+    });
+
+    // --- Interactive Media System Engines ---
+    const openBtn = document.getElementById('openVideoBtn');
+    const heroDemoBtn = document.getElementById('heroLiveDemoBtn');
+    const closeBtn = document.getElementById('closeVideoBtn');
+    const modal = document.getElementById('videoModal');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const body = document.body;
+
+    const openModalMatrix = (e) => {
+        if(e) e.preventDefault();
+        modal.classList.add('active');
+        body.classList.add('modal-open'); 
+        
+        videoPlayer.currentTime = 0; 
+        setTimeout(() => {
+            const playPromise = videoPlayer.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log("Local video stream started cleanly.");
+                }).catch(error => {
+                    videoPlayer.muted = true;
+                    videoPlayer.play();
+                });
+            }
+        }, 50);
+    };
+
+    const closeModalMatrix = () => {
+        modal.classList.remove('active');
+        body.classList.remove('modal-open');
+        videoPlayer.pause();       
+        videoPlayer.currentTime = 0; 
+    };
+
+    openBtn.addEventListener('click', openModalMatrix);
+    heroDemoBtn.addEventListener('click', openModalMatrix);
+    closeBtn.addEventListener('click', closeModalMatrix);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModalMatrix(); });
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeModalMatrix();
+    });
+
+    // --- Structural Entrance Intro Sequencer ---
+    window.addEventListener('DOMContentLoaded', () => {
+        const tl = gsap.timeline();
+        tl.from(".navbar", { y: -60, opacity: 0, duration: 1.2, ease: "power4.out" })
+          .from(".prefix-large", { opacity: 0, y: 20, duration: 0.8, ease: "power3.out" }, "-=0.6")
+          .from(".italic-gradient", { y: 40, opacity: 0, duration: 1, ease: "expo.out" }, "-=0.6")
+          .from("p", { y: 20, opacity: 0, duration: 0.8 }, "-=0.8")
+          .from(".hero-btns", { y: 15, opacity: 0, duration: 0.8 }, "-=0.6");
+    });
+
+    function shiftUIPane(paneIndex) {
+        const section = document.getElementById('ev-section');
+        
+        section.classList.remove('ev-show-part-1', 'ev-show-part-2', 'ev-show-part-3');
+        section.classList.add(`ev-show-part-${paneIndex}`);
+        
+        const activeElements = document.querySelectorAll('.ev-bento-card, .ev-image-card-wrapper, .ev-middle-icon-bar, .ev-bento-meta-data, .ev-metric-display, .ev-bento-visual-zone > *');
+        activeElements.forEach(el => {
+            el.style.animation = 'none';
+            el.offsetHeight; 
+            el.style.animation = '';
+        });
+    }
+
+    const tiltCards = document.querySelectorAll('.ev-dynamic-tilt');
+
+    tiltCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left; 
+            const y = e.clientY - rect.top; 
+
+            const xc = rect.width / 2;
+            const yc = rect.height / 2;
+            const angleX = (yc - y) / 10;
+            const angleY = (x - xc) / 10;
+
+            card.style.transform = `translateY(-8px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale(1.015)`;
+            
+            if(card.classList.contains('ev-bento-card')) {
+                card.style.backgroundImage = `radial-gradient(circle 120px at ${x}px ${y}px, rgba(11, 63, 163, 0.035), transparent 100%), var(--ev-bg-bento)`;
+            }
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0) rotateX(0) rotateY(0) scale(1)';
+            if(card.classList.contains('ev-bento-card')) {
+                card.style.backgroundImage = 'none';
+            }
+        });
+    });
+
+    const teamData = [
+        { name: "Anchal Taatya", role: "Founder & CEO", img: "img/ceo.png" },
+        { name: "Manish Kumar", role: "Project Lead", img: "img/lead.png" },
+        { name: "Divyanshu Gupta", role: "Senior HRBP", img: "img/hr.png" },
+        { name: "Bhaskar Saurabh", role: "Project Manager", img: "img/bhaskar.png" },
+        { name: "Chetan", role: "Electrical Engineer - EV", img: "img/chetan.png" }, 
+    ];
+
+    const grid = document.getElementById('teamGrid');
+
+    const renderTeam = () => {
+        teamData.forEach(member => {
+            const card = document.createElement('div');
+            card.className = 'team-card-custom';
+            card.innerHTML = `
+                <img src="${member.img}" alt="${member.name}" class="member-img-custom" loading="lazy">
+                <div class="member-details-custom">
+                    <h3 class="member-name-custom">${member.name}</h3>
+                    <p class="member-role-custom">${member.role}</p>
+                    <div class="member-socials-custom">
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    };
+
+    document.addEventListener('DOMContentLoaded', renderTeam);
+
+    // Init Lucide Vector Icons Assets
+    lucide.createIcons();
+
+    const slots = document.querySelectorAll('.canvas-img-slot');
+
+    function switchImage(slot, direction = 'next') {
+        const images = slot.querySelectorAll('img');
+        if (images.length <= 1) return;
+
+        let currentActiveIndex = Array.from(images).findIndex(img => img.classList.contains('active'));
+        images[currentActiveIndex].classList.remove('active');
+
+        if (direction === 'next') {
+            currentActiveIndex = (currentActiveIndex + 1) % images.length;
+        } else {
+            currentActiveIndex = (currentActiveIndex - 1 + images.length) % images.length;
         }
 
-        document.getElementById('canvasNextBtn').addEventListener('click', () => {
-            slots.forEach(slot => switchImage(slot, 'next'));
+        images[currentActiveIndex].classList.add('active');
+    }
+
+    function startImageRotation() {
+        slots.forEach(slot => {
+            const intervalTime = parseInt(slot.getAttribute('data-interval')) || 4000;
+            setInterval(() => {
+                switchImage(slot, 'next');
+            }, intervalTime);
         });
+    }
 
-        document.getElementById('canvasPrevBtn').addEventListener('click', () => {
-            slots.forEach(slot => switchImage(slot, 'prev'));
-        });
+    document.getElementById('canvasNextBtn').addEventListener('click', () => {
+        slots.forEach(slot => switchImage(slot, 'next'));
+    });
 
-        // Converted from window.onload to DOMContentLoaded to prevent overriding existing window listeners
-        window.addEventListener('DOMContentLoaded', startImageRotation);
+    document.getElementById('canvasPrevBtn').addEventListener('click', () => {
+        slots.forEach(slot => switchImage(slot, 'prev'));
+    });
 
+    window.addEventListener('DOMContentLoaded', startImageRotation);
 
-        document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("dialogue-form");
-  const submitBtn = document.getElementById("transmit-btn");
+    // --- Premium Scroll-Triggered Stat Counter Engine ---
+    document.addEventListener("DOMContentLoaded", () => {
+        const statElements = document.querySelectorAll(".impact-stat-number");
+        
+        const animateCounters = () => {
+            statElements.forEach(stat => {
+                const targetValue = parseInt(stat.getAttribute("data-target"));
+                const suffixElement = stat.querySelector(".impact-stat-suffix");
+                const suffixHTML = suffixElement ? suffixElement.outerHTML : "";
+                
+                const countTracker = { value: 0 };
+                
+                gsap.to(countTracker, {
+                    value: targetValue,
+                    duration: 2.2, 
+                    ease: "power2.out", 
+                    onUpdate: () => {
+                        stat.innerHTML = Math.floor(countTracker.value).toLocaleString() + suffixHTML;
+                    }
+                });
+            });
+        };
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault(); // Prevents page reload
-    
-    // Original button styling and text
-    const originalText = submitBtn.innerText;
-    const originalBg = submitBtn.style.backgroundColor;
+        const observerOptions = {
+            root: null,
+            threshold: 0.35 
+        };
 
-    // Change to transmission state
-    submitBtn.innerText = "Transmitting...";
-    submitBtn.style.backgroundColor = "#ff4a5a";
-    submitBtn.style.color = "#ffffff";
-    submitBtn.style.cursor = "wait";
+        const counterObserver = new IntersectionObserver((entries, observerInstance) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observerInstance.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
 
-    // Simulate network request delay (2 seconds)
-    setTimeout(() => {
-      submitBtn.innerText = "Transmitted";
-      submitBtn.style.backgroundColor = "#2ecc71"; // Success green
-      
-      // Reset form and button after 3 seconds
-      setTimeout(() => {
-        form.reset();
-        submitBtn.innerText = originalText;
-        submitBtn.style.backgroundColor = originalBg;
-        submitBtn.style.color = "#000000";
-        submitBtn.style.cursor = "pointer";
-      }, 3000);
-      
-    }, 2000);
-  });
-});
-
-    </script>
+        const impactSection = document.getElementById("impact");
+        if (impactSection) {
+            counterObserver.observe(impactSection);
+        }
+    });
+</script>
 </body>
 </html>

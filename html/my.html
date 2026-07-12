@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .active-service-item {
+    background-color: rgba(255, 255, 255, 0.18) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    transform: translateX(4px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+</style>
+<body>
+    <section id="ev-section" class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-6">
+        
+        <!-- Section Header -->
+        <div class="mb-12">
+            <span class="text-blue-600 font-bold text-xs uppercase tracking-widest mb-2 block">Our Capabilities</span>
+            <h2 id="service" class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                Our Core Business Offerings
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-[#2575c0] to-[#5dade2] text-2xl md:text-3xl mt-1">
+                    Executed with Absolute Precision
+                </span>
+            </h2>
+        </div>
+
+        <!-- Interactive Showcase Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            
+            <!-- Left Side: Interactive Dynamic Display (Takes up 7 cols) -->
+            <div class="lg:col-span-7 flex flex-col justify-between bg-slate-50 border border-slate-100 rounded-3xl p-6 relative overflow-hidden min-h-[480px]">
+                
+                <!-- Display Image Container -->
+                <div class="relative w-full h-[280px] rounded-2xl overflow-hidden shadow-md">
+                    <!-- Image elements will fade-in based on active state -->
+                    <img id="showcase-img-0" src="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=800&q=80" alt="EV Infrastructure" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-100">
+                    <img id="showcase-img-1" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80" alt="Human Proctoring" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-0">
+                    <img id="showcase-img-2" src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=80" alt="Talent Acquisition" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-0">
+                    <img id="showcase-img-3" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Business Development" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-0">
+                    <img id="showcase-img-4" src="https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&w=800&q=80" alt="Offline Marketing" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-0">
+                    <img id="showcase-img-5" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Performance Marketing" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-0">
+                </div>
+
+                <!-- Text Description (Dynamic) -->
+                <div class="mt-6">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span id="showcase-badge" class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                            EV Infrastructure
+                        </span>
+                    </div>
+                    <h3 id="showcase-title" class="text-xl font-bold text-slate-800 transition-all duration-300">
+                        EV Charging Infrastructure
+                    </h3>
+                    <p id="showcase-desc" class="text-slate-500 text-sm mt-2 leading-relaxed transition-all duration-300">
+                        Expert physical deployment of EV chargers. From initial location feasibility analysis and regulatory compliance to professional Level 1, Level 2, and DC fast charger installations.
+                    </p>
+                </div>
+
+                <!-- Interactive Float Card (Dynamic Metric) -->
+                <div class="absolute top-10 right-10 bg-slate-900/90 backdrop-blur-md text-white rounded-xl px-4 py-3 border border-white/10 shadow-lg flex items-center gap-3">
+                    <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                    <div>
+                        <div id="showcase-metric-label" class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">ACTIVE LOCATIONS</div>
+                        <div id="showcase-metric-val" class="text-sm font-extrabold tracking-tight">350+ Sites Secured</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Clean Interactive Selector Panel (Takes up 5 cols) -->
+            <div class="lg:col-span-5 flex flex-col justify-center bg-gradient-to-br from-[#2575c0] to-[#1d5b96] text-white rounded-3xl p-8 shadow-xl">
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold tracking-tight mb-1">Tailored Solutions</h3>
+                    <p class="text-blue-100 text-xs">Hover or click to explore our implementation verticals.</p>
+                </div>
+                
+                <ul class="flex flex-col gap-2 p-0 m-0 list-none" id="service-list-selector">
+                    <!-- Item 0: EV Infrastructure -->
+                    <li data-index="0" class="group flex items-center justify-between p-4 rounded-xl border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 cursor-pointer transition-all duration-300 select-none active-service-item">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center group-hover:scale-105 transition-transform"><i class="fa-solid fa-charging-station text-sm"></i></span>
+                            <span class="font-semibold text-sm">EV Infrastructure</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                    </li>
+                    
+                    <!-- Item 1: Human Proctoring -->
+                    <li data-index="1" class="group flex items-center justify-between p-4 rounded-xl border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 cursor-pointer transition-all duration-300 select-none">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center group-hover:scale-105 transition-transform"><i class="fa-solid fa-user-shield text-sm"></i></span>
+                            <span class="font-semibold text-sm">Human Proctoring</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                    </li>
+
+                    <!-- Item 2: Talent Acquisition -->
+                    <li data-index="2" class="group flex items-center justify-between p-4 rounded-xl border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 cursor-pointer transition-all duration-300 select-none">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center group-hover:scale-105 transition-transform"><i class="fa-solid fa-id-card text-sm"></i></span>
+                            <span class="font-semibold text-sm">Talent Acquisition</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                    </li>
+
+                    <!-- Item 3: Business Development -->
+                    <li data-index="3" class="group flex items-center justify-between p-4 rounded-xl border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 cursor-pointer transition-all duration-300 select-none">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center group-hover:scale-105 transition-transform"><i class="fa-solid fa-briefcase text-sm"></i></span>
+                            <span class="font-semibold text-sm">Business Development</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                    </li>
+
+                    <!-- Item 4: Offline Marketing -->
+                    <li data-index="4" class="group flex items-center justify-between p-4 rounded-xl border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 cursor-pointer transition-all duration-300 select-none">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center group-hover:scale-105 transition-transform"><i class="fa-solid fa-rectangle-ad text-sm"></i></span>
+                            <span class="font-semibold text-sm">Offline Marketing</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                    </li>
+
+                    <!-- Item 5: Performance Marketing -->
+                    <li data-index="5" class="group flex items-center justify-between p-4 rounded-xl border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 cursor-pointer transition-all duration-300 select-none">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center group-hover:scale-105 transition-transform"><i class="fa-solid fa-chart-line text-sm"></i></span>
+                            <span class="font-semibold text-sm">Performance Marketing</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // Array of dynamic content mapped directly to the pitch deck
+    const servicesData = [
+        {
+            title: "EV Charging Infrastructure",
+            badge: "EV Infrastructure",
+            desc: "Complete, certified physical deployment of EV chargers. From location feasibility analysis and regulatory grid clearance to Level 1, Level 2, and DC fast charger installations, operations, and AMC maintenance.",
+            metricLabel: "ACTIVE LOCATIONS",
+            metricVal: "350+ Sites Secured"
+        },
+        {
+            title: "Trained Human Proctoring",
+            badge: "Human Proctoring",
+            desc: "Uncompromising integrity solutions for enterprise evaluations. Offering live, highly trained supervisory frameworks combined with proctoring expertise for offline, online, and high-stakes examination pipelines.",
+            metricLabel: "SUPERVISION SCALE",
+            metricVal: "99.8% Accuracy Checked"
+        },
+        {
+            title: "Bespoke Talent Acquisition",
+            badge: "Talent Sourcing",
+            desc: "Customized executive recruitment solutions. Leverages an exclusive, direct-channel network of CXOs, engineers, and top-industry leads to match high-demand projects with top 1% skilled talent.",
+            metricLabel: "TALENT MATCH RATE",
+            metricVal: "10 Days Avg Turnaround"
+        },
+        {
+            title: "Strategic Business Development",
+            badge: "Revenue Growth",
+            desc: "Dedicated performance engines driving promotions, targeted lead generation, and multi-market enterprise contract conversions to directly scale top-line metrics.",
+            metricLabel: "CLIENT ACQUISITION",
+            metricVal: "40% Pipeline Efficiency"
+        },
+        {
+            title: "Offline & Experiential Marketing",
+            badge: "Offline Presence",
+            desc: "Physical point-of-sale advertising, elegant corporate outdoor print layouts, and meticulously crafted experiential brand displays designed to capture high-traffic awareness.",
+            metricLabel: "FOOTFALL IMPACT",
+            metricVal: "84% Local Coverage"
+        },
+        {
+            title: "Performance & Partnership Marketing",
+            badge: "Targeted ROI",
+            desc: "Data-driven digital marketing models focusing directly on targeted ad conversion, strategic ecosystem partnerships, and robust ROI tracking metrics.",
+            metricLabel: "ROI MAXIMIZATION",
+            metricVal: "3.5x Average Return"
+        }
+    ];
+
+    const selectItems = document.querySelectorAll("#service-list-selector li");
+    const displayBadge = document.getElementById("showcase-badge");
+    const displayTitle = document.getElementById("showcase-title");
+    const displayDesc = document.getElementById("showcase-desc");
+    const displayMetricLabel = document.getElementById("showcase-metric-label");
+    const displayMetricVal = document.getElementById("showcase-metric-val");
+
+    function updateShowcase(index) {
+        // Remove active class from all lists
+        selectItems.forEach(item => item.classList.remove("active-service-item"));
+        
+        // Add active class to selected list item
+        selectItems[index].classList.add("active-service-item");
+
+        // Swap visual image smoothly using opacity
+        for (let i = 0; i < servicesData.length; i++) {
+            const img = document.getElementById(`showcase-img-${i}`);
+            if (i === parseInt(index)) {
+                img.style.opacity = "1";
+                img.style.zIndex = "10";
+            } else {
+                img.style.opacity = "0";
+                img.style.zIndex = "0";
+            }
+        }
+
+        // Animate text changes smoothly
+        gsap.fromTo("#showcase-title, #showcase-badge, #showcase-desc", 
+            { opacity: 0, y: 5 }, 
+            { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" }
+        );
+
+        // Update data values
+        displayTitle.innerText = servicesData[index].title;
+        displayBadge.innerText = servicesData[index].badge;
+        displayDesc.innerText = servicesData[index].desc;
+        displayMetricLabel.innerText = servicesData[index].metricLabel;
+        displayMetricVal.innerText = servicesData[index].metricVal;
+    }
+
+    // Attach click and hover event listeners to selectors
+    selectItems.forEach(item => {
+        item.addEventListener("mouseenter", () => {
+            const index = item.getAttribute("data-index");
+            updateShowcase(index);
+        });
+        
+        item.addEventListener("click", () => {
+            const index = item.getAttribute("data-index");
+            updateShowcase(index);
+        });
+    });
+});
+</script>
+</html>
