@@ -332,35 +332,6 @@
             font-family: var(--font-sans-outfit);
         }
 
-        .motion-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background-color: var(--badge-bg);
-            border: 1px solid var(--badge-border);
-            border-radius: 50px;
-            padding: 0.55rem 1.25rem;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--brand-blue);
-            opacity: 0;
-            transform: translateY(-12px);
-            animation: badgeReveal 1.2s var(--ease-smooth) forwards;
-        }
-
-        .badge-dot {
-            width: 6px;
-            height: 6px;
-            background-color: var(--brand-blue);
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(17, 68, 227, 0.5);
-        }
-
         .headline-container {
             position: relative;
             display: flex;
@@ -2239,6 +2210,96 @@
           0% { opacity: 0; transform: translateY(20px); }
           100% { opacity: 1; transform: translateY(0); }
         }
+
+
+
+
+
+
+        /* --- CTA Connection Banner Styles --- */
+.talent-banner-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 60px auto 80px auto;
+    padding: 0 24px;
+    box-sizing: border-box;
+}
+
+.talent-banner {
+    background: linear-gradient(rgba(10, 15, 20, 0.7), rgba(10, 15, 20, 0.7)), 
+                url('./image copy.png') no-repeat center center / cover;
+    border-radius: 32px;
+    padding: 90px 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.talent-banner h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+    color: #ffffff;
+    font-weight: 600;
+    line-height: 1.65;
+    max-width: 850px;
+    word-spacing: 5px;
+    margin: 0 auto 36px auto;
+    letter-spacing: -0.5px;
+}
+
+.btn-connect {
+    background: #2575c0;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 100px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 25px rgba(37, 117, 192, 0.25);
+}
+
+.btn-connect:hover {
+    background: #2e86c1;
+    box-shadow: 0 15px 30px rgba(37, 117, 192, 0.35);
+}
+
+.arrow-circle {
+    background: #ffffff;
+    color: #2575c0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.btn-connect:hover .arrow-circle {
+    transform: rotate(45deg);
+    color: #2e86c1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .talent-banner {
+        padding: 60px 24px;
+        border-radius: 24px;
+    }
+}
     </style>
 </head>
 <body>
@@ -2262,7 +2323,7 @@
                     <li><a href="#home" class="nav-link active">Home</a></li>
                     <li><a href="#about" class="nav-link">About</a></li>
                     <li><a href="#service" class="nav-link">Service</a></li>
-                    <li><a href="career.html" class="nav-link">Career</a></li>
+                    <li><a href="try.html" class="nav-link">Career</a></li>
                     <li><a href="blog.html" class="nav-link">Blog</a></li>
                     <li><a href="#team" class="nav-link">Team</a></li>
                     <li class="btn-cta-mobile" style="display: none;"><a href="#dialogue-form" class="btn-cta">Consultation</a></li>
@@ -2289,11 +2350,11 @@
         <div class="hero-wrapper-container">
             <main class="hero-text-column">
                 
-                <!-- Motion Pill Badge -->
+                <!-- Motion Pill Badge
                 <div class="motion-badge">
                     <div class="badge-dot"></div>
                     <span>Powering India's Green Future</span>
-                </div>
+                </div> -->
 
                 <!-- Title Block -->
                 <div class="headline-container">
@@ -2533,7 +2594,7 @@
                             <img src="evindia/2.png" alt="Corporate Strategy" class="absolute inset-0 w-full h-full object-cover ev-bento-img">
                             <div class="ev-bento-gradient-mask absolute inset-0 opacity-0"></div>
                             <div class="ev-bento-text-overlay absolute bottom-5 left-5 text-white z-10 opacity-0 translate-y-3">
-                                <h4 class="font-serif italic text-lg md:text-xl font-light tracking-wide leading-tight">Solar EPC Solutions</h4>
+                                <h4 class="font-serif italic text-lg md:text-xl font-light tracking-wide leading-tight">Smart Meter Installation</h4>
                             </div>
                         </div>
                         
@@ -2850,11 +2911,29 @@
     <!-- TEAM SECTION -->
     <section id="team" class="team-section-wrapper">
         <header class="team-header-custom">
-            <h2 class="team-title-custom m-0">Meet Our Team Member</h2>
+            <h2 class="team-title-custom m-0">Meet Our Team Member's</h2>
             <p class="team-subtitle-custom mt-2 mb-0">The minds behind our mission.</p>
         </header>
         <div class="team-grid-custom" id="teamGrid"></div>
     </section>
+
+
+
+
+
+
+    <!-- Talent Connection Banner Component -->
+<section class="talent-banner-container">
+    <div class="talent-banner">
+        <h2>Powering India’s EV revolution with innovative infrastructure and smarter mobility solutions.</h2>
+        <a href="#form" class="btn-connect magnetic" data-strength="20">
+            <span>Let's Connect</span>
+            <span class="arrow-circle">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </span>
+        </a>
+    </div>
+</section>
 
     <!-- FOOTER & CONSULTATION FORM -->
     <footer class="igp-footer">
@@ -2868,7 +2947,7 @@
             <input type="text" placeholder="Name" required>
             <input type="email" placeholder="Email-Id" required>
             <input type="tel" placeholder="Phone no" required>
-            <textarea placeholder="Any suggestion" rows="3" required></textarea>
+            <textarea placeholder="Query" rows="3" required></textarea>
             <button type="submit" id="transmit-btn"> Schedule a Free Consultation</button>
           </form>
         </div>
@@ -2879,13 +2958,13 @@
             <div class="nav-grid">
               <ul class="nav-list">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#service">Feature's</a></li>
-                <li><a href="career.html">Career's</a></li>
+                <li><a href="#service">Services</a></li>
+                <li><a href="career.html">Career</a></li>
                 <li><a href="#partners">Partners+</a></li>
               </ul>
               <ul class="nav-list">
                 <li><a href="#about">About IGP by Sparklehood</a></li>
-                <li><a href="#service">Our Ev Installation</a></li>
+                <li><a href="#service">Our EV Installation</a></li>
                 <li><a href="#team">Our Team</a></li>
               </ul>
             </div>
@@ -3289,6 +3368,25 @@
             counterObserver.observe(impactSection);
         }
     });
+
+
+
+    // --- Magnetic Button Effect ---
+if (window.innerWidth > 576 && typeof gsap !== "undefined") {
+    const magnets = document.querySelectorAll('.magnetic');
+    magnets.forEach((el) => {
+        el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            const str = el.getAttribute('data-strength') || 20;
+            gsap.to(el, { x: x * (str / 100), y: y * (str / 100), duration: 0.6, ease: "power2.out" });
+        });
+        el.addEventListener('mouseleave', () => {
+            gsap.to(el, { x: 0, y: 0, duration: 1, ease: "elastic.out(1, 0.3)" });
+        });
+    });
+}
 </script>
 </body>
 </html>
