@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insights & Engineering Blog - IGP by Sparklehood</title>
-    <link rel="icon" type="image/png" href="./favicon.png">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%232171C1%22/><text x=%2250%22 y=%2255%22 font-family=%22Arial, sans-serif%22 font-size=%2245%22 font-weight=%22900%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>IGP</text></svg>">
+    <title>Growth Hub - IGP by Sparklehood</title>
 
+    <!-- Fonts Import (Identical to Home/Career Stack) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&family=Roboto+Slab:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons and Libraries -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -20,24 +19,29 @@
     </script>
     
     <style>
+        /* ==========================================================================
+           BRAND DESIGN SYSTEM VARIABLES
+           ========================================================================== */
         :root {
-            --brand-blue: #2575c0;
-            --blue-light: #b3d9ff; 
-            --blue-mid: #5dade2;
-            --blue-deep: #2e86c1;
-            --neon-blue: #00d2ff;
-            --glass-bg: rgba(10, 12, 16, 0.55);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --text-main: #FFFFFF;
-            --text-dim: rgba(255, 255, 255, 0.65);
-            --font-sans: 'Outfit', sans-serif;
-            --font-serif: 'Playfair Display', serif;
-            --ease-pro: cubic-bezier(0.16, 1, 0.3, 1);
-
-            --bg-canvas: #fafbfc;
+            --bg-primary: #f8fafc; 
             --bg-card: #ffffff;
-            --text-heading: #0f172a;
-            --text-body: #475569;
+            --text-charcoal: #0b0b0c; 
+            --text-slate: #52525b; 
+            --brand-blue: #1144e3; 
+            --brand-blue-gradient: linear-gradient(135deg, #1144e3 0%, #1e40af 100%);
+            
+            /* Navbar Specifics */
+            --text-secondary: #64646f;
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --nav-border: rgba(0, 0, 0, 0.06);
+            --transition-speed: 0.3s;
+            --easing-premium: cubic-bezier(0.22, 1, 0.36, 1);
+
+            /* Typography Stacks */
+            --font-serif: 'Roboto Slab', Georgia, serif;
+            --font-display: 'Bricolage Grotesque', sans-serif;
+            --font-sans-jakarta: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; 
+            --font-sans-outfit: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif; 
         }
 
         * { 
@@ -47,19 +51,18 @@
             -webkit-font-smoothing: antialiased; 
         }
 
+        body { 
+            background-color: var(--bg-primary); 
+            font-family: var(--font-sans-jakarta);
+            overflow-x: hidden;
+            width: 100%;
+            color: var(--text-charcoal);
+        }
+
+        /* Desktop Custom Tracker Cursor Support */
         @media (min-width: 1101px) {
             * { cursor: none !important; }
         }
-
-        body { 
-            background: var(--bg-canvas); 
-            color: var(--text-body);
-            font-family: var(--font-sans);
-            overflow-x: hidden;
-            width: 100%;
-        }
-
-        /* --- Custom Interactive Tracking Cursor --- */
         #cursor-dot {
             position: fixed;
             top: 0; left: 0;
@@ -68,17 +71,17 @@
             justify-content: center;
             font-size: 15px;
             color: #ffffff;              
-            z-index: 999999; 
+            z-index: 99999;
             pointer-events: none;
             mix-blend-mode: difference;
             display: none;
         }
         #cursor-ring {
             position: fixed;
-            width: 44px; height: 44px;
+            width: 40px; height: 40px;
             border: 1px solid rgba(255,255,255,0.3);
             border-radius: 50%;
-            z-index: 999998; 
+            z-index: 99998;
             pointer-events: none;
             transition: background 0.3s, border 0.3s;
             display: none;
@@ -88,1453 +91,1343 @@
             #cursor-ring { display: block; }
         }
 
-        /* --- Classic IGP Navbar --- */
-        .navbar {
-            font-family: 'Lora', serif; 
-            letter-spacing: 0.9px;
+        /* ==========================================================================
+           NAVIGATION HEADER STYLES (Identical to Home/Career Pages)
+           ========================================================================== */
+        .header-wrapper {
             position: fixed;
-            top: 24px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 0;
+            left: 0;
+            width: 100%;
             z-index: 1000;
+            pointer-events: none; 
+        }
+
+        .nav-container {
+            pointer-events: auto;
+            max-width: 1140px;
+            width: calc(100% - 4rem);
+            margin: 1.75rem auto 0 auto;
+            background-color: rgba(255, 255, 255, 0); 
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+            border: 1px solid transparent;
+            border-bottom: 1px solid rgba(11, 11, 12, 0.05);
+            border-radius: 0px;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+            transition: 
+                width 0.6s var(--easing-premium),
+                max-width 0.6s var(--easing-premium),
+                margin-top 0.6s var(--easing-premium),
+                border-radius 0.6s var(--easing-premium),
+                background-color 0.6s var(--easing-premium),
+                border-color 0.6s var(--easing-premium),
+                backdrop-filter 0.6s var(--easing-premium),
+                box-shadow 0.6s var(--easing-premium);
+        }
+
+        .header-wrapper.scrolled .nav-container {
+            margin-top: 1.25rem;   
+            max-width: 760px;
+            width: 90%;          
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(24px) saturate(170%);
+            -webkit-backdrop-filter: blur(24px) saturate(170%);
+            border: 1px solid var(--nav-border);
+            border-radius: 100px; 
+            box-shadow: 
+                0 1px 3px rgba(0, 0, 0, 0.02),
+                0 16px 40px rgba(11, 68, 227, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8); 
+        }
+
+        .navbar {
+            width: 100%;
+            padding: 1.1rem 3rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: var(--glass-bg);
-            backdrop-filter: blur(40px) saturate(180%);
-            -webkit-backdrop-filter: blur(40px) saturate(180%);
-            padding: 8px 16px;
-            border-radius: 100px;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-            white-space: nowrap;
-            width: 92%;
-            max-width: 1200px;
-            transition: filter 0.4s var(--ease-pro), all 0.4s var(--ease-pro);
+            transition: padding 0.6s var(--easing-premium);
         }
 
-        .brand-stack {
+        .header-wrapper.scrolled .navbar {
+            padding: 0.6rem 2rem;
+        }
+
+        .nav-logo img {
+            height: 38px;
+            display: block;
+        }
+
+        .nav-menu {
+            position: relative;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            padding-right: 16px;
+            list-style: none;
+            gap: 0.25rem;
+            margin: 0;
+            padding: 0;
         }
 
-        .nav-menu { display: flex; position: relative; gap: 4px; align-items: center; }
-        .nav-link {
-            text-decoration: none;
-            color: #FFFFFF;
-            font-size: 15px;
-            font-weight: 500;
-            padding: 11px 20px;
-            border-radius: 100px;
-            transition: color 0.4s var(--ease-pro);
-        }
-        .nav-link.active, .nav-link:hover { color: #5dade2; }
-
-        .nav-indicator {
+        .nav-hover-pill {
             position: absolute;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 100px;
-            height: 42px;
-            z-index: -1;
-            display: none;
+            height: 160%;
+            background-color: rgba(11, 11, 12, 0.04);
+            border-radius: 50px;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0.92);
+            transition: 
+                left 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                width 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                opacity 0.25s ease,
+                transform 0.25s var(--easing-premium);
         }
 
-        .nav-right {
+        .nav-link {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+            padding: 0.45rem 1rem;
+            border-radius: 50px;
+            letter-spacing: -0.01em;
+            transition: color 0.25s ease, opacity 0.25s ease;
+        }
+
+        .nav-menu:hover .nav-link:not(:hover) {
+            opacity: 0.5;
+        }
+
+        .nav-menu:hover .nav-link:hover,
+        .nav-link.active {
+            color: var(--brand-blue);
+            opacity: 1 !important;
+        }
+
+        .nav-actions {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 1.5rem;
         }
 
-        .cta-nav {
-            background: var(--brand-blue);
-            color: #FFF;
-            text-decoration: none;
-            padding: 12px 24px;
-            border-radius: 100px;
-            font-size: 14px;
+        .btn-cta {
+            display: inline-block;
+            padding: 0.6rem 1.4rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            transition: background 0.3s ease;
+            text-decoration: none;
+            background-color: var(--brand-blue);
+            color: #ffffff !important;
+            border-radius: 50px; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            transition: background-color var(--transition-speed) ease, transform 0.15s ease, box-shadow var(--transition-speed) ease;
         }
-        .cta-nav:hover { background: var(--blue-deep); }
+
+        .btn-cta:hover {
+            background-color: #1c3bb5;
+            box-shadow: 0 4px 12px rgba(17, 68, 227, 0.15);
+        }
 
         .menu-toggle {
             display: none;
-            background: transparent;
+            background: none;
             border: none;
-            color: var(--text-main);
-            font-size: 20px;
-            padding: 8px;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1010;
         }
 
-        /* --- SECTION 1: Interchanging Hero Banner Carousel --- */
-        .hero-section {
-            min-height: 80vh;
-            background-color: #030506;
+        .hamburger {
+            display: block;
+            width: 18px;
+            height: 1.5px;
+            background-color: var(--text-charcoal);
+            position: relative;
+            transition: background-color var(--transition-speed) ease;
+        }
+
+        .hamburger::before,
+        .hamburger::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 1.5px;
+            background-color: var(--text-charcoal);
+            transition: transform var(--transition-speed) ease, top var(--transition-speed) ease;
+        }
+
+        .hamburger::before { top: -5px; }
+        .hamburger::after { top: 5px; }
+
+        .menu-toggle.is-active .hamburger {
+            background-color: transparent;
+        }
+
+        .menu-toggle.is-active .hamburger::before {
+            top: 0;
+            transform: rotate(45deg);
+        }
+
+        .menu-toggle.is-active .hamburger::after {
+            top: 0;
+            transform: rotate(-45deg);
+        }
+
+        /* ==========================================================================
+           H2S-STYLE MATRIX EDITORIAL HERO AREA
+           ========================================================================== */
+        .editorial-hero-wrapper {
+            padding: 150px 24px 40px 24px;
+            max-width: 1240px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Asymmetric 3-Column Layout */
+        .editorial-hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.8fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 1100px) {
+            .editorial-hero-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero-sidebar-stack.right-flank {
+                display: none; 
+            }
+        }
+
+        @media (max-width: 768px) {
+            .editorial-hero-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-sidebar-stack.left-flank {
+                display: none; 
+            }
+        }
+
+        /* Stacked Side Columns */
+        .hero-sidebar-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Reusable Card Elements with Hover Elevation */
+        .editorial-card {
+            background-color: #ffffff;
+            border-radius: 14px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(17, 68, 227, 0.01);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            transition: transform 0.4s var(--easing-premium), border-color 0.4s var(--easing-premium), box-shadow 0.4s var(--easing-premium);
+        }
+
+        .editorial-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(17, 68, 227, 0.12);
+            box-shadow: 0 16px 32px rgba(17, 68, 227, 0.05);
+        }
+
+        .card-img-holder {
+            position: relative;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+
+        .card-img-holder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            will-change: transform;
+            transition: transform 0.8s var(--easing-premium);
+        }
+
+        .editorial-card:hover .card-img-holder img {
+            transform: scale(1.04);
+        }
+
+        /* Spacing variations for card types */
+        .hero-giant-card .card-img-holder { height: 260px; }
+        .hero-small-card .card-img-holder { height: 110px; }
+
+        .editorial-card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .editorial-card-body h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 700;
+            line-height: 1.35;
+            color: var(--text-charcoal);
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .hero-giant-card .editorial-card-body h3 {
+            font-size: 1.2rem;
+        }
+
+        .editorial-card:hover .editorial-card-body h3 {
+            color: var(--brand-blue);
+        }
+
+        .editorial-card-body p {
+            color: var(--text-slate);
+            font-size: 0.8rem;
+            line-height: 1.45;
+            margin-bottom: 12px;
+        }
+
+        /* Post Metadata Bar styled precisely like the mockup */
+        .editorial-meta-row {
             display: flex;
             align-items: center;
-            padding: 130px 4% 60px 4%;
-            position: relative;
-            width: 100%;
-            overflow: hidden;
+            gap: 12px;
+            font-size: 0.72rem;
+            color: #94a3b8;
+            font-weight: 600;
+            margin-top: auto;
         }
 
-        .hero-grid-overlay {
+        /* ==========================================================================
+           H2S-STYLE BRAND BIO BOARD (MCKINSEY PORTAL ENHANCED EDITION)
+           ========================================================================== */
+        .brand-bio-section {
+            padding: 20px 24px;
+            max-width: 1240px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .brand-bio-card {
+            background: radial-gradient(circle at 10% 20%, rgba(17, 68, 227, 0.03) 0%, #ffffff 100%);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            border-radius: 28px !important; /* Premium curved corners */
+            padding: 56px 40px !important;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 20px 50px rgba(17, 68, 227, 0.03) !important;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s var(--easing-premium), border-color 0.4s var(--easing-premium), box-shadow 0.4s var(--easing-premium);
+        }
+
+        .brand-bio-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(17, 68, 227, 0.15);
+            box-shadow: 0 30px 60px rgba(17, 68, 227, 0.06) !important;
+        }
+
+        /* Top colored neon indicator line */
+        .brand-bio-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #1144e3 0%, #00d4ff 100%);
+        }
+
+        /* Technical vector pattern backdrop */
+        .brand-bio-card-pattern {
             position: absolute;
             inset: 0;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-            background-size: 44px 44px;
-            background-position: center center;
-            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+            background-image: radial-gradient(rgba(17, 68, 227, 0.12) 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            opacity: 0.15;
             pointer-events: none;
             z-index: 1;
         }
 
-        .hero-carousel-container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            border-radius: 32px;
-            overflow: hidden;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            z-index: 10;
-        }
-
-        .hero-carousel-track {
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: 1fr;
-            width: 100%;
-        }
-
-        .hero-slide {
-            grid-column: 1;
-            grid-row: 1;
-            padding: 100px 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            position: relative;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s ease;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .hero-slide::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to right, rgba(3, 5, 6, 0.95) 30%, rgba(3, 5, 6, 0.3) 100%);
-            z-index: 1;
-        }
-
-        .hero-slide.active {
-            opacity: 1;
-            visibility: visible;
-            z-index: 2;
-        }
-
-        .hero-slide-content {
-            position: relative;
-            z-index: 2;
-            max-width: 650px;
-        }
-
-        .slide-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(37, 117, 192, 0.15);
-            border: 1px solid rgba(37, 117, 192, 0.3);
-            padding: 6px 14px;
-            border-radius: 100px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--blue-mid);
-            margin-bottom: 24px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .pulse-dot {
-            width: 6px;
-            height: 6px;
-            background-color: #2ecc71;
-            border-radius: 50%;
-            position: relative;
-        }
-        .pulse-dot::after {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 50%;
-            border: 2px solid #2ecc71;
-            animation: badgePulse 2s infinite;
-            opacity: 0.8;
-        }
-
-        @keyframes badgePulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(2.5); opacity: 0; }
-        }
-
-        .slide-title {
-            font-size: clamp(2.2rem, 4.5vw, 3.8rem);
-            font-weight: 500;
-            line-height: 1.1;
-            letter-spacing: -2px;
-            color: #ffffff;
-            margin-bottom: 20px;
-        }
-
-        .slide-title span {
-            font-family: var(--font-serif);
-            font-style: italic;
-            background: linear-gradient(to right, #ffffff, var(--blue-light));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .slide-desc {
-            font-size: clamp(1rem, 1.2vw, 1.15rem);
-            color: var(--text-dim);
-            line-height: 1.65;
-            margin-bottom: 36px;
-        }
-
-        /* Indicators below carousel */
-        .carousel-indicators {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            margin-top: 24px;
-            z-index: 10;
-            position: relative;
-        }
-
-        .indicator-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            padding: 0;
-        }
-
-        .indicator-dot.active {
-            background: var(--blue-mid);
-            transform: scale(1.35);
-            box-shadow: 0 0 12px rgba(93, 189, 226, 0.6);
-        }
-
-        /* --- Dashboard Controls Area (Search + Categories) --- */
-        .dashboard-controls {
-            max-width: 1200px;
-            margin: 60px auto 40px auto;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            padding: 0 24px;
-        }
-
-        .search-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 380px;
-        }
-
-        .search-input {
-            width: 100%;
-            background: #ffffff;
-            border: 1px solid rgba(15, 23, 42, 0.12);
-            border-radius: 100px;
-            padding: 14px 20px 14px 48px;
-            font-size: 0.9rem;
-            color: #0f172a;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--brand-blue);
-            box-shadow: 0 10px 25px rgba(37, 117, 192, 0.08);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #64748b;
-            font-size: 1.1rem;
-        }
-
-        .filter-container {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            background: #ffffff;
-            border: 1px solid rgba(15, 23, 42, 0.08);
-            padding: 10px 22px;
-            border-radius: 100px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #475569;
-            cursor: pointer;
-            transition: all 0.3s var(--ease-pro);
-        }
-
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--brand-blue);
-            border-color: var(--brand-blue);
-            color: #ffffff;
-            box-shadow: 0 8px 20px rgba(37, 117, 192, 0.15);
-        }
-
-        /* --- Premium Blog Grid --- */
-        .blog-section {
-            background-color: var(--bg-canvas);
-            padding: 0 24px 60px 24px;
+        /* McKinsey-style editorial heading */
+        .brand-bio-card h2 {
+            font-family: var(--font-display) !important;
+            font-size: clamp(1.4rem, 2.8vw, 2.2rem) !important;
+            font-weight: 700 !important;
+            line-height: 1.3 !important;
+            color: #0f172a !important;
+            max-width: 820px;
+            margin: 0 auto 12px auto;
             position: relative;
             z-index: 5;
         }
 
-        .blog-grid-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        /* High Contrast Card Styling to Prevent Invisible Text */
-        .blog-card {
-            background: #ffffff !important;
-            border: 1px solid rgba(15, 23, 42, 0.08) !important;
-            border-radius: 24px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            transition: all 0.4s var(--ease-pro);
-            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.02) !important;
-        }
-
-        /* Dynamically hidden cards styling */
-        .blog-card.hidden-card {
-            display: none;
-        }
-
-        .blog-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(37, 117, 192, 0.3) !important;
-            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.06) !important;
-        }
-
-        /* Dark High-Contrast Visual Container */
-        .blog-card-img {
-            height: 220px;
-            background-color: #0d1527 !important;
+        .brand-bio-card .mckinsey-attribution {
+            font-size: 0.88rem;
+            color: #94a3b8;
+            font-weight: 600;
+            margin-bottom: 28px;
             position: relative;
+            z-index: 5;
+        }
+
+        /* McKinsey-style Button Container */
+        .mckinsey-pill-btn {
+            background-color: var(--brand-blue);
+            color: #ffffff !important;
+            font-family: var(--font-sans-jakarta);
+            font-weight: 700;
+            font-size: 0.88rem;
+            padding: 12px 14px 12px 24px;
+            border-radius: 100px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(17, 68, 227, 0.15);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            z-index: 5;
+            margin-bottom: 28px;
+        }
+
+        .mckinsey-pill-btn:hover {
+            background-color: #1c3bb5;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(17, 68, 227, 0.25);
+        }
+
+        .mckinsey-arrow-circle {
+            width: 28px;
+            height: 28px;
+            background-color: #ffffff;
+            color: var(--brand-blue);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-        }
-
-        .blueprint-lines {
-            position: absolute;
-            inset: 0;
-            background-size: 15px 15px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-        }
-
-        .blog-card-content {
-            padding: 28px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            background: #ffffff !important;
-        }
-
-        .blog-card-content .cat-badge {
-            margin-bottom: 14px;
-            font-size: 0.72rem;
-            padding: 4px 12px;
-            align-self: flex-start;
-            background: rgba(37, 117, 192, 0.08) !important;
-            color: #2575c0 !important;
-            border: 1px solid rgba(37, 117, 192, 0.12) !important;
-        }
-
-        /* Explicit Dark Colors to override transparent/white CSS conflicts */
-        .blog-card-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #0f172a !important;
-            line-height: 1.35;
-            margin-bottom: 12px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .blog-card-desc {
-            font-size: 0.92rem;
-            color: #475569 !important;
-            line-height: 1.6;
-            margin-bottom: 24px;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .blog-card-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             font-size: 0.8rem;
-            color: #64748b !important;
-            margin-top: auto;
-            border-top: 1px solid #f1f5f9 !important;
-            padding-top: 16px;
+            transition: transform 0.3s ease;
         }
 
-        .meta-item {
+        .mckinsey-pill-btn:hover .mckinsey-arrow-circle {
+            transform: rotate(45deg);
+        }
+
+        .brand-bio-socials {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Custom social link circles */
+        .bio-social-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            color: #64748b;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
         }
 
-        /* See More Controls */
-        .see-more-wrapper {
+        .bio-social-icon:hover {
+            color: var(--brand-blue);
+            border-color: var(--brand-blue);
+            background-color: rgba(17, 68, 227, 0.02);
+            transform: translateY(-2px);
+        }
+
+        /* ==========================================================================
+           SUBSEQUENT GRID POSTS
+           ========================================================================== */
+        .lower-grid-section {
+            padding: 40px 24px 80px 24px;
+            max-width: 1240px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .lower-posts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .lower-posts-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .lower-posts-grid { grid-template-columns: 1fr; }
+        }
+
+        .lower-grid-card .card-img-holder {
+            height: 160px;
+        }
+
+        /* Clean "Load More" navigation button at page bottom */
+        .load-more-container {
             display: flex;
             justify-content: center;
             margin-top: 48px;
         }
 
-        /* --- Premium CTA Connection Banner --- */
-        .talent-banner-container {
-            max-width: 1200px;
-            margin: 60px auto 80px auto;
-            padding: 0 24px;
-            z-index: 5;
-            position: relative;
-        }
-
-        .talent-banner {
-            background: linear-gradient(rgba(3, 5, 6, 0.65), rgba(3, 5, 6, 0.65)), url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200') no-repeat center center / cover;
-            border-radius: 32px;
-            padding: 80px 40px;
-            text-align: center;
+        .load-more-btn {
+            background: none;
+            border: none;
+            color: var(--text-slate);
+            font-family: var(--font-sans-jakarta);
+            font-size: 0.82rem;
+            font-weight: 700;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            gap: 6px;
+            cursor: pointer;
+            transition: color 0.3s ease;
         }
 
-        .talent-banner h2 {
-            font-size: clamp(1.4rem, 2.8vw, 2.3rem);
-            color: #ffffff;
-            font-weight: 500;
-            line-height: 1.35;
-            max-width: 850px;
-            margin-bottom: 32px;
-            letter-spacing: -0.5px;
-        }
-
-        .btn-connect {
-            background: var(--brand-blue);
-            color: #ffffff;
-            text-decoration: none;
-            padding: 14px 28px;
-            border-radius: 100px;
-            font-size: 15px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .btn-connect:hover {
-            background: var(--blue-deep);
-            transform: translateY(-2px);
-        }
-
-        .arrow-circle {
-            background: #ffffff;
+        .load-more-btn:hover {
             color: var(--brand-blue);
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
+        }
+
+        .load-more-btn i {
+            font-size: 0.95rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(3px); }
+        }
+
+        /* ==========================================================================
+           SYSTEM PORTAL OVERRIDES (Bypasses preflight: false overrides on Vercel)
+           ========================================================================== */
+        #blogReaderModal {
+            font-family: var(--font-sans-jakarta) !important;
+        }
+
+        #readerTitle {
+            font-family: var(--font-serif) !important;
+            font-size: 1.85rem !important;
+            font-weight: 700 !important;
+            color: #0f172a !important;
+            line-height: 1.3 !important;
+        }
+
+        .modal-close-trigger {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50% !important;
+            background-color: #f1f5f9 !important;
+            border: 1px solid #e2e8f0 !important;
+            color: #64748b !important;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
-            transition: transform 0.3s;
+            cursor: pointer;
+            transition: all 0.3s ease !important;
+            z-index: 100;
         }
 
-        .btn-connect:hover .arrow-circle {
-            transform: rotate(45deg);
+        .modal-close-trigger:hover {
+            background-color: #ff3333 !important;
+            color: #ffffff !important;
+            border-color: #ff3333 !important;
+            transform: rotate(90deg) !important;
         }
 
-        /* --- Footer Styles --- */
-        .igp-footer {
-          background-color: #050505; 
-          color: #e0e0e0;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          padding: 60px 40px 20px 40px;
-          border-top-left-radius: 40px; 
-          border-top-right-radius: 40px;
+        /* Dynamic Article Scroll Progress Bar indicator */
+        .reader-scroll-progress-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: #f1f5f9;
+            z-index: 90;
         }
 
-        .footer-container {
-          display: grid;
-          grid-template-columns: 1.1fr 1fr;
-          gap: 25px;
-          max-width: 1400px;
-          margin: 0 auto;
+        #readerProgressBar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--brand-blue);
+            transition: width 0.1s ease;
         }
 
-        .footer-card {
-          background-color: #111111;
-          border: 1px solid #1f1f1f;
-          border-radius: 16px;
-          padding: 35px;
-          display: flex;
-          flex-direction: column;
+        /* Article body styling */
+        .reader-body-text {
+            color: #4b5563 !important;
+            line-height: 1.75 !important;
+            font-size: 0.95rem !important;
+            font-family: var(--font-sans-jakarta) !important;
         }
 
-        .right-column-wrapper {
-          display: flex;
-          flex-direction: column;
-          gap: 25px;
+        .reader-body-text p {
+            margin-bottom: 1.25rem !important;
         }
 
-        .accent-title {
-          color: #4463d6; 
-          font-size: 0.75rem;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          margin-bottom: 20px;
-          font-weight: 600;
+        .reader-body-text blockquote {
+            border-left: 4px solid var(--brand-blue) !important;
+            padding-left: 16px !important;
+            color: #0f172a !important;
+            font-style: italic !important;
+            margin: 1.5rem 0 !important;
         }
 
-        .main-title {
-          font-size: 2rem;
-          font-family: 'Times New Roman', Times, serif; 
-          color: #ffffff;
-          margin-bottom: 30px;
-          font-weight: normal;
+        /* ==========================================================================
+           UPGRADED BRAND FOOTER SYSTEM
+           ========================================================================== */
+        .igp-premium-footer {
+            background-color: #070a13; /* Deep Midnight Slate Background */
+            color: #94a3b8;
+            font-family: var(--font-sans-jakarta);
+            border-top-left-radius: 48px;
+            border-top-right-radius: 48px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.15);
+            padding: 80px 40px 30px 40px;
         }
 
-        .dark-form {
-          display: flex;
-          flex-direction: column;
-          gap: 15px;
+        .footer-grid-matrix {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr 0.8fr 1.2fr;
+            gap: 48px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 60px;
         }
 
-        .dark-form input,
-        .dark-form textarea {
-          background-color: #1a1a1a;
-          border: 1px solid #2a2a2a;
-          border-radius: 6px;
-          padding: 16px;
-          color: #ffffff;
-          font-size: 0.9rem;
-          transition: border-color 0.3s;
+        .footer-brand-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .dark-form input:focus,
-        .dark-form textarea:focus {
-          outline: none;
-          border-color: #555;
+        .footer-brand-column p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #94a3b8;
+            max-width: 280px;
         }
 
-        .dark-form button {
-          align-self: flex-start;
-          background-color: #ffffff;
-          color: #000000;
-          border: none;
-          border-radius: 30px;
-          padding: 14px 30px;
-          font-weight: 700;
-          font-size: 0.9rem;
-          margin-top: 10px;
-          cursor: pointer;
-          transition: background-color 0.3s;
+        .footer-nav-heading {
+            color: #ffffff;
+            font-family: var(--font-sans-outfit);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
         }
 
-        .dark-form button:hover {
-          background-color: #e0e0e0;
+        .footer-links-ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
         }
 
-        .nav-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 20px;
+        .footer-links-ul a {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color 0.25s ease, transform 0.25s ease;
+            display: inline-block;
         }
 
-        .nav-list {
-          list-style: none;
-          padding: 0;
-          margin: 0;
+        .footer-links-ul a:hover {
+            color: #ffffff;
+            transform: translateX(4px);
         }
 
-        .nav-list li {
-          margin-bottom: 15px;
+        .footer-social-icons {
+            display: flex;
+            gap: 12px;
         }
 
-        .nav-list a {
-          color: #aaaaaa;
-          text-decoration: none;
-          font-size: 0.95rem;
-          font-weight: 500;
-          transition: color 0.3s;
+        .footer-social-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
         }
 
-        .nav-list a:hover {
-          color: #ffffff;
+        .footer-social-circle:hover {
+            border-color: #ffffff;
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
         }
 
-        .social-icons {
-          display: flex;
-          gap: 15px;
-          margin-bottom: 25px;
+        /* Premium Form Newsletter Overlay */
+        .footer-newsletter-box {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
-        .social-icons a {
-          width: 40px;
-          height: 40px;
-          border: 1px solid #333;
-          border-radius: 50%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: #aaaaaa;
-          text-decoration: none;
-          transition: all 0.3s;
+        .footer-newsletter-box p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #64748b;
         }
 
-        .social-icons a:hover {
-          border-color: #ffffff;
-          color: #ffffff;
+        .footer-newsletter-form {
+            display: flex;
+            gap: 8px;
+            position: relative;
         }
 
-        .email-link {
-          color: #aaaaaa;
-          text-decoration: none;
-          font-size: 0.95rem;
-          transition: color 0.3s;
+        .footer-newsletter-form input {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 30px !important;
+            padding: 12px 48px 12px 20px !important;
+            color: #ffffff !important;
+            font-size: 0.85rem !important;
+            outline: none !important;
+            transition: all 0.3s ease !important;
         }
 
-        .email-link:hover {
-          color: #ffffff;
+        .footer-newsletter-form input:focus {
+            border-color: var(--brand-blue) !important;
+            background-color: rgba(255, 255, 255, 0.05) !important;
         }
 
-        .footer-bottom {
-          max-width: 1400px;
-          margin: 40px auto 0 auto;
-          padding-top: 25px;
-          border-top: 1px solid #1f1f1f;
-          display: flex;
-          justify-content: space-between;
-          color: #666666;
-          font-size: 0.85rem;
-          font-weight: 500;
+        .footer-newsletter-btn {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background-color: var(--brand-blue);
+            border: none;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        /* --- Responsive Styles --- */
-        @media (max-width: 1100px) {
-            .navbar { top: 16px; padding: 8px 14px; }
-            .menu-toggle { display: block; }
-            .nav-menu {
-                font-family: 'Lora', serif; 
-                position: fixed;
-                top: 85px;
-                left: 50%;
-                transform: translateX(-50%) scale(0.95);
-                width: 92%;
-                background: rgba(15, 18, 24, 0.96);
-                border: 1px solid var(--glass-border);
-                backdrop-filter: blur(30px);
-                -webkit-backdrop-filter: blur(30px);
-                border-radius: 24px;
-                padding: 24px;
-                flex-direction: column;
-                gap: 8px;
-                opacity: 0;
-                pointer-events: none;
-                transition: transform 0.4s var(--ease-pro), opacity 0.4s var(--ease-pro);
-                box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-            }
-            .nav-menu.mobile-active {
-                opacity: 1;
-                pointer-events: auto;
-                transform: translateX(-50%) scale(1);
-            }
-            .nav-link { width: 100%; text-align: center; padding: 14px; font-family: sans-serif;  }
-            .brand-stack { border-right: none; }
-
-            .blog-grid-container { grid-template-columns: repeat(2, 1fr); }
-            .hero-slide { padding: 60px 40px; }
+        .footer-newsletter-btn:hover {
+            background-color: #1c3bb5;
+            transform: translateY(-50%) scale(1.05);
         }
 
-        @media (min-width: 1101px) {
-            .brand-stack { border-right: 1px solid rgba(255, 255, 255, 0.12); margin-right: 8px; }
-            .nav-indicator { display: block; }
+        .footer-base-row {
+            max-width: 1140px;
+            margin: 30px auto 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            color: #475569;
+            font-weight: 500;
         }
 
+        /* Responsive Footer adaptations */
         @media (max-width: 1024px) {
-          .footer-container { grid-template-columns: 1fr; }
-          .right-column-wrapper { flex-direction: row; }
-          .nav-section, .social-section { flex: 1; }
+            .footer-grid-matrix {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
         }
 
         @media (max-width: 768px) {
-          .igp-footer { padding: 40px 20px 20px 20px; }
-          .right-column-wrapper { flex-direction: column; }
-          .footer-bottom { flex-direction: column; text-align: center; gap: 15px; }
-          .blog-grid-container { grid-template-columns: 1fr; }
-          .dashboard-controls { flex-direction: column; align-items: stretch; }
-          .search-wrapper { max-width: 100%; }
-        }
-
-        @media (max-width: 600px) {
-            .navbar { top: 12px; padding: 6px 10px; width: 94%; }
-            .brand-stack { padding-right: 8px; }
-            .nav-right { gap: 8px; }
-            .cta-nav { padding: 9px 16px; font-size: 12px; }
-
-            .hero-section { padding: 110px 4% 50px 4%; }
-            .btn-premium { padding: 16px 28px; }
-
-            .igp-footer { padding: 36px 16px 16px 16px; border-top-left-radius: 28px; border-top-right-radius: 28px; }
-            .footer-card { padding: 26px 22px; }
-            .main-title { font-size: 1.6rem; }
+            .igp-premium-footer {
+                padding: 60px 24px 20px 24px;
+                border-top-left-radius: 36px;
+                border-top-right-radius: 36px;
+            }
+            .footer-grid-matrix {
+                grid-template-columns: 1fr;
+                gap: 36px;
+                padding-bottom: 40px;
+            }
+            .footer-base-row {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- Tracker Cursor Elements -->
     <div id="cursor-dot"><i class="fa-solid fa-bolt"></i></div>
     <div id="cursor-ring"></div>
 
-    <nav class="navbar" id="main-nav">
-        <div class="brand-stack">
-            <div><img height="38px" src="igp logo.png" alt="logo"></div>
+    <!-- MAIN FLOATING NAVBAR (Identical to Home Page) -->
+    <header class="header-wrapper" id="header-wrapper">
+        <div class="nav-container">
+            <nav class="navbar">
+                <div class="nav-logo">
+                    <img src="igp logo.png" alt="logo" onerror="this.src='https://placehold.co/120x38/1144e3/ffffff?text=IGP+Logo'">
+                </div>
+
+                <ul class="nav-menu" id="nav-menu">
+                    <div class="nav-hover-pill" id="nav-hover-pill"></div>
+                    <li><a href="index.html#home" class="nav-link">Home</a></li>
+                    <li><a href="index.html#about" class="nav-link">About</a></li>
+                    <li><a href="index.html#service" class="nav-link">Service</a></li>
+                    <li><a href="career.html" class="nav-link">Career</a></li>
+                    <li><a href="blog.html" class="nav-link active">Blog</a></li>
+                    <li><a href="index.html#team" class="nav-link">Team</a></li>
+                    <li class="btn-cta-mobile" style="display: none;">
+                        <a href="index.html#dialogue-form" class="btn-cta">Consultation</a>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    <a href="index.html#dialogue-form" class="btn-cta">Consultation</a>
+                    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">
+                        <span class="hamburger"></span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ASYMMETRICAL 3-COLUMN HERO POST MATRIX -->
+    <section class="editorial-hero-wrapper">
+        <div class="editorial-hero-grid">
+            
+            <!-- Left Flank Stack -->
+            <div class="hero-sidebar-stack left-flank">
+                <!-- Card 1 -->
+                <a href="javascript:void(0)" class="editorial-card hero-small-card" 
+                   data-title="Guinness World Record™ EV Title Secured" 
+                   data-category="Corporate Milestone" 
+                   data-date="Sep 19, 2025" 
+                   data-readtime="2 min read" 
+                   data-content="We are thrilled to announce that IGP has secured a prestigious Guinness World Record™ title for the largest simultaneous deployment of electric vehicle charging systems. Our operations across regional transit hubs supported over thousands of active charging stations concurrently, validating our rapid deployment protocols and scaling models. Our execution teams engineered localized load diagnostic systems that ensured stable utility delivery throughout the record-setting run. <blockquote>Building India's green transport infrastructure requires absolute operational discipline and deep utility liaising protocols.</blockquote> This milestone proves our structural scalability and technical workforce execution capabilities at a national scale.">
+                    <div class="card-img-holder">
+                        <img src="img/tamil.jpg" onerror="this.src='https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=600'" alt="Guinness Record">
+                    </div>
+                    <div class="editorial-card-body">
+                        <h3>EV electrical Vehicles EV Title Secured</h3>
+                        <div class="editorial-meta-row">
+                            <span>Sep 19, 2025</span>
+                            <span>• 2 min read</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Card 2 -->
+                <a href="javascript:void(0)" class="editorial-card hero-small-card"
+                   data-title="Build Fest '25: A Journey of Clean Mobility" 
+                   data-category="Event Highlights" 
+                   data-date="Jul 3, 2025" 
+                   data-readtime="3 min read" 
+                   data-content="Build Fest '25 concluded with remarkable milestones, highlighting the rapid expansion and modern hardware adoption in India's green transport landscape. Hosted in collaboration with Sparklehood, the summit united over 200 EV charging hardware manufacturers, utility planners, and civil engineering partners. Our founders presented our standard smart-meter installations, showcasing how automation mitigates standard utility load bottlenecks on heavy commercial transport corridors. <blockquote>Innovation thrives where engineering meet logistical efficiency on the ground.</blockquote> The event consolidated critical business connections and outlined deployment timelines for the fiscal year.">
+                    <div class="card-img-holder">
+                        <img src="img/event.jpg" onerror="this.src='https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=600'" alt="Build Fest '25">
+                    </div>
+                    <div class="editorial-card-body">
+                        <h3>Build Fest '25: A Journey of Clean Mobility</h3>
+                        <div class="editorial-meta-row">
+                            <span>Jul 3, 2025</span>
+                            <span>• 3 min read</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Central Giant Featured Card -->
+            <a href="javascript:void(0)" class="editorial-card hero-giant-card"
+               data-title="How IGP is Building India's Bridge to EV-Powered Infrastructure" 
+               data-category="Infrastructure Report" 
+               data-date="Dec 3, 2025" 
+               data-readtime="5 min read" 
+               data-content="With electric vehicle adoption climbing at an exponential rate, India's secondary transit networks face critical grid challenges. This comprehensive report outlines how IGP is deploying advanced engineering field operations, smart metering infrastructure, and complete utility liaison support to safeguard national logistics channels. By analyzing high-density logistics corridors across 500+ Indian cities, we have formulated key deployment milestones that secure high-voltage DC system operations under heavy ambient temperature shifts and load loads. <blockquote>Our mission is clear: to deploy charging infrastructure that is robust, automated, and 100% resilient.</blockquote> Through our dedicated nationwide technician network, we ensure certified onsite operations with minimum overheads.">
+                <div class="card-img-holder">
+                    <img src="evindia/1.png" onerror="this.src='https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=1200'" alt="Gen AI Hackathon">
+                </div>
+                <div class="editorial-card-body">
+                    <h3>How IGP is Building India's Bridge to EV-Powered Infrastructure</h3>
+                    <p>An extensive, data-driven report exploring the execution timeline of dynamic grid loads, commercial DC fast charger deployments, and technical operations support across 500+ Indian cities.</p>
+                    <div class="editorial-meta-row" style="margin-top: 24px;">
+                        <span>Dec 3, 2025</span>
+                        <span>• 5 min read</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Right Flank Stack -->
+            <div class="hero-sidebar-stack right-flank">
+                <!-- Card 3 -->
+                <a href="javascript:void(0)" class="editorial-card hero-small-card"
+                   data-title="Spotlight on Engineers: Tech Leaders of the Year" 
+                   data-category="Our Team" 
+                   data-date="Jul 3, 2025" 
+                   data-readtime="2 min read" 
+                   data-content="Behind every successful commercial EV charging station and solar array is a dedicated team of engineers. This week, we shine our spotlight on our technical field operation leaders who coordinate high-voltage DC installations across challenging topographical zones. Discover how certified technical training, localized project safety clearances, and strict operation workflows help our engineers scale sustainable networks while protecting zero-accident parameters. <blockquote>True engineering lies in solving the physical constraints of deployment.</blockquote> Learn more about our technical path and workforce operations milestones.">
+                    <div class="card-img-holder">
+                        <img src="img/tamil.jpg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600'" alt="Meet the Winners">
+                    </div>
+                    <div class="editorial-card-body">
+                        <h3>Spotlight on Engineers: Tech Leaders of the Year</h3>
+                        <div class="editorial-meta-row">
+                            <span>Jul 3, 2025</span>
+                            <span>• 2 min read</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Card 4 -->
+                <a href="javascript:void(0)" class="editorial-card hero-small-card"
+                   data-title="Smart Grid Technology: Catalyzing Utility Expansion" 
+                   data-category="Grid Technology" 
+                   data-date="Mar 5, 2025" 
+                   data-readtime="4 min read" 
+                   data-content="The transition to sustainable mobility requires more than raw power—it demands intelligent, automated utility management. This paper breaks down our recent smart metering deployments, outlining how local automation protects high-density charging hubs against unexpected grid fluctuations. Through active utility liaison work and real-time remote diagnostics, we are building a grid-resilient future for commercial centers. <blockquote>Smart grids are the brains that direct the raw brawn of high-speed charging nodes.</blockquote> Learn more about our advanced monitoring technology.">
+                    <div class="card-img-holder">
+                        <img src="evindia/5.png" onerror="this.src='https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=600'" alt="Web3 Hackathon">
+                    </div>
+                    <div class="editorial-card-body">
+                        <h3>Smart Grid Technology: Catalyzing Utility Expansion</h3>
+                        <div class="editorial-meta-row">
+                            <span>Mar 5, 2025</span>
+                            <span>• 4 min read</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CENTERED BRAND BIO STATION (McKinsey Style Enhanced Layout) -->
+    <section class="brand-bio-section">
+        <div class="brand-bio-card">
+            <!-- Background dot pattern inside card container -->
+            <div class="brand-bio-card-pattern"></div>
+
+            <!-- Logo of the corporate identity -->
+            <img src="igp logo.png" alt="IGP Logo" class="h-[44px] w-auto relative z-10 transition-transform duration-300 hover:scale-105" onerror="this.src='https://placehold.co/120x38/1144e3/ffffff?text=IGP+Logo'">
+            
+            <!-- McKinsey Editorial Quote Section -->
+            <h2 class="relative z-10 mt-6">Innovative companies are <span class="text-[#1144e3]">10x faster</span> in product development and <span class="text-[#1144e3]">6x better</span> at scaling new ventures</h2>
+            <span class="mckinsey-attribution">— by McKinsey Report</span>
+
+            <!-- McKinsey Style Pill Action Button with rotate arrow on hover -->
+            <a href="career.html" class="mckinsey-pill-btn relative z-10">
+                <span>Experience the impact firsthand.</span>
+                <span class="mckinsey-arrow-circle"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+            </a>
+
+            <!-- Aligned Social connections -->
+            <div class="brand-bio-socials relative z-10">
+                <a href="https://www.linkedin.com/company/igp-by-sparklehood/" class="bio-social-icon magnetic" data-strength="15"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://www.instagram.com/igp.sparklehood/" class="bio-social-icon magnetic" data-strength="15"><i class="fa-brands fa-instagram"></i></a>
+                <a href="mailto:team@sparklehood.com" class="bio-social-icon magnetic" data-strength="15"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SUBSEQUENT EDITORIAL GRID POSTS -->
+    <section class="lower-grid-section">
+        <div class="lower-posts-grid">
+            
+            <!-- Grid Card 1 -->
+            <a href="javascript:void(0)" class="editorial-card lower-grid-card"
+               data-title="Decarbonizing Industrial Logistics with Rooftop Solar EPC" 
+               data-category="Solar EPC" 
+               data-date="Dec 28, 2024" 
+               data-readtime="3 min read" 
+               data-content="Heavy manufacturing hubs are facing mounting pressure to meet global carbon targets. Our latest solar EPC installations demonstrate how rooftop solar arrays can offset over 35% of an industrial complex's active power requirement. By introducing automated local grid tie-ins and structural support networks, our civil team has simplified solar deployment across regional logistics hubs. <blockquote>The sun provides clean, scalable energy that secures long-term operational resilience.</blockquote> Discover how we integrate solar assets with active charging grids.">
+                <div class="card-img-holder">
+                    <img src="evindia/3.png" onerror="this.src='https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=600'" alt="Teams Emerged">
+                </div>
+                <div class="editorial-card-body">
+                    <h3>Decarbonizing Industrial Logistics with Rooftop Solar EPC</h3>
+                    <div class="editorial-meta-row">
+                        <span>Dec 28, 2024</span>
+                        <span>• 3 min read</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Grid Card 2 -->
+            <a href="javascript:void(0)" class="editorial-card lower-grid-card"
+               data-title="Operational Benchmarks: 99.4% Grid Uptime Guarantee" 
+               data-category="Operations" 
+               data-date="Dec 28, 2024" 
+               data-readtime="4 min read" 
+               data-content="Maintaining zero-fault parameters on high-speed commercial charging networks requires rigorous maintenance protocols. By coordinating real-time remote diagnostics with localized operations engineers, IGP has achieved an average grid uptime ratio of 99.4%. Read how our localized diagnostic checkpoints, automated cooling fail-safes, and 24/7 call centers keep India's fleets rolling. <blockquote>Every minute of utility downtime represents directly lost commerce for fleet operators.</blockquote> Our preventive maintenance is engineered to stop failures before they start.">
+                <div class="card-img-holder">
+                    <img src="img/Tamil.jpg" onerror="this.src='https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=600'" alt="Change with AI">
+                </div>
+                <div class="editorial-card-body">
+                    <h3>Operational Benchmarks: 99.4% Grid Uptime Guarantee</h3>
+                    <div class="editorial-meta-row">
+                        <span>Dec 28, 2024</span>
+                        <span>• 4 min read</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Grid Card 3 -->
+            <a href="javascript:void(0)" class="editorial-card lower-grid-card"
+               data-title="Smart Meter Systems: Overcoming Utility Obstacles" 
+               data-category="Utility Liaison" 
+               data-date="Dec 5, 2024" 
+               data-readtime="3 min read" 
+               data-content="Utility load approvals and complex grid connectivity regulations remain a major bottleneck for heavy commercial transport operators. Our specialised utility liaison team has bridged this gap, deploying pre-engineered smart meter stations that conform directly to local state utility standards. Discover how we reduce utility connection times from months to weeks. <blockquote>Grid tape must never slow down the progress of clean transport.</blockquote> Read our regulatory compliance guide.">
+                <div class="card-img-holder">
+                    <img src="evindia/2.png" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600'" alt="A Journey of Empowerment">
+                </div>
+                <div class="editorial-card-body">
+                    <h3>Smart Meter Systems: Overcoming Utility Obstacles</h3>
+                    <div class="editorial-meta-row">
+                        <span>Dec 5, 2024</span>
+                        <span>• 3 min read</span>
+                    </div>
+                </div>
+            </a>
+
         </div>
 
-        <div class="nav-menu" id="nav-container">
-            <div class="nav-indicator" id="indicator"></div>
-            <a href="index.html#home" class="nav-link">Home</a>
-            <a href="index.html#about" class="nav-link">About</a>
-            <a href="index.html#service" class="nav-link">Service</a>
-            <a href="career.html" class="nav-link">Career</a>
-            <a href="blog.html" class="nav-link active">Blog</a>
-            <a href="index.html#team" class="nav-link">Team</a>
-        </div>
-
-        <div class="nav-right">
-            <a href="#form" class="cta-nav">Connect Us</a>
-            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu">
-                <i class="fa-solid fa-bars"></i>
+        <!-- Dynamic Load More Posts controller -->
+        <div class="load-more-container">
+            <button class="load-more-btn" onclick="alert('Loading more insights...')">
+                <span>Load More Insights</span>
+                <i class="fa-solid fa-chevron-down"></i>
             </button>
         </div>
-    </nav>
+    </section>
 
-    <!-- Shifting Hero Banner Carousel -->
-    <main class="hero-section">
-        <div class="hero-grid-overlay"></div>
-        <div class="hero-carousel-container" id="heroCarousel">
-            <div class="hero-carousel-track">
-                
-                <!-- Slide 1 -->
-                <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&q=80&w=1200')">
-                    <div class="hero-slide-content">
-                        <div class="slide-tag">
-                            <span class="pulse-dot"></span>
-                            EV Infrastructure
-                        </div>
-                        <h1 class="slide-title">Revolutionizing India's <span>EV Power Grid</span></h1>
-                        <p class="slide-desc">Discover how smart charging infrastructures and integrated technology grids are driving sustainable transit across urban landscapes.</p>
-                        <a href="#blogDashboard" class="btn-premium btn-live magnetic" data-strength="20">
-                            <span>Explore Insights</span>
-                            <i class="fa-solid fa-arrow-down ml-2"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Slide 2 -->
-                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&q=80&w=1200')">
-                    <div class="hero-slide-content">
-                        <div class="slide-tag">
-                            <span class="pulse-dot"></span>
-                            Installation
-                        </div>
-                        <h1 class="slide-title">Precision <span>Charger Deployment</span></h1>
-                        <p class="slide-desc">From complex site acquisitions to technical electrical load-balancing execution, reliability is engineered from day one.</p>
-                        <a href="#blogDashboard" class="btn-premium btn-live magnetic" data-strength="20">
-                            <span>Read Technical Manuals</span>
-                            <i class="fa-solid fa-arrow-down ml-2"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Slide 3 -->
-                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200')">
-                    <div class="hero-slide-content">
-                        <div class="slide-tag">
-                            <span class="pulse-dot"></span>
-                            Operations & Maintenance
-                        </div>
-                        <h1 class="slide-title">Uptime <span>Diagnostics & Operations</span></h1>
-                        <p class="slide-desc">Unpack our proactive technician dispatches, 24/7 call centers, and robust Annual Maintenance Contracts driving 99.9% uptime.</p>
-                        <a href="#blogDashboard" class="btn-premium btn-live magnetic" data-strength="20">
-                            <span>View O&M Protocols</span>
-                            <i class="fa-solid fa-arrow-down ml-2"></i>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </main>
-
-    <!-- Carousel Indicators -->
-    <div class="carousel-indicators">
-        <button class="indicator-dot active" aria-label="Slide 1"></button>
-        <button class="indicator-dot" aria-label="Slide 2"></button>
-        <button class="indicator-dot" aria-label="Slide 3"></button>
-    </div>
-
-    <!-- Search and Filter Controls -->
-    <div class="dashboard-controls" id="blogDashboard">
-        <div class="search-wrapper">
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" id="searchInput" class="search-input" placeholder="Search insights and technical updates...">
-        </div>
-        <div class="filter-container">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="infrastructure">EV Infrastructure</button>
-            <button class="filter-btn" data-filter="charging">EV Charging</button>
-            <button class="filter-btn" data-filter="installation">Installation</button>
-            <button class="filter-btn" data-filter="maintenance">Maintenance & O&M</button>
-            <button class="filter-btn" data-filter="sustainability">Sustainability</button>
-            <button class="filter-btn" data-filter="insights">Industry Insights</button>
-            <button class="filter-btn" data-filter="company">Company Insights</button>
-        </div>
-    </div>
-
-    <!-- Blog Grid Section -->
-    <section class="blog-section">
-        <div class="blog-grid-container" id="postsContainer">
+    <!-- PREMIUM GLASSMORPHIC BLOG READER MODAL (Consistent with Form designs) -->
+    <div id="blogReaderModal" class="fixed inset-0 bg-black/40 backdrop-blur-md z-[2000] hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div id="blogReaderCard" class="bg-white rounded-[28px] max-w-2xl w-full shadow-2xl relative border border-slate-100 transform scale-95 opacity-0 transition-all duration-300 flex flex-col max-h-[85vh] overflow-y-auto">
             
-            <!-- Blog 1 -->
-            <div class="blog-card" data-category="installation">
-                <div class="blog-card-img">
-                    <div class="blueprint-lines"></div>
-                    <svg viewBox="0 0 300 200" class="w-full h-full max-h-[220px]">
-                        <rect width="300" height="200" fill="#090e14"/>
-                        <path d="M60 130 L150 40 L240 130 Z" stroke="rgba(0, 210, 255, 0.3)" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
-                        <path d="M100 130 L150 80 L200 130" stroke="#00d2ff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                        <circle cx="150" cy="80" r="6" fill="#FFFFFF" filter="drop-shadow(0 0 4px #00d2ff)"/>
-                    </svg>
+            <!-- Dynamic Scroll progress bar -->
+            <div class="reader-scroll-progress-container">
+                <div id="readerProgressBar"></div>
+            </div>
+
+            <!-- Modal Content Padding -->
+            <div class="p-8 flex flex-col">
+                <!-- Close Button Frame -->
+                <button onclick="closeBlogReaderModal()" class="modal-close-trigger">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <!-- Dynamic Category Tag -->
+                <span id="readerCategory" class="blog-meta-badge self-start">Category</span>
+
+                <!-- Dynamic Title -->
+                <h2 id="readerTitle" class="mt-2 pr-12">Dynamic Title</h2>
+                
+                <!-- Dynamic Post Meta Data Row -->
+                <div class="flex items-center gap-4 text-xs text-slate-400 font-semibold mt-3 mb-6">
+                    <span id="readerDate"><i class="fa-regular fa-calendar-days mr-1.5"></i>Dec 3, 2025</span>
+                    <span id="readerTime"><i class="fa-regular fa-clock mr-1.5"></i>5 min read</span>
                 </div>
-                <div class="blog-card-content">
-                    <span class="cat-badge">Installation</span>
-                    <h3 class="blog-card-title">EV Charger Installation: What Businesses Need to Know</h3>
-                    <p class="blog-card-desc">Explain the important considerations involved in installing EV chargers for commercial and public locations, including electrical safety, site permits, power load sharing, and physical spacing optimization.</p>
-                    <div class="blog-card-meta">
-                        <span class="meta-item"><i class="fa-regular fa-calendar"></i> May 12, 2026</span>
-                        <span class="meta-item"><i class="fa-regular fa-clock"></i> 5 min read</span>
-                    </div>
+
+                <!-- Dynamic Mockup Image -->
+                <div class="rounded-xl overflow-hidden mb-6 h-[260px] flex-shrink-0">
+                    <img id="readerImage" src="" alt="Blog Backdrop" class="w-full h-full object-cover">
+                </div>
+
+                <!-- Dynamic Rich Body Text Paragraph -->
+                <div id="readerContent" class="reader-body-text pr-2">
+                    <!-- Content injected dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UPGRADED BRAND FOOTER SYSTEM -->
+    <footer class="igp-premium-footer">
+        <div class="footer-grid-matrix">
+            <!-- Brand Column -->
+            <div class="footer-brand-column">
+                <img src="igp logo.png" alt="IGP Logo" class="h-[38px] w-auto self-start" onerror="this.src='https://placehold.co/120x38/1144e3/ffffff?text=IGP+Logo'">
+                <p>Deploying technical field operations, certified engineers, and EV charging grids to enable sustainable mobility systems across India.</p>
+                <div class="footer-social-icons">
+                    <a href="https://www.instagram.com/igp.sparklehood/" class="footer-social-circle magnetic" data-strength="15"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/company/igp-by-sparklehood/" class="footer-social-circle magnetic" data-strength="15"><i class="fa-brands fa-linkedin-in"></i></a>
                 </div>
             </div>
 
-            <!-- Blog 2 -->
-            <div class="blog-card" data-category="infrastructure">
-                <div class="blog-card-img">
-                    <div class="blueprint-lines"></div>
-                    <svg viewBox="0 0 300 200" class="w-full h-full max-h-[220px]">
-                        <rect width="300" height="200" fill="#090e14"/>
-                        <circle cx="150" cy="100" r="50" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-                        <circle cx="150" cy="100" r="35" stroke="rgba(37, 117, 192, 0.3)" stroke-width="2" stroke-dasharray="6 3"/>
-                        <line x1="150" y1="40" x2="150" y2="160" stroke="rgba(37, 117, 192, 0.15)" stroke-width="1"/>
-                        <line x1="90" y1="100" x2="210" y2="100" stroke="rgba(37, 117, 192, 0.15)" stroke-width="1"/>
-                        <circle cx="150" cy="100" r="5" fill="#00d2ff" filter="drop-shadow(0 0 6px #00d2ff)"/>
-                    </svg>
-                </div>
-                <div class="blog-card-content">
-                    <span class="cat-badge">EV Infrastructure</span>
-                    <h3 class="blog-card-title">Finding the Right Location for an EV Charging Station</h3>
-                    <p class="blog-card-desc">Discuss site scouting, feasibility, power grid accessibility, highway and city traffic density, utilization potential, and crucial regulatory clearances necessary for compliant public rollouts.</p>
-                    <div class="blog-card-meta">
-                        <span class="meta-item"><i class="fa-regular fa-calendar"></i> Apr 28, 2026</span>
-                        <span class="meta-item"><i class="fa-regular fa-clock"></i> 6 min read</span>
-                    </div>
-                </div>
+            <!-- Sitemap links -->
+            <div>
+                <h4 class="footer-nav-heading">Explore</h4>
+                <ul class="footer-links-ul">
+                    <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#about">About Us</a></li>
+                    <li><a href="index.html#service">Services</a></li>
+                    <li><a href="career.html">Careers</a></li>
+                </ul>
             </div>
 
-            <!-- Blog 3 -->
-            <div class="blog-card" data-category="maintenance">
-                <div class="blog-card-img">
-                    <div class="blueprint-lines"></div>
-                    <svg viewBox="0 0 300 200" class="w-full h-full max-h-[220px]">
-                        <rect width="300" height="200" fill="#090e14"/>
-                        <path d="M50 100 Q 100 20, 150 100 T 250 100" stroke="rgba(0, 210, 255, 0.15)" stroke-width="1.5" fill="none"/>
-                        <path d="M50 100 Q 100 40, 150 100 T 250 100" stroke="#2575c0" stroke-width="2" fill="none"/>
-                        <circle cx="150" cy="100" r="4" fill="#FFFFFF"/>
-                    </svg>
-                </div>
-                <div class="blog-card-content">
-                    <span class="cat-badge">Maintenance & O&M</span>
-                    <h3 class="blog-card-title">Why EV Charger Maintenance Matters</h3>
-                    <p class="blog-card-desc">Explain preventative maintenance, quick on-site diagnostic protocols, ensuring optimal equipment uptime, customer safety protection, and long-term charger operational performance metrics.</p>
-                    <div class="blog-card-meta">
-                        <span class="meta-item"><i class="fa-regular fa-calendar"></i> Mar 15, 2026</span>
-                        <span class="meta-item"><i class="fa-regular fa-clock"></i> 4 min read</span>
-                    </div>
-                </div>
+            <!-- Utility Column -->
+            <div>
+                <h4 class="footer-nav-heading">Solutions</h4>
+                <ul class="footer-links-ul">
+                    <li><a href="index.html#service">EV Charging</a></li>
+                    <li><a href="index.html#service">Solar EPC</a></li>
+                    <li><a href="index.html#service">Smart Metering</a></li>
+                    <li><a href="index.html#team">Our Team</a></li>
+                </ul>
             </div>
 
-            <!-- Blog 4 -->
-            <div class="blog-card" data-category="maintenance">
-                <div class="blog-card-img">
-                    <div class="blueprint-lines"></div>
-                    <svg viewBox="0 0 300 200" class="w-full h-full max-h-[220px]">
-                        <rect width="300" height="200" fill="#090e14"/>
-                        <circle cx="150" cy="100" r="40" stroke="rgba(37, 117, 192, 0.2)" stroke-width="1"/>
-                        <path d="M110 100 A40 40 0 0 1 185 80" stroke="#00d2ff" stroke-width="2.5" fill="none"/>
-                        <circle cx="185" cy="80" r="5" fill="#FFFFFF"/>
-                    </svg>
-                </div>
-                <div class="blog-card-content">
-                    <span class="cat-badge">Maintenance & O&M</span>
-                    <h3 class="blog-card-title">From Installation to O&M: Managing the Complete EV Lifecycle</h3>
-                    <p class="blog-card-desc">EV infrastructure demands ongoing management far past initial physical installation. Explore site scouting, power commissioning, and custom operational support workflows.</p>
-                    <div class="blog-card-meta">
-                        <span class="meta-item"><i class="fa-regular fa-calendar"></i> Feb 22, 2026</span>
-                        <span class="meta-item"><i class="fa-regular fa-clock"></i> 8 min read</span>
-                    </div>
-                </div>
+            <!-- Stay Connected Column -->
+            <div class="footer-newsletter-box">
+                <h4 class="footer-nav-heading">Stay Connected</h4>
+                <p>Subscribe to our quarterly newsletter for updates on India's evolving green grid network.</p>
+                <form class="footer-newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed successfully!'); this.reset();">
+                    <input type="email" placeholder="Your corporate email" required>
+                    <button type="submit" class="footer-newsletter-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                </form>
             </div>
-
-            <!-- Blog 5 -->
-            <div class="blog-card" data-category="maintenance">
-                <div class="blog-card-img">
-                    <div class="blueprint-lines"></div>
-                    <svg viewBox="0 0 300 200" class="w-full h-full max-h-[220px]">
-                        <rect width="300" height="200" fill="#090e14"/>
-                        <rect x="100" y="60" width="100" height="80" rx="12" stroke="rgba(255,255,255,0.05)" stroke-width="1.5"/>
-                        <rect x="110" y="70" width="80" height="60" rx="8" stroke="rgba(0, 210, 255, 0.3)" stroke-width="1.5"/>
-                        <path d="M135 100 L145 110 L165 90" stroke="#5dade2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <div class="blog-card-content">
-                    <span class="cat-badge">Maintenance & O&M</span>
-                    <h3 class="blog-card-title">The Role of AMC in Reliable EV Charging Infrastructure</h3>
-                    <p class="blog-card-desc">Scheduled technical inspections, rapid troubleshooting support pathways, operational cost efficiencies, and secure continuous user-charging access via annual maintenance contracts.</p>
-                    <div class="blog-card-meta">
-                        <span class="meta-item"><i class="fa-regular fa-calendar"></i> Jan 09, 2026</span>
-                        <span class="meta-item"><i class="fa-regular fa-clock"></i> 5 min read</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Blog 6 -->
-            <div class="blog-card" data-category="charging">
-                <div class="blog-card-img">
-                    <div class="blueprint-lines"></div>
-                    <svg viewBox="0 0 300 200" class="w-full h-full max-h-[220px]">
-                        <rect width="300" height="200" fill="#090e14"/>
-                        <path d="M60 100 L110 100 L125 60 L140 140 L155 100 L240 100" stroke="#2575c0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <circle cx="155" cy="100" r="4" fill="#FFFFFF"/>
-                    </svg>
-                </div>
-                <div class="blog-card-content">
-                    <span class="cat-badge">EV Charging</span>
-                    <h3 class="blog-card-title">How Technology Is Transforming EV Charging Networks</h3>
-                    <p class="blog-card-desc">How smart grid balancing systems, live telemetry monitoring, real-time connectivity interfaces, and predictive maintenance schedules drive network-wide operational efficiency.</p>
-                    <div class="blog-card-meta">
-                        <span class="meta-item"><i class="fa-regular fa-calendar"></i> Dec 18, 2025</span>
-                        <span class="meta-item"><i class="fa-regular fa-clock"></i> 7 min read</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Blog 7 (Hidden initially) -->
-            <div class="blog-card hidden-card" data-category="installation">
-                <div class="blog-card-img">
-                    <div class="blueprint-lines"></div>
-                    <svg viewBox="0 0 300 200" class="w-full h-full max-h-[220px]">
-                        <rect width="300" height="200" fill="#090e14"/>
-                        <line x1="80" y1="100" x2="220" y2="100" stroke="rgba(255,255,255,0.05)" stroke-width="2"/>
-                        <line x1="140" y1="100" x2="180" y2="60" stroke="#00d2ff" stroke-width="3" stroke-linecap="round"/>
-                        <circle cx="140" cy="100" r="5" fill="#FFFFFF"/>
-                        <circle cx="200" cy="100" r="5" fill="#FFFFFF"/>
-                    </svg>
-                </div>
-                <div class="blog-card-content">
-                    <span class="cat-badge">Installation</span>
-                    <h3 class="blog-card-title">EV Charger Uninstallation: What Happens After Deployment?</h3>
-                    <p class="blog-card-desc">A deep dive into regulatory-compliant charger de-commissioning, secure hardware transport logistics, site restoration processes, and strict public safety standards.</p>
-                    <div class="blog-card-meta">
-                        <span class="meta-item"><i class="fa-regular fa-calendar"></i> Nov 05, 2025</span>
-                        <span class="meta-item"><i class="fa-regular fa-clock"></i> 5 min read</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Blog 8 (Hidden initially) -->
-            <div class="blog-card hidden-card" data-category="insights">
-                <div class="blog-card-img">
-                    <div class="blueprint-lines"></div>
-                    <svg viewBox="0 0 300 200" class="w-full h-full max-h-[220px]">
-                        <rect width="300" height="200" fill="#090e14"/>
-                        <circle cx="150" cy="100" r="25" fill="none" stroke="rgba(37, 117, 192, 0.15)" stroke-width="1.5"/>
-                        <circle cx="120" cy="100" r="15" fill="none" stroke="#00d2ff" stroke-width="2"/>
-                        <circle cx="180" cy="100" r="15" fill="none" stroke="#2575c0" stroke-width="2"/>
-                        <circle cx="150" cy="100" r="4" fill="#FFFFFF"/>
-                    </svg>
-                </div>
-                <div class="blog-card-content">
-                    <span class="cat-badge">Industry Insights</span>
-                    <h3 class="blog-card-title">The Growing EV Charging Ecosystem in India</h3>
-                    <p class="blog-card-desc">Analyze rapid governmental scale incentives, public-private collaborative funding structures, and deployment requirements of commercial fleet networks nationwide.</p>
-                    <div class="blog-card-meta">
-                        <span class="meta-item"><i class="fa-regular fa-calendar"></i> Oct 24, 2025</span>
-                        <span class="meta-item"><i class="fa-regular fa-clock"></i> 9 min read</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Blog 9 (Hidden initially) -->
-            <div class="blog-card hidden-card" data-category="company">
-                <div class="blog-card-img">
-                    <div class="blueprint-lines"></div>
-                    <svg viewBox="0 0 300 200" class="w-full h-full max-h-[220px]">
-                        <rect width="300" height="200" fill="#090e14"/>
-                        <line x1="80" y1="140" x2="220" y2="140" stroke="rgba(255,255,255,0.05)" stroke-width="2"/>
-                        <rect x="100" y="80" width="24" height="60" fill="rgba(37,117,192,0.2)" stroke="var(--blue-mid)" stroke-width="1.5"/>
-                        <rect x="138" y="50" width="24" height="90" fill="rgba(37,117,192,0.3)" stroke="#00d2ff" stroke-width="1.5"/>
-                        <rect x="176" y="100" width="24" height="40" fill="rgba(37,117,192,0.2)" stroke="var(--blue-deep)" stroke-width="1.5"/>
-                    </svg>
-                </div>
-                <div class="blog-card-content">
-                    <span class="cat-badge">Company Insights</span>
-                    <h3 class="blog-card-title">Why Reliable Operations Matter in EV Infrastructure</h3>
-                    <p class="blog-card-desc">Explore diagnostic workflows, remote tech-dispatch coordination pathways, and professional customer care operations for robust infrastructure uptime targets.</p>
-                    <div class="blog-card-meta">
-                        <span class="meta-item"><i class="fa-regular fa-calendar"></i> Sep 14, 2025</span>
-                        <span class="meta-item"><i class="fa-regular fa-clock"></i> 6 min read</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Blog 10 (Hidden initially) -->
-            <div class="blog-card hidden-card" data-category="sustainability">
-                <div class="blog-card-img">
-                    <div class="blueprint-lines"></div>
-                    <svg viewBox="0 0 300 200" class="w-full h-full max-h-[220px]">
-                        <rect width="300" height="200" fill="#090e14"/>
-                        <circle cx="150" cy="100" r="35" stroke="var(--blue-light)" stroke-width="1.5" stroke-dasharray="5 5" fill="none"/>
-                        <circle cx="150" cy="100" r="20" fill="none" stroke="#00d2ff" stroke-width="2"/>
-                        <circle cx="150" cy="100" r="4" fill="#FFFFFF"/>
-                    </svg>
-                </div>
-                <div class="blog-card-content">
-                    <span class="cat-badge">Sustainability</span>
-                    <h3 class="blog-card-title">Building Smarter, More Accessible EV Networks</h3>
-                    <p class="blog-card-desc">Strategic design considerations focused on carbon-reduction impacts, integration with solar frameworks, and accessible charging interfaces.</p>
-                    <div class="blog-card-meta">
-                        <span class="meta-item"><i class="fa-regular fa-calendar"></i> Aug 30, 2025</span>
-                        <span class="meta-item"><i class="fa-regular fa-clock"></i> 7 min read</span>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
-        <div class="see-more-wrapper">
-            <button class="filter-btn" id="seeMoreBtn">See More</button>
+        <!-- Base Copyright Bar -->
+        <div class="footer-base-row">
+            <p>&copy; 2026 India Growth Partner. All rights reserved.</p>
+            <p class="flex items-center gap-1.5"><i class="fa-solid fa-bolt text-[#ffaa00]"></i> Empowering India's Technical Future</p>
         </div>
-    </section>
-
-    <!-- Premium Connection Banner (Matches Attached Reference Image Exactly) -->
-    <section class="talent-banner-container">
-        <div class="talent-banner">
-            <h2>Leverage innovative ideas and exceptional talent to drive transformative change within your business.</h2>
-            <a href="index.html#form" class="btn-connect">
-                <span>Let's Connect</span>
-                <span class="arrow-circle">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </span>
-            </a>
-        </div>
-    </section>
-
-    <!-- Footer Section -->
-   <footer class="igp-footer">
-      <div class="footer-container">
-        
-        <div class="footer-card form-section">
-          <h4 class="accent-title">Trusted by Leading EV Brands</h4>
-          <h2 class="main-title">Connect with our experts for end-to-end EV infrastructure solutions across India.</h2>
-          
-          <form id="dialogue-form" class="dark-form">
-            <input type="text" placeholder="Name" required>
-            <input type="email" placeholder="Email-Id" required>
-            <input type="tel" placeholder="Phone no" required>
-            <textarea placeholder="Any suggestion" rows="3" required></textarea>
-            <button type="submit" id="transmit-btn"> Schedule a Free Consultation</button>
-          </form>
-        </div>
-
-        <div class="right-column-wrapper">
-          
-          <div class="footer-card nav-section">
-            <h4 class="accent-title"> IGP By Sparklehood</h4>
-            <div class="nav-grid">
-              <ul class="nav-list">
-                <li><a href="index.html#home">Home</a></li>
-                <li><a href="index.html">Feature's</a></li>
-                <li><a href="career.html">Career's</a></li>
-                <li><a href="index.html#partners">Partners+</a></li>
-              </ul>
-              <ul class="nav-list">
-                <li><a href="index.html#about">About IGP by Sparklehood</a></li>
-                <li><a href="index.html#service">Our Ev Installation</a></li>
-                <li><a href="index.html#team">Our Team</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="footer-card social-section">
-            <h4 class="accent-title">CONNECT with IGP by Sparklehood</h4>
-            <div class="social-icons">
-              <a href="https://www.instagram.com/igp.sparklehood/"><i class="fa-brands fa-instagram"></i></a>
-              <a href="https://www.linkedin.com/company/igp-by-sparklehood/"><i class="fa-brands fa-linkedin-in"></i></a>
-            </div>
-            <a href="mailto:info.igp@gmail.com" class="email-link"> team@sparklehood.com</a>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>&copy; 2026 India Growth Partner</p>
-        <p>Developed by Team IGP by sparklehood</p>
-      </div>
     </footer>
 
-  <script>
-    // --- Global Configuration ---
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwVdCcqK9a09fe0WYY-jcQIT7hXhSVEN0c16MdEIG6aK4bhjNGC3L0b2SKGVbDDXtZp/exec";
-
-    // --- Premium Custom Mouse Tracking (Desktop Only) ---
-    const dot = document.getElementById('cursor-dot');
-    const ring = document.getElementById('cursor-ring');
-
-    if (window.innerWidth > 1100) {
-        window.addEventListener('mousemove', (e) => {
-            gsap.to(dot, { x: e.clientX - 10, y: e.clientY - 10, duration: 0.1 });
-            gsap.to(ring, { x: e.clientX - 22, y: e.clientY - 22, duration: 0.2 });
-        });
-
-        const hoverables = document.querySelectorAll('a, button, .brand-stack, .blog-card, .filter-btn, input, textarea, .indicator-dot');
-        hoverables.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                gsap.to(ring, { scale: 1.35, background: 'rgba(255,255,255,0.06)', border: '1px solid #fff', duration: 0.3 });
-            });
-            el.addEventListener('mouseleave', () => {
-                gsap.to(ring, { scale: 1, background: 'transparent', border: '1px solid rgba(255,255,255,0.3)', duration: 0.3 });
-            });
-        });
-    }
-
-    // --- Mobile Menu Toggle Logic ---
-    const menuToggle = document.getElementById('menuToggle');
-    const navMenu = document.getElementById('nav-container');
-    const toggleIcon = menuToggle.querySelector('i');
-
-    menuToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('mobile-active');
-        if(navMenu.classList.contains('mobile-active')) {
-            toggleIcon.classList.remove('fa-bars');
-            toggleIcon.classList.add('fa-xmark');
-            gsap.fromTo(".nav-link", {opacity: 0, y: 10}, {opacity: 1, y: 0, stagger: 0.05, duration: 0.4, ease: "power2.out"});
-        } else {
-            toggleIcon.classList.remove('fa-xmark');
-            toggleIcon.classList.add('fa-bars');
-        }
-    });
-
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('mobile-active');
-            toggleIcon.classList.remove('fa-xmark');
-            toggleIcon.classList.add('fa-bars');
-        });
-    });
-
-    // --- Premium Magnetic Interaction (Desktop Only) ---
-    if (window.innerWidth > 576) {
-        const magnets = document.querySelectorAll('.magnetic');
-        magnets.forEach((el) => {
-            el.addEventListener('mousemove', (e) => {
-                const rect = el.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                const str = el.getAttribute('data-strength');
-                gsap.to(el, { x: x * (str / 100), y: y * (str / 100), duration: 0.6, ease: "power2.out" });
-            });
-            el.addEventListener('mouseleave', () => {
-                gsap.to(el, { x: 0, y: 0, duration: 1, ease: "elastic.out(1, 0.3)" });
-            });
-        });
-    }
-
-    // --- Slide Tracker Navbar Indicator Interaction ---
-    const indicator = document.getElementById('indicator');
-    const links = document.querySelectorAll('.nav-link');
-    const container = document.getElementById('nav-container');
-
-    const moveIndicator = (target) => {
-        if(window.innerWidth > 1100) {
-            const rect = target.getBoundingClientRect();
-            const parentRect = container.getBoundingClientRect();
-            gsap.to(indicator, { x: rect.left - parentRect.left, width: rect.width, duration: 0.5, ease: "expo.out" });
-        }
-    };
-
-    links.forEach(link => {
-        link.addEventListener('mouseenter', () => moveIndicator(link));
-        if(link.classList.contains('active')) {
-            window.addEventListener('load', () => setTimeout(() => moveIndicator(link), 100));
-        }
-    });
-
-    // --- Interchanging Hero Banner Carousel Logic ---
-    let currentHeroIndex = 0;
-    const heroSlides = document.querySelectorAll('.hero-slide');
-    const heroDots = document.querySelectorAll('.indicator-dot');
-    let heroInterval = null;
-
-    function showHeroSlide(index) {
-        if (index === currentHeroIndex) return;
-        const current = heroSlides[currentHeroIndex];
-        const next = heroSlides[index];
-
-        gsap.to(current, { opacity: 0, duration: 0.6, onComplete: () => {
-            current.classList.remove('active');
-            next.classList.add('active');
-            gsap.fromTo(next, { opacity: 0 }, { opacity: 1, duration: 0.8 });
+    <!-- ==========================================================================
+         INTERACTIVE JAVASCRIPT LOGIC
+         ========================================================================== -->
+    <script>
+        // --- Dynamic Blog Reader Modal Controllers ---
+        function openBlogReaderModal(title, date, readtime, category, img, content) {
+            const modal = document.getElementById('blogReaderModal');
+            const card = document.getElementById('blogReaderCard');
+            const progressBar = document.getElementById('readerProgressBar');
             
-            // Text visual slide entrance stagger
-            gsap.fromTo(next.querySelector('.hero-slide-content'), { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" });
-        }});
+            // Populate content vectors dynamically
+            document.getElementById('readerTitle').innerText = title;
+            document.getElementById('readerDate').innerHTML = `<i class="fa-regular fa-calendar-days mr-1.5"></i>${date}`;
+            document.getElementById('readerTime').innerHTML = `<i class="fa-regular fa-clock mr-1.5"></i>${readtime}`;
+            document.getElementById('readerCategory').innerText = category;
+            document.getElementById('readerImage').src = img;
+            document.getElementById('readerContent').innerHTML = content; // Injected as parsed rich html structure
 
-        heroDots[currentHeroIndex].classList.remove('active');
-        heroDots[index].classList.add('active');
-        currentHeroIndex = index;
-    }
-
-    function initHeroAutoplay() {
-        if (heroInterval) clearInterval(heroInterval);
-        heroInterval = setInterval(() => {
-            const nextIdx = (currentHeroIndex + 1) % heroSlides.length;
-            showHeroSlide(nextIdx);
-        }, 5000);
-    }
-
-    heroDots.forEach((dot, idx) => {
-        dot.addEventListener('click', () => {
-            showHeroSlide(idx);
-            initHeroAutoplay();
-        });
-    });
-
-    initHeroAutoplay();
-
-    // --- Structural Entrance Intro Sequencer ---
-    window.addEventListener('load', () => {
-        const tl = gsap.timeline();
-        tl.from(".navbar", { y: -60, opacity: 0, duration: 1.2, ease: "power4.out" })
-          .from(".hero-carousel-container", { scale: 0.96, opacity: 0, duration: 1, ease: "power3.out" }, "-=0.6")
-          .from(".carousel-indicators", { opacity: 0, y: 10, duration: 0.5 }, "-=0.4");
-
-        // Staggered Blog Cards Entrance (Only for initially visible cards)
-        gsap.from(".blog-card:not(.hidden-card)", { 
-            opacity: 0, 
-            y: 40, 
-            stagger: 0.08, 
-            duration: 0.8, 
-            ease: "power3.out" 
-        });
-    });
-
-    // --- See More Loading Logic ---
-    const seeMoreBtn = document.getElementById('seeMoreBtn');
-    let cardsExpanded = false;
-
-    seeMoreBtn.addEventListener('click', () => {
-        const hiddenCards = document.querySelectorAll('.blog-card.hidden-card');
-        if (!cardsExpanded) {
-            hiddenCards.forEach(card => {
-                card.style.display = 'flex';
-            });
-            gsap.fromTo(hiddenCards, { opacity: 0, y: 30 }, { opacity: 1, y: 0, stagger: 0.08, duration: 0.5, ease: "power2.out" });
-            seeMoreBtn.innerText = "See Less";
-            cardsExpanded = true;
-        } else {
-            gsap.to(hiddenCards, { opacity: 0, y: 30, duration: 0.4, stagger: 0.05, ease: "power2.in", onComplete: () => {
-                hiddenCards.forEach(card => {
-                    card.style.display = 'none';
-                });
-                seeMoreBtn.innerText = "See More";
-                cardsExpanded = false;
-            }});
-        }
-    });
-
-    // --- Real-time Filter & Search Integration ---
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const blogCards = document.querySelectorAll('.blog-card');
-    const searchInput = document.getElementById('searchInput');
-
-    function updateFilters() {
-        const activeBtn = document.querySelector('.filter-btn.active');
-        const filterValue = activeBtn.getAttribute('data-filter');
-        const query = searchInput.value.toLowerCase().trim();
-        const targetCards = [];
-
-        blogCards.forEach((card, index) => {
-            const matchesCategory = filterValue === 'all' || card.getAttribute('data-category') === filterValue;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Stop background scrolling
             
-            const titleText = card.querySelector('.blog-card-title').innerText.toLowerCase();
-            const descText = card.querySelector('.blog-card-desc').innerText.toLowerCase();
-            const matchesSearch = titleText.includes(query) || descText.includes(query);
+            // Reset Progress Bar state on start
+            if (progressBar) progressBar.style.width = '0%';
 
-            if (matchesCategory && matchesSearch) {
-                // If search query is empty, respect the See More/Less initial states (limit to first 6)
-                if (query === "" && !cardsExpanded && index >= 6) {
-                    card.classList.add('hidden-card');
-                    card.style.display = 'none';
-                } else {
-                    card.style.display = 'flex';
-                    card.classList.remove('hidden-card');
-                    targetCards.push(card);
+            // Smooth backdrop fading & scaling transitions
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                card.classList.remove('scale-95', 'opacity-0');
+                card.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeBlogReaderModal() {
+            const modal = document.getElementById('blogReaderModal');
+            const card = document.getElementById('blogReaderCard');
+            
+            card.classList.remove('scale-100', 'opacity-100');
+            card.classList.add('scale-95', 'opacity-0');
+            modal.classList.remove('opacity-100');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = ''; // Restore page scrolling
+            }, 300);
+        }
+
+        // Track internal modal container scrolling to update progress bar dynamically
+        const readerCardEl = document.getElementById('blogReaderCard');
+        const progressBarEl = document.getElementById('readerProgressBar');
+
+        if (readerCardEl && progressBarEl) {
+            readerCardEl.addEventListener('scroll', () => {
+                const totalScrollableHeight = readerCardEl.scrollHeight - readerCardEl.clientHeight;
+                if (totalScrollableHeight > 0) {
+                    const scrollPercentage = (readerCardEl.scrollTop / totalScrollableHeight) * 100;
+                    progressBarEl.style.width = `${scrollPercentage}%`;
                 }
+            });
+        }
+
+        // Connect editorial card clicks dynamically to our Modal Controller
+        document.addEventListener("DOMContentLoaded", () => {
+            const editorialCards = document.querySelectorAll('.editorial-card');
+            editorialCards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // Prevent any browser default actions
+                    e.preventDefault();
+                    
+                    const title = card.getAttribute('data-title');
+                    const category = card.getAttribute('data-category');
+                    const date = card.getAttribute('data-date');
+                    const readtime = card.getAttribute('data-readtime');
+                    const content = card.getAttribute('data-content');
+                    const img = card.querySelector('img').src;
+
+                    // Open popup dynamically
+                    openBlogReaderModal(title, date, readtime, category, img, content);
+                });
+            });
+        });
+
+        // Close modal on background overlay click
+        const readerBackdrop = document.getElementById('blogReaderModal');
+        readerBackdrop.addEventListener('click', (e) => {
+            if (e.target === readerBackdrop) closeBlogReaderModal();
+        });
+
+
+        // --- Header Scroll Tracking logic ---
+        const headerWrapper = document.getElementById('header-wrapper');
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('nav-menu');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const hoverPill = document.getElementById('nav-hover-pill');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                headerWrapper.classList.add('scrolled');
             } else {
-                card.style.display = 'none';
+                headerWrapper.classList.remove('scrolled');
             }
+            resetToActive();
         });
 
-        // Hide "See More" button if search query or specific active filters restrict layout density
-        if (query !== "" || filterValue !== "all") {
-            seeMoreBtn.style.display = 'none';
-        } else {
-            seeMoreBtn.style.display = 'inline-block';
+        // --- Desktop Sliding Hover Pill Indicator ---
+        function positionPill(targetElement) {
+            if (!targetElement) return;
+            hoverPill.style.left = `${targetElement.offsetLeft}px`;
+            hoverPill.style.width = `${targetElement.offsetWidth}px`;
+            hoverPill.style.opacity = '1';
+            hoverPill.style.transform = 'scale(1)';
         }
 
-        if (targetCards.length > 0) {
-            gsap.fromTo(targetCards, 
-                { opacity: 0, y: 15 }, 
-                { opacity: 1, y: 0, stagger: 0.04, duration: 0.35, ease: "power2.out", overwrite: "auto" }
-            );
+        function resetToActive() {
+            const activeLink = document.querySelector('.nav-link.active');
+            if (activeLink && window.innerWidth > 768) {
+                positionPill(activeLink);
+            } else {
+                hoverPill.style.opacity = '0';
+                hoverPill.style.transform = 'scale(0.92)';
+            }
         }
-    }
 
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            updateFilters();
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', (e) => {
+                if (window.innerWidth > 768) {
+                    positionPill(e.target);
+                }
+            });
         });
-    });
 
-    searchInput.addEventListener('input', updateFilters);
-
-    // --- Footer Contact Form Submission ---
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById("dialogue-form");
-      const submitBtn = document.getElementById("transmit-btn");
-
-      form.addEventListener("submit", (e) => {
-        e.preventDefault(); 
-        
-        const originalText = submitBtn.innerText;
-        const originalBg = submitBtn.style.backgroundColor;
-
-        submitBtn.innerText = "Transmitting...";
-        submitBtn.style.backgroundColor = "#ff4a5a";
-        submitBtn.style.color = "#ffffff";
-        submitBtn.style.cursor = "wait";
-
-        const payload = {
-          formType: "consultation",
-          name: form.querySelector('input[placeholder="Name"]').value,
-          email: form.querySelector('input[placeholder="Email-Id"]').value,
-          phone: form.querySelector('input[placeholder="Phone no"]').value,
-          suggestion: form.querySelector('textarea').value
-        };
-
-        fetch(GOOGLE_SCRIPT_URL, {
-          method: "POST",
-          mode: "no-cors",
-          cache: "no-cache",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        })
-        .then(() => {
-          submitBtn.innerText = "Transmitted";
-          submitBtn.style.backgroundColor = "#2ecc71"; 
-          
-          setTimeout(() => {
-            form.reset();
-            submitBtn.innerText = originalText;
-            submitBtn.style.backgroundColor = originalBg;
-            submitBtn.style.color = "#000000";
-            submitBtn.style.cursor = "pointer";
-          }, 3000);
-        })
-        .catch(error => {
-          console.error("Consultation Error: ", error);
-          submitBtn.innerText = "Error, Try Again";
-          submitBtn.style.backgroundColor = "#ff3333";
-          setTimeout(() => {
-            submitBtn.innerText = originalText;
-            submitBtn.style.backgroundColor = originalBg;
-            submitBtn.style.color = "#000000";
-            submitBtn.style.cursor = "pointer";
-          }, 3000);
+        navMenu.addEventListener('mouseleave', () => {
+            resetToActive();
         });
-      });
-    });
-</script>
+
+        // --- Mobile Responsive Menu Drawer ---
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            menuToggle.classList.toggle('is-active');
+            navMenu.classList.toggle('is-active');
+            document.body.style.overflow = navMenu.classList.contains('is-active') ? 'hidden' : '';
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.forEach(item => item.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Mobile layout collapse
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.classList.remove('is-active');
+                navMenu.classList.remove('is-active');
+                document.body.style.overflow = '';
+                
+                resetToActive();
+            });
+        });
+
+        // Initialize nav layout highlights on startup
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(resetToActive, 100);
+        });
+        window.addEventListener('resize', resetToActive);
+
+        // --- Custom Interaction Tracker Cursor Support ---
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+
+        if (window.innerWidth > 1100 && dot && ring) {
+            window.addEventListener('mousemove', (e) => {
+                gsap.to(dot, { x: e.clientX - 10, y: e.clientY - 10, duration: 0.1 });
+                gsap.to(ring, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.2 });
+            });
+
+            const hoverables = document.querySelectorAll('a, button, .nav-logo, .editorial-card, .footer-social-circle, .bio-social-icon, .footer-newsletter-btn, .load-more-btn');
+            hoverables.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    gsap.to(ring, { scale: 1.4, background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.35)', duration: 0.3 });
+                });
+                el.addEventListener('mouseleave', () => {
+                    gsap.to(ring, { scale: 1, background: 'transparent', border: '1px solid rgba(255, 255, 255, 0.3)', duration: 0.3 });
+                });
+            });
+        }
+
+        // --- Magnetic Buttons Effect (Desktop Only) ---
+        if (window.innerWidth > 576 && typeof gsap !== "undefined") {
+            const magnets = document.querySelectorAll('.magnetic');
+            magnets.forEach((el) => {
+                el.addEventListener('mousemove', (e) => {
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    const str = el.getAttribute('data-strength') || 20;
+                    gsap.to(el, { x: x * (str / 100), y: y * (str / 100), duration: 0.6, ease: "power2.out" });
+                });
+                el.addEventListener('mouseleave', () => {
+                    gsap.to(el, { x: 0, y: 0, duration: 1, ease: "elastic.out(1, 0.3)" });
+                });
+            });
+        }
+    </script>
 </body>
 </html>

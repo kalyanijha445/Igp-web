@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers - IGP by Sparklehood</title>
+
+    <!-- Fonts Import (Identical to Home Page Stack) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&family=Roboto+Slab:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons and Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { corePlugins: { preflight: false } }
+    </script>
+    
+    <style>
+        /* ==========================================================================
+           BRAND DESIGN SYSTEM VARIABLES
+           ========================================================================== */
+        :root {
+            --bg-primary: #f8fafc; 
+            --bg-card: #ffffff;
+            --text-charcoal: #0b0b0c; 
+            --text-slate: #52525b; 
+            --brand-blue: #1144e3; 
+            --brand-blue-gradient: linear-gradient(135deg, #1144e3 0%, #1e40af 100%);
+            
+            /* Navbar Specifics */
+            --text-secondary: #64646f;
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --nav-border: rgba(0, 0, 0, 0.06);
+            --transition-speed: 0.3s;
+            --easing-premium: cubic-bezier(0.22, 1, 0.36, 1);
+
+            /* Typography Stacks */
+            --font-serif: 'Roboto Slab', Georgia, serif;
+            --font-display: 'Bricolage Grotesque', sans-serif;
+            --font-sans-jakarta: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; 
+            --font-sans-outfit: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif; 
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            -webkit-font-smoothing: antialiased; 
+        }
+
+        body { 
+            background-color: var(--bg-primary); 
+            font-family: var(--font-sans-jakarta);
+            overflow-x: hidden;
+            width: 100%;
+            color: var(--text-charcoal);
+        }
+
+        /* Desktop Custom Tracker Cursor Support */
+        @media (min-width: 1101px) {
+            * { cursor: none !important; }
+        }
+        #cursor-dot {
+            position: fixed;
+            top: 0; left: 0;
+            width: 20px; height: 20px;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            color: #ffffff;              
+            z-index: 99999;
+            pointer-events: none;
+            mix-blend-mode: difference;
+            display: none;
+        }
+        #cursor-ring {
+            position: fixed;
+            width: 40px; height: 40px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            z-index: 99998;
+            pointer-events: none;
+            transition: background 0.3s, border 0.3s;
+            display: none;
+        }
+        @media (min-width: 1101px) {
+            #cursor-dot { display: flex; }
+            #cursor-ring { display: block; }
+        }
+
+        /* ==========================================================================
+           NAVIGATION HEADER STYLES (Identical to Home Page)
+           ========================================================================== */
+        .header-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            pointer-events: none; 
+        }
+
+        .nav-container {
+            pointer-events: auto;
+            max-width: 1140px;
+            width: calc(100% - 4rem);
+            margin: 1.75rem auto 0 auto;
+            background-color: rgba(255, 255, 255, 0); 
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+            border: 1px solid transparent;
+            border-bottom: 1px solid rgba(11, 11, 12, 0.05);
+            border-radius: 0px;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+            transition: 
+                width 0.6s var(--easing-premium),
+                max-width 0.6s var(--easing-premium),
+                margin-top 0.6s var(--easing-premium),
+                border-radius 0.6s var(--easing-premium),
+                background-color 0.6s var(--easing-premium),
+                border-color 0.6s var(--easing-premium),
+                backdrop-filter 0.6s var(--easing-premium),
+                box-shadow 0.6s var(--easing-premium);
+        }
+
+        .header-wrapper.scrolled .nav-container {
+            margin-top: 1.25rem;   
+            max-width: 760px;
+            width: 90%;          
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(24px) saturate(170%);
+            -webkit-backdrop-filter: blur(24px) saturate(170%);
+            border: 1px solid var(--nav-border);
+            border-radius: 100px; 
+            box-shadow: 
+                0 1px 3px rgba(0, 0, 0, 0.02),
+                0 16px 40px rgba(11, 68, 227, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8); 
+        }
+
+        .navbar {
+            width: 100%;
+            padding: 1.1rem 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: padding 0.6s var(--easing-premium);
+        }
+
+        .header-wrapper.scrolled .navbar {
+            padding: 0.6rem 2rem;
+        }
+
+        .nav-logo img {
+            height: 38px;
+            display: block;
+        }
+
+        .nav-menu {
+            position: relative;
+            display: flex;
+            align-items: center;
+            list-style: none;
+            gap: 0.25rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-hover-pill {
+            position: absolute;
+            height: 160%;
+            background-color: rgba(11, 11, 12, 0.04);
+            border-radius: 50px;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0.92);
+            transition: 
+                left 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                width 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                opacity 0.25s ease,
+                transform 0.25s var(--easing-premium);
+        }
+
+        .nav-link {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+            padding: 0.45rem 1rem;
+            border-radius: 50px;
+            letter-spacing: -0.01em;
+            transition: color 0.25s ease, opacity 0.25s ease;
+        }
+
+        .nav-menu:hover .nav-link:not(:hover) {
+            opacity: 0.5;
+        }
+
+        .nav-menu:hover .nav-link:hover,
+        .nav-link.active {
+            color: var(--brand-blue);
+            opacity: 1 !important;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .btn-cta {
+            display: inline-block;
+            padding: 0.6rem 1.4rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            background-color: var(--brand-blue);
+            color: #ffffff !important;
+            border-radius: 50px; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            transition: background-color var(--transition-speed) ease, transform 0.15s ease, box-shadow var(--transition-speed) ease;
+        }
+
+        .btn-cta:hover {
+            background-color: #1c3bb5;
+            box-shadow: 0 4px 12px rgba(17, 68, 227, 0.15);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1010;
+        }
+
+        .hamburger {
+            display: block;
+            width: 18px;
+            height: 1.5px;
+            background-color: var(--text-charcoal);
+            position: relative;
+            transition: background-color var(--transition-speed) ease;
+        }
+
+        .hamburger::before,
+        .hamburger::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 1.5px;
+            background-color: var(--text-charcoal);
+            transition: transform var(--transition-speed) ease, top var(--transition-speed) ease;
+        }
+
+        .hamburger::before { top: -5px; }
+        .hamburger::after { top: 5px; }
+
+        .menu-toggle.is-active .hamburger {
+            background-color: transparent;
+        }
+
+        .menu-toggle.is-active .hamburger::before {
+            top: 0;
+            transform: rotate(45deg);
+        }
+
+        .menu-toggle.is-active .hamburger::after {
+            top: 0;
+            transform: rotate(-45deg);
+        }
+
+        /* ==========================================================================
+           CAREER HERO PORTFOLIO BANNER (Consistent Light Theme Card Split)
+           ========================================================================== */
+        .banner-hero-section {
+            padding: 160px 24px 60px 24px; /* Optimal headroom under the sticky navbar */
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .marketing-banner-card {
+            background-color: #ffffff; 
+            border-radius: 28px;
+            border: 1px solid rgba(0, 0, 0, 0.05); 
+            box-shadow: 0 25px 60px rgba(17, 68, 227, 0.04); 
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1.15fr 1fr;
+            min-height: 480px;
+            position: relative;
+        }
+
+        /* Left side content stack */
+        .banner-left-side {
+            padding: 56px 64px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            z-index: 10;
+            position: relative;
+        }
+
+        .slides-text-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .text-slide {
+            grid-area: 1 / 1;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            pointer-events: none;
+        }
+
+        .text-slide.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+            z-index: 2;
+        }
+
+        .banner-badge {
+            background: rgba(17, 68, 227, 0.05);
+            border: 1px solid rgba(17, 68, 227, 0.15);
+            color: var(--brand-blue);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .text-slide h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+            color: var(--text-charcoal);
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        .text-slide p {
+            color: var(--text-slate);
+            font-size: clamp(0.85rem, 0.95vw, 1rem);
+            line-height: 1.55;
+            max-width: 480px;
+        }
+
+        /* Progress Dots */
+        .banner-dots-indicators {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 32px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(0, 0, 0, 0.12);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                        background-color 0.4s ease, 
+                        border-radius 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .progress-dot:hover {
+            background-color: rgba(0, 0, 0, 0.35);
+        }
+
+        .progress-dot.active {
+            width: 28px;
+            border-radius: 100px;
+            background-color: var(--brand-blue);
+        }
+
+        /* Static CTA below text stack */
+        .banner-actions {
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Right side slide track */
+        .banner-right-side {
+            position: relative;
+            overflow: hidden;
+            background: #f1f5f9; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .graphic-shape-accent {
+            position: absolute;
+            width: 140%;
+            height: 140%;
+            background: linear-gradient(135deg, rgba(17, 68, 227, 0.05) 0%, rgba(0, 162, 255, 0.1) 100%); 
+            top: -20%;
+            left: 20%;
+            transform: rotate(-10deg);
+            z-index: 1;
+            clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+            transition: background 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .graphic-shape-sub {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.45);
+            top: 0;
+            left: 0;
+            z-index: 2;
+            clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 10% 100%);
+        }
+
+        .graphic-image-viewport {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr;
+            padding: 30px; /* Padding ensures the active mockup is completely centered */
+        }
+
+        /* Stack-Grid Image Wrapper for Infinite Circular Loop (No snappings) */
+        .image-slide-wrapper {
+            grid-area: 1 / 1;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            opacity: 0;
+            /* Animation positioning managed explicitly via JS inline-styles to bypass preflight issues */
+            transition: transform 0.95s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.95s ease;
+            z-index: 1;
+        }
+
+        /* Active Slide Centered Position */
+        .image-slide-wrapper.active {
+            pointer-events: auto;
+            z-index: 3;
+        }
+
+        .image-slide-wrapper .graphic-slide-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 18px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .diagonal-grid-layer {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.012) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 0, 0, 0.012) 1px, transparent 1px);
+            background-size: 24px 24px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           CAREER OPEN ROLES BOARD STYLES
+           ========================================================================== */
+        .positions-section {
+            padding: 80px 24px;
+            max-width: 1140px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section-header-styled {
+            margin-bottom: 48px;
+            max-width: 650px;
+        }
+
+        .section-header-styled h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(2.2rem, 3.8vw, 3rem);
+            font-weight: 400;
+            color: var(--text-charcoal);
+            line-height: 1.15;
+            margin-bottom: 16px;
+        }
+
+        .section-header-styled h2 strong {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--brand-blue);
+        }
+
+        .section-header-styled p {
+            color: var(--text-slate);
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .jobs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .job-card {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 20px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 220px;
+            transition: transform 0.4s var(--easing-premium), border-color 0.4s var(--easing-premium), box-shadow 0.4s var(--easing-premium);
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(17, 68, 227, 0.15);
+            box-shadow: 0 15px 35px rgba(17, 68, 227, 0.05);
+        }
+
+        .job-card-top h3 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-charcoal);
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .job-card:hover .job-card-top h3 {
+            color: var(--brand-blue);
+        }
+
+        .jobs-grid a {
+            text-decoration: none;
+        }
+
+        .job-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .job-tag {
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 100px;
+        }
+
+        .job-card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 16px;
+        }
+
+        .job-salary {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-slate);
+        }
+
+        .job-apply-link {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--brand-blue);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.3s ease;
+        }
+
+        .job-card:hover .job-apply-link {
+            gap: 10px;
+        }
+
+        /* ==========================================================================
+           EXCLUSIVE SYSTEM PORTAL OVERRIDES (Forces Aesthetic Alignment on Vercel)
+           ========================================================================== */
+        #applyModal {
+            font-family: var(--font-sans-jakarta) !important;
+        }
+
+        #modalCard h2 {
+            font-family: var(--font-serif) !important;
+            font-size: 1.65rem !important;
+            font-weight: 700 !important;
+            color: #0f172a !important;
+            line-height: 1.35 !important;
+        }
+
+        #modalCard p {
+            font-family: var(--font-sans-jakarta) !important;
+            font-size: 0.85rem !important;
+            font-weight: 600 !important;
+            color: #4b5563 !important;
+        }
+
+        #applyJobForm input,
+        #applyJobForm textarea {
+            font-family: var(--font-sans-jakarta) !important;
+            background-color: #f8fafc !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            padding: 14px 16px !important;
+            font-size: 0.88rem !important;
+            color: #0f172a !important;
+            transition: all 0.3s ease !important;
+        }
+
+        #applyJobForm input:focus,
+        #applyJobForm textarea:focus {
+            border-color: var(--brand-blue) !important;
+            background-color: #ffffff !important;
+            box-shadow: 0 0 0 3px rgba(17, 68, 227, 0.08) !important;
+        }
+
+        /* Minimal Circular close frame */
+        .modal-close-trigger {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50% !important;
+            background-color: #f1f5f9 !important;
+            border: 1px solid #e2e8f0 !important;
+            color: #64748b !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease !important;
+        }
+
+        .modal-close-trigger:hover {
+            background-color: #ff3333 !important;
+            color: #ffffff !important;
+            border-color: #ff3333 !important;
+            transform: rotate(90deg) !important;
+        }
+
+        /* High-End Dash Upload Area */
+        .file-upload-dashed-frame {
+            border: 1.5px dashed #cbd5e1 !important;
+            background-color: #f8fafc !important;
+            border-radius: 12px !important;
+            padding: 16px !important;
+            text-align: center;
+            transition: all 0.3s ease !important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .file-upload-dashed-frame:hover {
+            border-color: var(--brand-blue) !important;
+            background-color: #f1f5f9 !important;
+        }
+
+        /* Aesthetic Apply Action Button (Matches Screenshot Colors) */
+        #submitAppBtn {
+            font-family: var(--font-sans-jakarta) !important;
+            font-weight: 700 !important;
+            border-radius: 100px !important;
+            padding: 16px !important;
+            background-color: #2575c0 !important; 
+            color: #ffffff !important;
+            border: none !important;
+            font-size: 0.9rem !important;
+            cursor: pointer;
+            transition: all 0.3s ease !important;
+        }
+
+        #submitAppBtn:hover {
+            background-color: #1e60a5 !important;
+            box-shadow: 0 10px 20px rgba(37, 117, 192, 0.2) !important;
+        }
+
+        /* ==========================================================================
+           UPGRADED BRAND FOOTER SYSTEM
+           ========================================================================== */
+        .igp-premium-footer {
+            background-color: #070a13; /* Deep Midnight Slate Background */
+            color: #94a3b8;
+            font-family: var(--font-sans-jakarta);
+            border-top-left-radius: 48px;
+            border-top-right-radius: 48px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.15);
+            padding: 80px 40px 30px 40px;
+        }
+
+        .footer-grid-matrix {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr 0.8fr 1.2fr;
+            gap: 48px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 60px;
+        }
+
+        .footer-brand-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-brand-column p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #94a3b8;
+            max-width: 280px;
+        }
+
+        .footer-nav-heading {
+            color: #ffffff;
+            font-family: var(--font-sans-outfit);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .footer-links-ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .footer-links-ul a {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color 0.25s ease, transform 0.25s ease;
+            display: inline-block;
+        }
+
+        .footer-links-ul a:hover {
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+
+        .footer-social-icons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-social-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .footer-social-circle:hover {
+            border-color: #ffffff;
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* Premium Form Newsletter Overlay */
+        .footer-newsletter-box {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-newsletter-box p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #64748b;
+        }
+
+        .footer-newsletter-form {
+            display: flex;
+            gap: 8px;
+            position: relative;
+        }
+
+        .footer-newsletter-form input {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 30px !important;
+            padding: 12px 48px 12px 20px !important;
+            color: #ffffff !important;
+            font-size: 0.85rem !important;
+            outline: none !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .footer-newsletter-form input:focus {
+            border-color: var(--brand-blue) !important;
+            background-color: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        .footer-newsletter-btn {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background-color: var(--brand-blue);
+            border: none;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .footer-newsletter-btn:hover {
+            background-color: #1c3bb5;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .footer-base-row {
+            max-width: 1140px;
+            margin: 30px auto 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            color: #475569;
+            font-weight: 500;
+        }
+
+        /* Responsive Footer adaptations */
+        @media (max-width: 1024px) {
+            .footer-grid-matrix {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .igp-premium-footer {
+                padding: 60px 24px 20px 24px;
+                border-top-left-radius: 36px;
+                border-top-right-radius: 36px;
+            }
+            .footer-grid-matrix {
+                grid-template-columns: 1fr;
+                gap: 36px;
+                padding-bottom: 40px;
+            }
+            .footer-base-row {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+        }
+
+        /* ==========================================================================
+           RESPONSIVE CONFIGURATIONS
+           ========================================================================== */
+        @media (max-width: 992px) {
+            .marketing-banner-card {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+            .banner-left-side {
+                padding: 44px 32px;
+                order: 2;
+            }
+            .banner-right-side {
+                height: 320px;
+                order: 1;
+            }
+            .graphic-shape-accent {
+                left: 0;
+                transform: rotate(-3deg);
+                clip-path: none;
+                width: 100%;
+                height: 100%;
+                top: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-hover-pill { display: none !important; }
+            .nav-container { width: calc(100% - 2rem); margin: 1rem auto 0 auto; }
+            .navbar { padding: 1.1rem 1.5rem; }
+            .header-wrapper.scrolled .nav-container { width: calc(100% - 2rem); margin-top: 0.75rem; border-radius: 100px; }
+            .header-wrapper.scrolled .navbar { padding: 0.65rem 1.25rem; }
+            .menu-toggle { display: block; }
+            .nav-menu {
+                position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
+                background-color: #ffffff; flex-direction: column; justify-content: center;
+                align-items: center; gap: 2rem; transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1005;
+            }
+            .nav-menu.is-active { right: 0; }
+            .nav-link { font-size: 1.25rem; padding: 0.5rem 1.5rem; color: var(--text-slate); }
+            .nav-link.active { background-color: rgba(0, 0, 0, 0.05); color: var(--brand-blue); }
+            .btn-cta { display: none; }
+            .nav-menu .btn-cta-mobile { display: inline-block !important; margin-top: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tracker Cursor Elements -->
+    <div id="cursor-dot"><i class="fa-solid fa-bolt"></i></div>
+    <div id="cursor-ring"></div>
+
+    <!-- MAIN FLOATING NAVBAR (Identical to Home Page) -->
+    <header class="header-wrapper" id="header-wrapper">
+        <div class="nav-container">
+            <nav class="navbar">
+                <div class="nav-logo">
+                    <img src="igp logo.png" alt="logo" onerror="this.src='https://placehold.co/120x38/1144e3/ffffff?text=IGP+Logo'">
+                </div>
+
+                <ul class="nav-menu" id="nav-menu">
+                    <div class="nav-hover-pill" id="nav-hover-pill"></div>
+                    <li><a href="index.html#home" class="nav-link">Home</a></li>
+                    <li><a href="index.html#about" class="nav-link">About</a></li>
+                    <li><a href="index.html#service" class="nav-link">Service</a></li>
+                    <li><a href="career.html" class="nav-link active">Career</a></li>
+                    <li><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li><a href="index.html#team" class="nav-link">Team</a></li>
+                    <li class="btn-cta-mobile" style="display: none;">
+                        <a href="index.html#dialogue-form" class="btn-cta">Consultation</a>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    <a href="index.html#dialogue-form" class="btn-cta">Consultation</a>
+                    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">
+                        <span class="hamburger"></span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- UNIFIED MARKETING BANNER -->
+    <main class="banner-hero-section" id="home">
+        <div class="marketing-banner-card">
+            <div class="diagonal-grid-layer"></div>
+
+            <!-- Left Content Stage -->
+            <div class="banner-left-side">
+                <div class="slides-text-container">
+                    
+                    <!-- Slide 1 Text -->
+                    <div class="text-slide active" id="textSlide0">
+                        <span class="banner-badge">Join Our Mission</span>
+                        <h1>Shape India's Green Energy Revolution.</h1>
+                        <p>We build, maintain, and support sustainable infrastructure networks. Join a dedicated team delivering commercial-scale utility systems nationwide.</p>
+                    </div>
+
+                    <!-- Slide 2 Text -->
+                    <div class="text-slide" id="textSlide1">
+                        <span class="banner-badge">Engineering Roles</span>
+                        <h1>Build World-Class EV Solutions.</h1>
+                        <p>Engage with cutting-edge high-voltage hardware, localized diagnostic grids, and smart power networks that push transition boundaries.</p>
+                    </div>
+
+                    <!-- Slide 3 Text -->
+                    <div class="text-slide" id="textSlide2">
+                        <span class="banner-badge">Field Operations</span>
+                        <h1>Deploy Nationwide Green Networks.</h1>
+                        <p>Join our physical operation centers and onsite project deployment forces coordinating smart utility rollouts and solar array support networks.</p>
+                    </div>
+
+                    <!-- Slide 4 Text -->
+                    <div class="text-slide" id="textSlide3">
+                        <span class="banner-badge">Our Culture</span>
+                        <h1>Nurture Continuous Technical Growth.</h1>
+                        <p>We align technical training, safety certifications, and operations management milestones with clear career roadmaps built to scale.</p>
+                    </div>
+
+                </div>
+
+                <!-- Progress Dot Indicators -->
+                <div class="banner-dots-indicators">
+                    <span class="progress-dot active" data-slide-to="0" onclick="goToSlide(0)"></span>
+                    <span class="progress-dot" data-slide-to="1" onclick="goToSlide(1)"></span>
+                    <span class="progress-dot" data-slide-to="2" onclick="goToSlide(2)"></span>
+                    <span class="progress-dot" data-slide-to="3" onclick="goToSlide(3)"></span>
+                </div>
+
+                <!-- Static Non-shifting CTA Action -->
+                <div class="banner-actions">
+                    <a href="#openings" class="btn-cta magnetic" data-strength="15" style="padding: 0.8rem 2.2rem; font-size: 0.8rem;">View Open Positions →</a>
+                </div>
+            </div>
+
+            <!-- Right Visual Moving Canvas Stage -->
+            <div class="banner-right-side">
+                <div class="graphic-shape-accent" id="graphicShape"></div>
+                <div class="graphic-shape-sub"></div>
+                
+                <div class="graphic-image-viewport" id="viewportStage">
+                    <!-- Slide 1 Image -->
+                    <div class="image-slide-wrapper active" id="wrapperSlide0">
+                        <img class="graphic-slide-img" src="img/event.jpg" onerror="this.src='https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=600'" alt="Join Our Mission - Team Collaboration">
+                    </div>
+                    
+                    <!-- Slide 2 Image -->
+                    <div class="image-slide-wrapper" id="wrapperSlide1">
+                        <img class="graphic-slide-img" src="img/tamil.jpg" onerror="this.src='https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=600'" alt="Engineering Roles - EV Diagnostics">
+                    </div>
+                    
+                    <!-- Slide 3 Image -->
+                    <div class="image-slide-wrapper" id="wrapperSlide2">
+                        <img class="graphic-slide-img" src="img/event.jpg" onerror="this.src='https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=600'" alt="Field Operations - Solar Installation">
+                    </div>
+
+                    <!-- Slide 4 Image -->
+                    <div class="image-slide-wrapper" id="wrapperSlide3">
+                        <img class="graphic-slide-img" src="img/ceo.png" onerror="this.src='https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600'" alt="Continuous Technical Growth">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- INTERACTIVE JOB BOARD SECTION -->
+    <section class="positions-section" id="openings">
+        <header class="section-header-styled">
+            <h2>Our Open <strong>Opportunities</strong></h2>
+            <p>Work with forward-thinking technical minds on impactful, nationwide green mobility solutions. Browse our currently open technical positions below.</p>
+        </header>
+
+        <div class="jobs-grid">
+            <!-- Job Card 1 -->
+            <article class="job-card">
+                <div class="job-card-top">
+                    <div class="job-tags">
+                        <span class="job-tag">Engineering</span>
+                        <span class="job-tag">Full-Time</span>
+                        <span class="job-tag">Bengaluru</span>
+                    </div>
+                    <h3>Electrical Engineer - EV Infrastructure</h3>
+                </div>
+                <div class="job-card-bottom">
+                    <span class="job-salary">₹12L - ₹18L L.A.</span>
+                    <a href="javascript:void(0)" onclick="openApplyModal('Electrical Engineer - EV Infrastructure', 'Engineering')" class="job-apply-link">Apply Now <i class="fa-solid fa-arrow-right-long"></i></a>
+                </div>
+            </article>
+
+            <!-- Job Card 2 -->
+            <article class="job-card">
+                <div class="job-card-top">
+                    <div class="job-tags">
+                        <span class="job-tag">Operations</span>
+                        <span class="job-tag">On-Site</span>
+                        <span class="job-tag">Delhi NCR</span>
+                    </div>
+                    <h3>Project Manager - EV Deployment</h3>
+                </div>
+                <div class="job-card-bottom">
+                    <span class="job-salary">₹8L - ₹12L L.A.</span>
+                    <a href="javascript:void(0)" onclick="openApplyModal('Project Manager - EV Deployment', 'Operations')" class="job-apply-link">Apply Now <i class="fa-solid fa-arrow-right-long"></i></a>
+                </div>
+            </article>
+
+            <!-- Job Card 3 -->
+            <article class="job-card">
+                <div class="job-card-top">
+                    <div class="job-tags">
+                        <span class="job-tag">Grid Tech</span>
+                        <span class="job-tag">Full-Time</span>
+                        <span class="job-tag">Remote / Pune</span>
+                    </div>
+                    <h3>Smart Meter Systems Specialist</h3>
+                </div>
+                <div class="job-card-bottom">
+                    <span class="job-salary">₹6L - ₹9L L.A.</span>
+                    <a href="javascript:void(0)" onclick="openApplyModal('Smart Meter Systems Specialist', 'Grid Tech')" class="job-apply-link">Apply Now <i class="fa-solid fa-arrow-right-long"></i></a>
+                </div>
+            </article>
+
+            <!-- Job Card 4 -->
+            <article class="job-card">
+                <div class="job-card-top">
+                    <div class="job-tags">
+                        <span class="job-tag">Solar EPC</span>
+                        <span class="job-tag">Contract</span>
+                        <span class="job-tag">Chennai</span>
+                    </div>
+                    <h3>Solar Site Electrical Engineer</h3>
+                </div>
+                <div class="job-card-bottom">
+                    <span class="job-salary">₹7L - ₹10L L.A.</span>
+                    <a href="javascript:void(0)" onclick="openApplyModal('Solar Site Electrical Engineer', 'Solar EPC')" class="job-apply-link">Apply Now <i class="fa-solid fa-arrow-right-long"></i></a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE JOB APPLICATION MODAL (Matching Screenshot Layout) -->
+    <div id="applyModal" class="fixed inset-0 bg-black/40 backdrop-blur-md z-[2000] hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div id="modalCard" class="bg-white rounded-[28px] p-8 max-w-lg w-full shadow-2xl relative border border-slate-100 transform scale-95 opacity-0 transition-all duration-300 flex flex-col">
+            
+            <!-- Close Button Trigger Frame -->
+            <button onclick="closeApplyModal()" class="modal-close-trigger">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Dynamic Headers -->
+            <h2 id="modalJobTitle">Electrical Engineer - EV Infrastructure</h2>
+            <p id="modalJobDept" class="mt-1 mb-6">Department: Engineering</p>
+
+            <!-- Form Body Fields -->
+            <form id="applyJobForm" class="flex flex-col gap-4">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email Address" required>
+                <input type="tel" placeholder="Phone Number" required>
+                <input type="url" placeholder="LinkedIn Profile URL">
+                <textarea placeholder="Briefly introduce yourself and your relevant background" rows="3"></textarea>
+                
+                <!-- Custom Upload Dashed Box Layout -->
+                <div class="file-upload-dashed-frame relative" id="uploadArea">
+                    <input type="file" id="resumeFile" required class="absolute inset-0 opacity-0 cursor-pointer" accept=".pdf,.doc,.docx">
+                    <div class="flex items-center gap-2 text-slate-500 text-sm font-semibold pointer-events-none" id="uploadStatusText">
+                        <i class="fa-solid fa-cloud-arrow-up text-lg"></i>
+                        <span>Upload Resume (PDF, DOC, DOCX)</span>
+                    </div>
+                </div>
+                <div id="fileChosenText" class="text-xs text-slate-400 text-center mt-[-6px]">No file chosen</div>
+
+                <button type="submit" id="submitAppBtn">Submit Application</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- UPGRADED BRAND FOOTER SYSTEM -->
+    <footer class="igp-premium-footer">
+        <div class="footer-grid-matrix">
+            <!-- Brand Column -->
+            <div class="footer-brand-column">
+                <img src="igp logo.png" alt="IGP Logo" class="h-[38px] w-auto self-start" onerror="this.src='https://placehold.co/120x38/1144e3/ffffff?text=IGP+Logo'">
+                <p>Deploying technical field operations, certified engineers, and EV charging grids to enable sustainable mobility systems across India.</p>
+                <div class="footer-social-icons">
+                    <a href="https://www.instagram.com/igp.sparklehood/" class="footer-social-circle magnetic" data-strength="15"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/company/igp-by-sparklehood/" class="footer-social-circle magnetic" data-strength="15"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <!-- Sitemap links -->
+            <div>
+                <h4 class="footer-nav-heading">Explore</h4>
+                <ul class="footer-links-ul">
+                    <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#about">About Us</a></li>
+                    <li><a href="index.html#service">Services</a></li>
+                    <li><a href="career.html">Careers</a></li>
+                </ul>
+            </div>
+
+            <!-- Utility Column -->
+            <div>
+                <h4 class="footer-nav-heading">Solutions</h4>
+                <ul class="footer-links-ul">
+                    <li><a href="index.html#service">EV Charging</a></li>
+                    <li><a href="index.html#service">Solar EPC</a></li>
+                    <li><a href="index.html#service">Smart Metering</a></li>
+                    <li><a href="index.html#team">Our Team</a></li>
+                </ul>
+            </div>
+
+            <!-- Stay Connected Column -->
+            <div class="footer-newsletter-box">
+                <h4 class="footer-nav-heading">Stay Connected</h4>
+                <p>Subscribe to our quarterly newsletter for updates on India's evolving green grid network.</p>
+                <form class="footer-newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed successfully!'); this.reset();">
+                    <input type="email" placeholder="Your corporate email" required>
+                    <button type="submit" class="footer-newsletter-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Base Copyright Bar -->
+        <div class="footer-base-row">
+            <p>&copy; 2026 India Growth Partner. All rights reserved.</p>
+            <p class="flex items-center gap-1.5"><i class="fa-solid fa-bolt text-[#ffaa00]"></i> Empowering India's Technical Future</p>
+        </div>
+    </footer>
+
+    <!-- ==========================================================================
+         INTERACTIVE JAVASCRIPT LOGIC
+         ========================================================================== -->
+    <script>
+        // Soft Light cohesive brand gradients
+        const slideAccentGradients = [
+            "linear-gradient(135deg, rgba(17, 68, 227, 0.05) 0%, rgba(0, 162, 255, 0.1) 100%)",
+            "linear-gradient(135deg, rgba(30, 64, 175, 0.05) 0%, rgba(17, 24, 39, 0.05) 100%)",
+            "linear-gradient(135deg, rgba(17, 68, 227, 0.05) 0%, rgba(59, 130, 246, 0.1) 100%)",
+            "linear-gradient(135deg, rgba(15, 23, 42, 0.03) 0%, rgba(30, 41, 59, 0.05) 100%)"
+        ];
+
+        let currentActiveIdx = 0;
+        const totalSlidesCount = 4;
+        let slideTimer;
+
+        // Initialize state vectors for each slide wrapper on start to prevent displace bugs
+        function initSlideCoordinates() {
+            const allWrappers = document.querySelectorAll('.image-slide-wrapper');
+            allWrappers.forEach((wrapper, idx) => {
+                if (idx === 0) {
+                    wrapper.style.transform = 'translateX(0%) scale(1)';
+                    wrapper.style.opacity = '1';
+                } else {
+                    wrapper.style.transform = 'translateX(100%) scale(0.9)';
+                    wrapper.style.opacity = '0';
+                }
+            });
+        }
+        window.addEventListener('DOMContentLoaded', initSlideCoordinates);
+
+        // Infinite Circular Loop forward slide transition (Zero CSS specify conflicts)
+        function goToSlide(targetIdx) {
+            if (targetIdx === currentActiveIdx) return;
+
+            const previousIdx = currentActiveIdx;
+            currentActiveIdx = targetIdx;
+
+            // Determine if motion is moving forward or backward (For manual dots override)
+            const isForward = (targetIdx > previousIdx) || (targetIdx === 0 && previousIdx === totalSlidesCount - 1);
+
+            // 1. Swap active text frames
+            document.getElementById(`textSlide${previousIdx}`).classList.remove('active');
+            document.getElementById(`textSlide${targetIdx}`).classList.add('active');
+
+            // 2. Continuous Stack-Slide Image Animation (Pure Inline Controller)
+            const allWrappers = document.querySelectorAll('.image-slide-wrapper');
+            allWrappers.forEach((wrapper, idx) => {
+                // Clear old positions classes
+                wrapper.classList.remove('active', 'exit-left', 'exit-right');
+
+                if (idx === targetIdx) {
+                    // Set entry direction dynamically before translating it into center view
+                    wrapper.style.transition = 'none';
+                    wrapper.style.transform = isForward ? 'translateX(100%) scale(0.92)' : 'translateX(-100%) scale(0.92)';
+                    wrapper.offsetHeight; // Reflow trigger
+                    wrapper.style.transition = '';
+                    
+                    wrapper.classList.add('active');
+                    wrapper.style.transform = 'translateX(0%) scale(1)';
+                    wrapper.style.opacity = '1';
+                } else if (idx === previousIdx) {
+                    // Exit the old slide to the corresponding direction
+                    wrapper.style.transform = isForward ? 'translateX(-100%) scale(0.92)' : 'translateX(100%) scale(0.92)';
+                    wrapper.style.opacity = '0';
+                } else {
+                    // Instantly reset positions of un-active slides
+                    wrapper.style.transform = idx > targetIdx ? 'translateX(100%) scale(0.92)' : 'translateX(-100%) scale(0.92)';
+                    wrapper.style.opacity = '0';
+                }
+            });
+
+            // 3. Highlight current navigation dot
+            const dots = document.querySelectorAll('.progress-dot');
+            dots[previousIdx].classList.remove('active');
+            dots[targetIdx].classList.add('active');
+
+            // 4. Shift background abstract card gradient
+            const graphicShapeEl = document.getElementById('graphicShape');
+            if (graphicShapeEl) {
+                graphicShapeEl.style.background = slideAccentGradients[targetIdx];
+            }
+
+            resetSlideTimer();
+        }
+
+        function nextSlide() {
+            const nextIdx = (currentActiveIdx + 1) % totalSlidesCount;
+            goToSlide(nextIdx);
+        }
+
+        function resetSlideTimer() {
+            clearInterval(slideTimer);
+            slideTimer = setInterval(nextSlide, 4000); 
+        }
+
+        resetSlideTimer();
+
+        // --- Application Form Modal Functions ---
+        function openApplyModal(title, dept) {
+            const modal = document.getElementById('applyModal');
+            const card = document.getElementById('modalCard');
+            document.getElementById('modalJobTitle').innerText = title;
+            document.getElementById('modalJobDept').innerText = `Department: ${dept}`;
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Stop background scrolling
+
+            // Smooth backdrop fading & card scaling
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                card.classList.remove('scale-95', 'opacity-0');
+                card.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeApplyModal() {
+            const modal = document.getElementById('applyModal');
+            const card = document.getElementById('modalCard');
+            
+            card.classList.remove('scale-100', 'opacity-100');
+            card.classList.add('scale-95', 'opacity-0');
+            modal.classList.remove('opacity-100');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.getElementById('applyJobForm').reset();
+                document.getElementById('fileChosenText').innerText = "No file chosen";
+                document.getElementById('fileChosenText').classList.remove('text-blue-600', 'font-semibold');
+                document.body.style.overflow = ''; // Restore scrolling
+            }, 300);
+        }
+
+        // Track selected file attachment update
+        const fileInput = document.getElementById('resumeFile');
+        const fileLabel = document.getElementById('fileChosenText');
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                fileLabel.innerText = e.target.files[0].name;
+                fileLabel.classList.add('text-blue-600', 'font-semibold');
+            } else {
+                fileLabel.innerText = "No file chosen";
+                fileLabel.classList.remove('text-blue-600', 'font-semibold');
+            }
+        });
+
+        // Application Form Submission Event
+        const applyForm = document.getElementById('applyJobForm');
+        applyForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitAppBtn');
+            const originalText = submitBtn.innerText;
+
+            submitBtn.innerText = "Submitting...";
+            submitBtn.disabled = true;
+
+            // Simulating API loading states
+            setTimeout(() => {
+                submitBtn.innerText = "Application Submitted!";
+                submitBtn.style.backgroundColor = "#2ecc71";
+                
+                setTimeout(() => {
+                    closeApplyModal();
+                    submitBtn.innerText = originalText;
+                    submitBtn.style.backgroundColor = "";
+                    submitBtn.disabled = false;
+                }, 1500);
+            }, 1500);
+        });
+
+        // Close modal on click outside content
+        const modalBackdrop = document.getElementById('applyModal');
+        modalBackdrop.addEventListener('click', (e) => {
+            if (e.target === modalBackdrop) closeApplyModal();
+        });
+
+
+        // --- Header Scroll Tracking logic ---
+        const headerWrapper = document.getElementById('header-wrapper');
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('nav-menu');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const hoverPill = document.getElementById('nav-hover-pill');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                headerWrapper.classList.add('scrolled');
+            } else {
+                headerWrapper.classList.remove('scrolled');
+            }
+            resetToActive();
+        });
+
+        // --- Desktop Sliding Hover Pill Indicator ---
+        function positionPill(targetElement) {
+            if (!targetElement) return;
+            hoverPill.style.left = `${targetElement.offsetLeft}px`;
+            hoverPill.style.width = `${targetElement.offsetWidth}px`;
+            hoverPill.style.opacity = '1';
+            hoverPill.style.transform = 'scale(1)';
+        }
+
+        // Positioning logic
+        function resetToActive() {
+            const activeLink = document.querySelector('.nav-link.active');
+            if (activeLink && window.innerWidth > 768) {
+                positionPill(activeLink);
+            } else {
+                hoverPill.style.opacity = '0';
+                hoverPill.style.transform = 'scale(0.92)';
+            }
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', (e) => {
+                if (window.innerWidth > 768) {
+                    positionPill(e.target);
+                }
+            });
+        });
+
+        navMenu.addEventListener('mouseleave', () => {
+            resetToActive();
+        });
+
+        // --- Mobile Responsive Menu Drawer ---
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            menuToggle.classList.toggle('is-active');
+            navMenu.classList.toggle('is-active');
+            document.body.style.overflow = navMenu.classList.contains('is-active') ? 'hidden' : '';
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.forEach(item => item.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Mobile layout collapse
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.classList.remove('is-active');
+                navMenu.classList.remove('is-active');
+                document.body.style.overflow = '';
+                
+                resetToActive();
+            });
+        });
+
+        // Initialize nav layout highlights on startup
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(resetToActive, 100);
+        });
+        window.addEventListener('resize', resetToActive);
+
+        // --- Custom Interaction Tracker Cursor Support ---
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+
+        if (window.innerWidth > 1100 && dot && ring) {
+            window.addEventListener('mousemove', (e) => {
+                gsap.to(dot, { x: e.clientX - 10, y: e.clientY - 10, duration: 0.1 });
+                gsap.to(ring, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.2 });
+            });
+
+            const hoverables = document.querySelectorAll('a, button, .nav-logo, .progress-dot, .job-card, .footer-social-circle, .footer-newsletter-btn');
+            hoverables.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    gsap.to(ring, { scale: 1.4, background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.35)', duration: 0.3 });
+                });
+                el.addEventListener('mouseleave', () => {
+                    gsap.to(ring, { scale: 1, background: 'transparent', border: '1px solid rgba(255, 255, 255, 0.3)', duration: 0.3 });
+                });
+            });
+        }
+
+        // --- Magnetic Buttons Effect (Desktop Only) ---
+        if (window.innerWidth > 576 && typeof gsap !== "undefined") {
+            const magnets = document.querySelectorAll('.magnetic');
+            magnets.forEach((el) => {
+                el.addEventListener('mousemove', (e) => {
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    const str = el.getAttribute('data-strength') || 20;
+                    gsap.to(el, { x: x * (str / 100), y: y * (str / 100), duration: 0.6, ease: "power2.out" });
+                });
+                el.addEventListener('mouseleave', () => {
+                    gsap.to(el, { x: 0, y: 0, duration: 1, ease: "elastic.out(1, 0.3)" });
+                });
+            });
+        }
+    </script>
+</body>
+</html>
