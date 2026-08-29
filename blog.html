@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growth Hub - IGP by Sparklehood</title>
+
+    <!-- Fonts Import (Identical to Home/Career Stack) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&family=Roboto+Slab:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons and Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { corePlugins: { preflight: false } }
+    </script>
+    
+    <style>
+        /* ==========================================================================
+           BRAND DESIGN SYSTEM VARIABLES
+           ========================================================================== */
+        :root {
+            --bg-primary: #f8fafc; 
+            --bg-card: #ffffff;
+            --text-charcoal: #0b0b0c; 
+            --text-slate: #52525b; 
+            --brand-blue: #1144e3; 
+            --brand-blue-gradient: linear-gradient(135deg, #1144e3 0%, #1e40af 100%);
+            
+            /* Navbar Specifics */
+            --text-secondary: #64646f;
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --nav-border: rgba(0, 0, 0, 0.06);
+            --transition-speed: 0.3s;
+            --easing-premium: cubic-bezier(0.22, 1, 0.36, 1);
+
+            /* Typography Stacks */
+            --font-serif: 'Roboto Slab', Georgia, serif;
+            --font-display: 'Bricolage Grotesque', sans-serif;
+            --font-sans-jakarta: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; 
+            --font-sans-outfit: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif; 
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            -webkit-font-smoothing: antialiased; 
+        }
+
+        body { 
+            background-color: var(--bg-primary); 
+            font-family: var(--font-sans-jakarta);
+            overflow-x: hidden;
+            width: 100%;
+            color: var(--text-charcoal);
+        }
+
+        /* Desktop Custom Tracker Cursor Support */
+        @media (min-width: 1101px) {
+            * { cursor: none !important; }
+        }
+        #cursor-dot {
+            position: fixed;
+            top: 0; left: 0;
+            width: 20px; height: 20px;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            color: #ffffff;              
+            z-index: 99999;
+            pointer-events: none;
+            mix-blend-mode: difference;
+            display: none;
+        }
+        #cursor-ring {
+            position: fixed;
+            width: 40px; height: 40px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            z-index: 99998;
+            pointer-events: none;
+            transition: background 0.3s, border 0.3s;
+            display: none;
+        }
+        @media (min-width: 1101px) {
+            #cursor-dot { display: flex; }
+            #cursor-ring { display: block; }
+        }
+
+        /* ==========================================================================
+           NAVIGATION HEADER STYLES (Identical to Home/Career Pages)
+           ========================================================================== */
+        .header-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            pointer-events: none; 
+        }
+
+        .nav-container {
+            pointer-events: auto;
+            max-width: 1140px;
+            width: calc(100% - 4rem);
+            margin: 1.75rem auto 0 auto;
+            background-color: rgba(255, 255, 255, 0); 
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+            border: 1px solid transparent;
+            border-bottom: 1px solid rgba(11, 11, 12, 0.05);
+            border-radius: 0px;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+            transition: 
+                width 0.6s var(--easing-premium),
+                max-width 0.6s var(--easing-premium),
+                margin-top 0.6s var(--easing-premium),
+                border-radius 0.6s var(--easing-premium),
+                background-color 0.6s var(--easing-premium),
+                border-color 0.6s var(--easing-premium),
+                backdrop-filter 0.6s var(--easing-premium),
+                box-shadow 0.6s var(--easing-premium);
+        }
+
+        .header-wrapper.scrolled .nav-container {
+            margin-top: 1.25rem;   
+            max-width: 760px;
+            width: 90%;          
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(24px) saturate(170%);
+            -webkit-backdrop-filter: blur(24px) saturate(170%);
+            border: 1px solid var(--nav-border);
+            border-radius: 100px; 
+            box-shadow: 
+                0 1px 3px rgba(0, 0, 0, 0.02),
+                0 16px 40px rgba(11, 68, 227, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8); 
+        }
+
+        .navbar {
+            width: 100%;
+            padding: 1.1rem 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: padding 0.6s var(--easing-premium);
+        }
+
+        .header-wrapper.scrolled .navbar {
+            padding: 0.6rem 2rem;
+        }
+
+        .nav-logo img {
+            height: 38px;
+            display: block;
+        }
+
+        .nav-menu {
+            position: relative;
+            display: flex;
+            align-items: center;
+            list-style: none;
+            gap: 0.25rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-hover-pill {
+            position: absolute;
+            height: 160%;
+            background-color: rgba(11, 11, 12, 0.04);
+            border-radius: 50px;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0.92);
+            transition: 
+                left 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                width 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                opacity 0.25s ease,
+                transform 0.25s var(--easing-premium);
+        }
+
+        .nav-link {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+            padding: 0.45rem 1rem;
+            border-radius: 50px;
+            letter-spacing: -0.01em;
+            transition: color 0.25s ease, opacity 0.25s ease;
+        }
+
+        .nav-menu:hover .nav-link:not(:hover) {
+            opacity: 0.5;
+        }
+
+        .nav-menu:hover .nav-link:hover,
+        .nav-link.active {
+            color: var(--brand-blue);
+            opacity: 1 !important;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .btn-cta {
+            display: inline-block;
+            padding: 0.6rem 1.4rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            background-color: var(--brand-blue);
+            color: #ffffff !important;
+            border-radius: 50px; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            transition: background-color var(--transition-speed) ease, transform 0.15s ease, box-shadow var(--transition-speed) ease;
+        }
+
+        .btn-cta:hover {
+            background-color: #1c3bb5;
+            box-shadow: 0 4px 12px rgba(17, 68, 227, 0.15);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1010;
+        }
+
+        .hamburger {
+            display: block;
+            width: 18px;
+            height: 1.5px;
+            background-color: var(--text-charcoal);
+            position: relative;
+            transition: background-color var(--transition-speed) ease;
+        }
+
+        .hamburger::before,
+        .hamburger::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 1.5px;
+            background-color: var(--text-charcoal);
+            transition: transform var(--transition-speed) ease, top var(--transition-speed) ease;
+        }
+
+        .hamburger::before { top: -5px; }
+        .hamburger::after { top: 5px; }
+
+        .menu-toggle.is-active .hamburger {
+            background-color: transparent;
+        }
+
+        .menu-toggle.is-active .hamburger::before {
+            top: 0;
+            transform: rotate(45deg);
+        }
+
+        .menu-toggle.is-active .hamburger::after {
+            top: 0;
+            transform: rotate(-45deg);
+        }
+
+        /* ==========================================================================
+           H2S-STYLE MATRIX EDITORIAL HERO AREA
+           ========================================================================== */
+        .editorial-hero-wrapper {
+            padding: 150px 24px 40px 24px;
+            max-width: 1240px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Asymmetric 3-Column Layout */
+        .editorial-hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.8fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 1100px) {
+            .editorial-hero-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero-sidebar-stack.right-flank {
+                display: none; 
+            }
+        }
+
+        @media (max-width: 768px) {
+            .editorial-hero-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-sidebar-stack.left-flank {
+                display: none; 
+            }
+        }
+
+        /* Stacked Side Columns */
+        .hero-sidebar-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Reusable Card Elements with Hover Elevation */
+        .editorial-card {
+            background-color: #ffffff;
+            border-radius: 14px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(17, 68, 227, 0.01);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            transition: transform 0.4s var(--easing-premium), border-color 0.4s var(--easing-premium), box-shadow 0.4s var(--easing-premium);
+        }
+
+        .editorial-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(17, 68, 227, 0.12);
+            box-shadow: 0 16px 32px rgba(17, 68, 227, 0.05);
+        }
+
+        .card-img-holder {
+            position: relative;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+
+        .card-img-holder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            will-change: transform;
+            transition: transform 0.8s var(--easing-premium);
+        }
+
+        .editorial-card:hover .card-img-holder img {
+            transform: scale(1.04);
+        }
+
+        /* Spacing variations for card types */
+        .hero-giant-card .card-img-holder { height: 260px; }
+        .hero-small-card .card-img-holder { height: 110px; }
+
+        .editorial-card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .editorial-card-body h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 700;
+            line-height: 1.35;
+            color: var(--text-charcoal);
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .hero-giant-card .editorial-card-body h3 {
+            font-size: 1.2rem;
+        }
+
+        .editorial-card:hover .editorial-card-body h3 {
+            color: var(--brand-blue);
+        }
+
+        .editorial-card-body p {
+            color: var(--text-slate);
+            font-size: 0.8rem;
+            line-height: 1.45;
+            margin-bottom: 12px;
+        }
+
+        /* Post Metadata Bar styled precisely like the mockup */
+        .editorial-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.72rem;
+            color: #94a3b8;
+            font-weight: 600;
+            margin-top: auto;
+        }
+
+        /* ==========================================================================
+           H2S-STYLE BRAND BIO BOARD (MCKINSEY PORTAL ENHANCED EDITION)
+           ========================================================================== */
+        .brand-bio-section {
+            padding: 20px 24px;
+            max-width: 1240px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .brand-bio-card {
+            background: radial-gradient(circle at 10% 20%, rgba(17, 68, 227, 0.03) 0%, #ffffff 100%);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            border-radius: 28px !important; /* Premium curved corners */
+            padding: 56px 40px !important;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 20px 50px rgba(17, 68, 227, 0.03) !important;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s var(--easing-premium), border-color 0.4s var(--easing-premium), box-shadow 0.4s var(--easing-premium);
+        }
+
+        .brand-bio-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(17, 68, 227, 0.15);
+            box-shadow: 0 30px 60px rgba(17, 68, 227, 0.06) !important;
+        }
+
+        /* Top colored neon indicator line */
+        .brand-bio-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #1144e3 0%, #00d4ff 100%);
+        }
+
+        /* Technical vector pattern backdrop */
+        .brand-bio-card-pattern {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(17, 68, 227, 0.12) 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* McKinsey-style editorial heading */
+        .brand-bio-card h2 {
+            font-family: var(--font-display) !important;
+            font-size: clamp(1.4rem, 2.8vw, 2.2rem) !important;
+            font-weight: 700 !important;
+            line-height: 1.3 !important;
+            color: #0f172a !important;
+            max-width: 820px;
+            margin: 0 auto 12px auto;
+            position: relative;
+            z-index: 5;
+        }
+
+        .brand-bio-card .mckinsey-attribution {
+            font-size: 0.88rem;
+            color: #94a3b8;
+            font-weight: 600;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* McKinsey-style Button Container */
+        .mckinsey-pill-btn {
+            background-color: var(--brand-blue);
+            color: #ffffff !important;
+            font-family: var(--font-sans-jakarta);
+            font-weight: 700;
+            font-size: 0.88rem;
+            padding: 12px 14px 12px 24px;
+            border-radius: 100px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(17, 68, 227, 0.15);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            z-index: 5;
+            margin-bottom: 28px;
+        }
+
+        .mckinsey-pill-btn:hover {
+            background-color: #1c3bb5;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(17, 68, 227, 0.25);
+        }
+
+        .mckinsey-arrow-circle {
+            width: 28px;
+            height: 28px;
+            background-color: #ffffff;
+            color: var(--brand-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .mckinsey-pill-btn:hover .mckinsey-arrow-circle {
+            transform: rotate(45deg);
+        }
+
+        .brand-bio-socials {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Custom social link circles */
+        .bio-social-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .bio-social-icon:hover {
+            color: var(--brand-blue);
+            border-color: var(--brand-blue);
+            background-color: rgba(17, 68, 227, 0.02);
+            transform: translateY(-2px);
+        }
+
+        /* ==========================================================================
+           SUBSEQUENT GRID POSTS
+           ========================================================================== */
+        .lower-grid-section {
+            padding: 40px 24px 80px 24px;
+            max-width: 1240px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .lower-posts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .lower-posts-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .lower-posts-grid { grid-template-columns: 1fr; }
+        }
+
+        .lower-grid-card .card-img-holder {
+            height: 160px;
+        }
+
+        /* Clean "Load More" navigation button at page bottom */
+        .load-more-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 48px;
+        }
+
+        .load-more-btn {
+            background: none;
+            border: none;
+            color: var(--text-slate);
+            font-family: var(--font-sans-jakarta);
+            font-size: 0.82rem;
+            font-weight: 700;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .load-more-btn:hover {
+            color: var(--brand-blue);
+        }
+
+        .load-more-btn i {
+            font-size: 0.95rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(3px); }
+        }
+
+        /* ==========================================================================
+           SYSTEM PORTAL OVERRIDES (Bypasses preflight: false overrides on Vercel)
+           ========================================================================== */
+        #blogReaderModal {
+            font-family: var(--font-sans-jakarta) !important;
+        }
+
+        #readerTitle {
+            font-family: var(--font-serif) !important;
+            font-size: 1.85rem !important;
+            font-weight: 700 !important;
+            color: #0f172a !important;
+            line-height: 1.3 !important;
+        }
+
+        .modal-close-trigger {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50% !important;
+            background-color: #f1f5f9 !important;
+            border: 1px solid #e2e8f0 !important;
+            color: #64748b !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease !important;
+            z-index: 100;
+        }
+
+        .modal-close-trigger:hover {
+            background-color: #ff3333 !important;
+            color: #ffffff !important;
+            border-color: #ff3333 !important;
+            transform: rotate(90deg) !important;
+        }
+
+        /* Dynamic Article Scroll Progress Bar indicator */
+        .reader-scroll-progress-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: #f1f5f9;
+            z-index: 90;
+        }
+
+        #readerProgressBar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--brand-blue);
+            transition: width 0.1s ease;
+        }
+
+        /* Article body styling */
+        .reader-body-text {
+            color: #4b5563 !important;
+            line-height: 1.75 !important;
+            font-size: 0.95rem !important;
+            font-family: var(--font-sans-jakarta) !important;
+        }
+
+        .reader-body-text p {
+            margin-bottom: 1.25rem !important;
+        }
+
+        .reader-body-text blockquote {
+            border-left: 4px solid var(--brand-blue) !important;
+            padding-left: 16px !important;
+            color: #0f172a !important;
+            font-style: italic !important;
+            margin: 1.5rem 0 !important;
+        }
+
+        /* ==========================================================================
+           UPGRADED BRAND FOOTER SYSTEM
+           ========================================================================== */
+        .igp-premium-footer {
+            background-color: #070a13; /* Deep Midnight Slate Background */
+            color: #94a3b8;
+            font-family: var(--font-sans-jakarta);
+            border-top-left-radius: 48px;
+            border-top-right-radius: 48px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.15);
+            padding: 80px 40px 30px 40px;
+        }
+
+        .footer-grid-matrix {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr 0.8fr 1.2fr;
+            gap: 48px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 60px;
+        }
+
+        .footer-brand-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-brand-column p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #94a3b8;
+            max-width: 280px;
+        }
+
+        .footer-nav-heading {
+            color: #ffffff;
+            font-family: var(--font-sans-outfit);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .footer-links-ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .footer-links-ul a {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color 0.25s ease, transform 0.25s ease;
+            display: inline-block;
+        }
+
+        .footer-links-ul a:hover {
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+
+        .footer-social-icons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-social-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .footer-social-circle:hover {
+            border-color: #ffffff;
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* Premium Form Newsletter Overlay */
+        .footer-newsletter-box {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-newsletter-box p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #64748b;
+        }
+
+        .footer-newsletter-form {
+            display: flex;
+            gap: 8px;
+            position: relative;
+        }
+
+        .footer-newsletter-form input {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 30px !important;
+            padding: 12px 48px 12px 20px !important;
+            color: #ffffff !important;
+            font-size: 0.85rem !important;
+            outline: none !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .footer-newsletter-form input:focus {
+            border-color: var(--brand-blue) !important;
+            background-color: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        .footer-newsletter-btn {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background-color: var(--brand-blue);
+            border: none;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .footer-newsletter-btn:hover {
+            background-color: #1c3bb5;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .footer-base-row {
+            max-width: 1140px;
+            margin: 30px auto 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            color: #475569;
+            font-weight: 500;
+        }
+
+        /* Responsive Footer adaptations */
+        @media (max-width: 1024px) {
+            .footer-grid-matrix {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .igp-premium-footer {
+                padding: 60px 24px 20px 24px;
+                border-top-left-radius: 36px;
+                border-top-right-radius: 36px;
+            }
+            .footer-grid-matrix {
+                grid-template-columns: 1fr;
+                gap: 36px;
+                padding-bottom: 40px;
+            }
+            .footer-base-row {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tracker Cursor Elements -->
+    <div id="cursor-dot"><i class="fa-solid fa-bolt"></i></div>
+    <div id="cursor-ring"></div>
+
+    <!-- MAIN FLOATING NAVBAR (Identical to Home Page) -->
+    <header class="header-wrapper" id="header-wrapper">
+        <div class="nav-container">
+            <nav class="navbar">
+                <div class="nav-logo">
+                    <img src="igp logo.png" alt="logo" onerror="this.src='https://placehold.co/120x38/1144e3/ffffff?text=IGP+Logo'">
+                </div>
+
+                <ul class="nav-menu" id="nav-menu">
+                    <div class="nav-hover-pill" id="nav-hover-pill"></div>
+                    <li><a href="index.html#home" class="nav-link">Home</a></li>
+                    <li><a href="index.html#about" class="nav-link">About</a></li>
+                    <li><a href="index.html#service" class="nav-link">Service</a></li>
+                    <li><a href="career.html" class="nav-link">Career</a></li>
+                    <li><a href="blog.html" class="nav-link active">Blog</a></li>
+                    <li><a href="index.html#team" class="nav-link">Team</a></li>
+                    <li class="btn-cta-mobile" style="display: none;">
+                        <a href="index.html#dialogue-form" class="btn-cta">Consultation</a>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    <a href="index.html#dialogue-form" class="btn-cta">Consultation</a>
+                    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">
+                        <span class="hamburger"></span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ASYMMETRICAL 3-COLUMN HERO POST MATRIX -->
+    <section class="editorial-hero-wrapper">
+        <div class="editorial-hero-grid">
+            
+            <!-- Left Flank Stack -->
+            <div class="hero-sidebar-stack left-flank">
+                <!-- Card 1 -->
+                <a href="javascript:void(0)" class="editorial-card hero-small-card" 
+                   data-title="Guinness World Record™ EV Title Secured" 
+                   data-category="Corporate Milestone" 
+                   data-date="Sep 19, 2025" 
+                   data-readtime="2 min read" 
+                   data-content="We are thrilled to announce that IGP has secured a prestigious Guinness World Record™ title for the largest simultaneous deployment of electric vehicle charging systems. Our operations across regional transit hubs supported over thousands of active charging stations concurrently, validating our rapid deployment protocols and scaling models. Our execution teams engineered localized load diagnostic systems that ensured stable utility delivery throughout the record-setting run. <blockquote>Building India's green transport infrastructure requires absolute operational discipline and deep utility liaising protocols.</blockquote> This milestone proves our structural scalability and technical workforce execution capabilities at a national scale.">
+                    <div class="card-img-holder">
+                        <img src="img/tamil.jpg" onerror="this.src='https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=600'" alt="Guinness Record">
+                    </div>
+                    <div class="editorial-card-body">
+                        <h3>EV electrical Vehicles EV Title Secured</h3>
+                        <div class="editorial-meta-row">
+                            <span>Sep 19, 2025</span>
+                            <span>• 2 min read</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Card 2 -->
+                <a href="javascript:void(0)" class="editorial-card hero-small-card"
+                   data-title="Build Fest '25: A Journey of Clean Mobility" 
+                   data-category="Event Highlights" 
+                   data-date="Jul 3, 2025" 
+                   data-readtime="3 min read" 
+                   data-content="Build Fest '25 concluded with remarkable milestones, highlighting the rapid expansion and modern hardware adoption in India's green transport landscape. Hosted in collaboration with Sparklehood, the summit united over 200 EV charging hardware manufacturers, utility planners, and civil engineering partners. Our founders presented our standard smart-meter installations, showcasing how automation mitigates standard utility load bottlenecks on heavy commercial transport corridors. <blockquote>Innovation thrives where engineering meet logistical efficiency on the ground.</blockquote> The event consolidated critical business connections and outlined deployment timelines for the fiscal year.">
+                    <div class="card-img-holder">
+                        <img src="img/event.jpg" onerror="this.src='https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=600'" alt="Build Fest '25">
+                    </div>
+                    <div class="editorial-card-body">
+                        <h3>Build Fest '25: A Journey of Clean Mobility</h3>
+                        <div class="editorial-meta-row">
+                            <span>Jul 3, 2025</span>
+                            <span>• 3 min read</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Central Giant Featured Card -->
+            <a href="javascript:void(0)" class="editorial-card hero-giant-card"
+               data-title="How IGP is Building India's Bridge to EV-Powered Infrastructure" 
+               data-category="Infrastructure Report" 
+               data-date="Dec 3, 2025" 
+               data-readtime="5 min read" 
+               data-content="With electric vehicle adoption climbing at an exponential rate, India's secondary transit networks face critical grid challenges. This comprehensive report outlines how IGP is deploying advanced engineering field operations, smart metering infrastructure, and complete utility liaison support to safeguard national logistics channels. By analyzing high-density logistics corridors across 500+ Indian cities, we have formulated key deployment milestones that secure high-voltage DC system operations under heavy ambient temperature shifts and load loads. <blockquote>Our mission is clear: to deploy charging infrastructure that is robust, automated, and 100% resilient.</blockquote> Through our dedicated nationwide technician network, we ensure certified onsite operations with minimum overheads.">
+                <div class="card-img-holder">
+                    <img src="evindia/1.png" onerror="this.src='https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=1200'" alt="Gen AI Hackathon">
+                </div>
+                <div class="editorial-card-body">
+                    <h3>How IGP is Building India's Bridge to EV-Powered Infrastructure</h3>
+                    <p>An extensive, data-driven report exploring the execution timeline of dynamic grid loads, commercial DC fast charger deployments, and technical operations support across 500+ Indian cities.</p>
+                    <div class="editorial-meta-row" style="margin-top: 24px;">
+                        <span>Dec 3, 2025</span>
+                        <span>• 5 min read</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Right Flank Stack -->
+            <div class="hero-sidebar-stack right-flank">
+                <!-- Card 3 -->
+                <a href="javascript:void(0)" class="editorial-card hero-small-card"
+                   data-title="Spotlight on Engineers: Tech Leaders of the Year" 
+                   data-category="Our Team" 
+                   data-date="Jul 3, 2025" 
+                   data-readtime="2 min read" 
+                   data-content="Behind every successful commercial EV charging station and solar array is a dedicated team of engineers. This week, we shine our spotlight on our technical field operation leaders who coordinate high-voltage DC installations across challenging topographical zones. Discover how certified technical training, localized project safety clearances, and strict operation workflows help our engineers scale sustainable networks while protecting zero-accident parameters. <blockquote>True engineering lies in solving the physical constraints of deployment.</blockquote> Learn more about our technical path and workforce operations milestones.">
+                    <div class="card-img-holder">
+                        <img src="img/tamil.jpg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600'" alt="Meet the Winners">
+                    </div>
+                    <div class="editorial-card-body">
+                        <h3>Spotlight on Engineers: Tech Leaders of the Year</h3>
+                        <div class="editorial-meta-row">
+                            <span>Jul 3, 2025</span>
+                            <span>• 2 min read</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Card 4 -->
+                <a href="javascript:void(0)" class="editorial-card hero-small-card"
+                   data-title="Smart Grid Technology: Catalyzing Utility Expansion" 
+                   data-category="Grid Technology" 
+                   data-date="Mar 5, 2025" 
+                   data-readtime="4 min read" 
+                   data-content="The transition to sustainable mobility requires more than raw power—it demands intelligent, automated utility management. This paper breaks down our recent smart metering deployments, outlining how local automation protects high-density charging hubs against unexpected grid fluctuations. Through active utility liaison work and real-time remote diagnostics, we are building a grid-resilient future for commercial centers. <blockquote>Smart grids are the brains that direct the raw brawn of high-speed charging nodes.</blockquote> Learn more about our advanced monitoring technology.">
+                    <div class="card-img-holder">
+                        <img src="evindia/5.png" onerror="this.src='https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=600'" alt="Web3 Hackathon">
+                    </div>
+                    <div class="editorial-card-body">
+                        <h3>Smart Grid Technology: Catalyzing Utility Expansion</h3>
+                        <div class="editorial-meta-row">
+                            <span>Mar 5, 2025</span>
+                            <span>• 4 min read</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CENTERED BRAND BIO STATION (McKinsey Style Enhanced Layout) -->
+    <section class="brand-bio-section">
+        <div class="brand-bio-card">
+            <!-- Background dot pattern inside card container -->
+            <div class="brand-bio-card-pattern"></div>
+
+            <!-- Logo of the corporate identity -->
+            <img src="igp logo.png" alt="IGP Logo" class="h-[44px] w-auto relative z-10 transition-transform duration-300 hover:scale-105" onerror="this.src='https://placehold.co/120x38/1144e3/ffffff?text=IGP+Logo'">
+            
+            <!-- McKinsey Editorial Quote Section -->
+            <h2 class="relative z-10 mt-6">Innovative companies are <span class="text-[#1144e3]">10x faster</span> in product development and <span class="text-[#1144e3]">6x better</span> at scaling new ventures</h2>
+            <span class="mckinsey-attribution">— by McKinsey Report</span>
+
+            <!-- McKinsey Style Pill Action Button with rotate arrow on hover -->
+            <a href="career.html" class="mckinsey-pill-btn relative z-10">
+                <span>Experience the impact firsthand.</span>
+                <span class="mckinsey-arrow-circle"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+            </a>
+
+            <!-- Aligned Social connections -->
+            <div class="brand-bio-socials relative z-10">
+                <a href="https://www.linkedin.com/company/igp-by-sparklehood/" class="bio-social-icon magnetic" data-strength="15"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://www.instagram.com/igp.sparklehood/" class="bio-social-icon magnetic" data-strength="15"><i class="fa-brands fa-instagram"></i></a>
+                <a href="mailto:team@sparklehood.com" class="bio-social-icon magnetic" data-strength="15"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SUBSEQUENT EDITORIAL GRID POSTS -->
+    <section class="lower-grid-section">
+        <div class="lower-posts-grid">
+            
+            <!-- Grid Card 1 -->
+            <a href="javascript:void(0)" class="editorial-card lower-grid-card"
+               data-title="Decarbonizing Industrial Logistics with Rooftop Solar EPC" 
+               data-category="Solar EPC" 
+               data-date="Dec 28, 2024" 
+               data-readtime="3 min read" 
+               data-content="Heavy manufacturing hubs are facing mounting pressure to meet global carbon targets. Our latest solar EPC installations demonstrate how rooftop solar arrays can offset over 35% of an industrial complex's active power requirement. By introducing automated local grid tie-ins and structural support networks, our civil team has simplified solar deployment across regional logistics hubs. <blockquote>The sun provides clean, scalable energy that secures long-term operational resilience.</blockquote> Discover how we integrate solar assets with active charging grids.">
+                <div class="card-img-holder">
+                    <img src="evindia/3.png" onerror="this.src='https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=600'" alt="Teams Emerged">
+                </div>
+                <div class="editorial-card-body">
+                    <h3>Decarbonizing Industrial Logistics with Rooftop Solar EPC</h3>
+                    <div class="editorial-meta-row">
+                        <span>Dec 28, 2024</span>
+                        <span>• 3 min read</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Grid Card 2 -->
+            <a href="javascript:void(0)" class="editorial-card lower-grid-card"
+               data-title="Operational Benchmarks: 99.4% Grid Uptime Guarantee" 
+               data-category="Operations" 
+               data-date="Dec 28, 2024" 
+               data-readtime="4 min read" 
+               data-content="Maintaining zero-fault parameters on high-speed commercial charging networks requires rigorous maintenance protocols. By coordinating real-time remote diagnostics with localized operations engineers, IGP has achieved an average grid uptime ratio of 99.4%. Read how our localized diagnostic checkpoints, automated cooling fail-safes, and 24/7 call centers keep India's fleets rolling. <blockquote>Every minute of utility downtime represents directly lost commerce for fleet operators.</blockquote> Our preventive maintenance is engineered to stop failures before they start.">
+                <div class="card-img-holder">
+                    <img src="img/Tamil.jpg" onerror="this.src='https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=600'" alt="Change with AI">
+                </div>
+                <div class="editorial-card-body">
+                    <h3>Operational Benchmarks: 99.4% Grid Uptime Guarantee</h3>
+                    <div class="editorial-meta-row">
+                        <span>Dec 28, 2024</span>
+                        <span>• 4 min read</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Grid Card 3 -->
+            <a href="javascript:void(0)" class="editorial-card lower-grid-card"
+               data-title="Smart Meter Systems: Overcoming Utility Obstacles" 
+               data-category="Utility Liaison" 
+               data-date="Dec 5, 2024" 
+               data-readtime="3 min read" 
+               data-content="Utility load approvals and complex grid connectivity regulations remain a major bottleneck for heavy commercial transport operators. Our specialised utility liaison team has bridged this gap, deploying pre-engineered smart meter stations that conform directly to local state utility standards. Discover how we reduce utility connection times from months to weeks. <blockquote>Grid tape must never slow down the progress of clean transport.</blockquote> Read our regulatory compliance guide.">
+                <div class="card-img-holder">
+                    <img src="evindia/2.png" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600'" alt="A Journey of Empowerment">
+                </div>
+                <div class="editorial-card-body">
+                    <h3>Smart Meter Systems: Overcoming Utility Obstacles</h3>
+                    <div class="editorial-meta-row">
+                        <span>Dec 5, 2024</span>
+                        <span>• 3 min read</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- Dynamic Load More Posts controller -->
+        <div class="load-more-container">
+            <button class="load-more-btn" onclick="alert('Loading more insights...')">
+                <span>Load More Insights</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- PREMIUM GLASSMORPHIC BLOG READER MODAL (Consistent with Form designs) -->
+    <div id="blogReaderModal" class="fixed inset-0 bg-black/40 backdrop-blur-md z-[2000] hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div id="blogReaderCard" class="bg-white rounded-[28px] max-w-2xl w-full shadow-2xl relative border border-slate-100 transform scale-95 opacity-0 transition-all duration-300 flex flex-col max-h-[85vh] overflow-y-auto">
+            
+            <!-- Dynamic Scroll progress bar -->
+            <div class="reader-scroll-progress-container">
+                <div id="readerProgressBar"></div>
+            </div>
+
+            <!-- Modal Content Padding -->
+            <div class="p-8 flex flex-col">
+                <!-- Close Button Frame -->
+                <button onclick="closeBlogReaderModal()" class="modal-close-trigger">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <!-- Dynamic Category Tag -->
+                <span id="readerCategory" class="blog-meta-badge self-start">Category</span>
+
+                <!-- Dynamic Title -->
+                <h2 id="readerTitle" class="mt-2 pr-12">Dynamic Title</h2>
+                
+                <!-- Dynamic Post Meta Data Row -->
+                <div class="flex items-center gap-4 text-xs text-slate-400 font-semibold mt-3 mb-6">
+                    <span id="readerDate"><i class="fa-regular fa-calendar-days mr-1.5"></i>Dec 3, 2025</span>
+                    <span id="readerTime"><i class="fa-regular fa-clock mr-1.5"></i>5 min read</span>
+                </div>
+
+                <!-- Dynamic Mockup Image -->
+                <div class="rounded-xl overflow-hidden mb-6 h-[260px] flex-shrink-0">
+                    <img id="readerImage" src="" alt="Blog Backdrop" class="w-full h-full object-cover">
+                </div>
+
+                <!-- Dynamic Rich Body Text Paragraph -->
+                <div id="readerContent" class="reader-body-text pr-2">
+                    <!-- Content injected dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UPGRADED BRAND FOOTER SYSTEM -->
+    <footer class="igp-premium-footer">
+        <div class="footer-grid-matrix">
+            <!-- Brand Column -->
+            <div class="footer-brand-column">
+                <img src="igp logo.png" alt="IGP Logo" class="h-[38px] w-auto self-start" onerror="this.src='https://placehold.co/120x38/1144e3/ffffff?text=IGP+Logo'">
+                <p>Deploying technical field operations, certified engineers, and EV charging grids to enable sustainable mobility systems across India.</p>
+                <div class="footer-social-icons">
+                    <a href="https://www.instagram.com/igp.sparklehood/" class="footer-social-circle magnetic" data-strength="15"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/company/igp-by-sparklehood/" class="footer-social-circle magnetic" data-strength="15"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <!-- Sitemap links -->
+            <div>
+                <h4 class="footer-nav-heading">Explore</h4>
+                <ul class="footer-links-ul">
+                    <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#about">About Us</a></li>
+                    <li><a href="index.html#service">Services</a></li>
+                    <li><a href="career.html">Careers</a></li>
+                </ul>
+            </div>
+
+            <!-- Utility Column -->
+            <div>
+                <h4 class="footer-nav-heading">Solutions</h4>
+                <ul class="footer-links-ul">
+                    <li><a href="index.html#service">EV Charging</a></li>
+                    <li><a href="index.html#service">Solar EPC</a></li>
+                    <li><a href="index.html#service">Smart Metering</a></li>
+                    <li><a href="index.html#team">Our Team</a></li>
+                </ul>
+            </div>
+
+            <!-- Stay Connected Column -->
+            <div class="footer-newsletter-box">
+                <h4 class="footer-nav-heading">Stay Connected</h4>
+                <p>Subscribe to our quarterly newsletter for updates on India's evolving green grid network.</p>
+                <form class="footer-newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed successfully!'); this.reset();">
+                    <input type="email" placeholder="Your corporate email" required>
+                    <button type="submit" class="footer-newsletter-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Base Copyright Bar -->
+        <div class="footer-base-row">
+            <p>&copy; 2026 India Growth Partner. All rights reserved.</p>
+            <p class="flex items-center gap-1.5"><i class="fa-solid fa-bolt text-[#ffaa00]"></i> Empowering India's Technical Future</p>
+        </div>
+    </footer>
+
+    <!-- ==========================================================================
+         INTERACTIVE JAVASCRIPT LOGIC
+         ========================================================================== -->
+    <script>
+        // --- Dynamic Blog Reader Modal Controllers ---
+        function openBlogReaderModal(title, date, readtime, category, img, content) {
+            const modal = document.getElementById('blogReaderModal');
+            const card = document.getElementById('blogReaderCard');
+            const progressBar = document.getElementById('readerProgressBar');
+            
+            // Populate content vectors dynamically
+            document.getElementById('readerTitle').innerText = title;
+            document.getElementById('readerDate').innerHTML = `<i class="fa-regular fa-calendar-days mr-1.5"></i>${date}`;
+            document.getElementById('readerTime').innerHTML = `<i class="fa-regular fa-clock mr-1.5"></i>${readtime}`;
+            document.getElementById('readerCategory').innerText = category;
+            document.getElementById('readerImage').src = img;
+            document.getElementById('readerContent').innerHTML = content; // Injected as parsed rich html structure
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Stop background scrolling
+            
+            // Reset Progress Bar state on start
+            if (progressBar) progressBar.style.width = '0%';
+
+            // Smooth backdrop fading & scaling transitions
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                card.classList.remove('scale-95', 'opacity-0');
+                card.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeBlogReaderModal() {
+            const modal = document.getElementById('blogReaderModal');
+            const card = document.getElementById('blogReaderCard');
+            
+            card.classList.remove('scale-100', 'opacity-100');
+            card.classList.add('scale-95', 'opacity-0');
+            modal.classList.remove('opacity-100');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = ''; // Restore page scrolling
+            }, 300);
+        }
+
+        // Track internal modal container scrolling to update progress bar dynamically
+        const readerCardEl = document.getElementById('blogReaderCard');
+        const progressBarEl = document.getElementById('readerProgressBar');
+
+        if (readerCardEl && progressBarEl) {
+            readerCardEl.addEventListener('scroll', () => {
+                const totalScrollableHeight = readerCardEl.scrollHeight - readerCardEl.clientHeight;
+                if (totalScrollableHeight > 0) {
+                    const scrollPercentage = (readerCardEl.scrollTop / totalScrollableHeight) * 100;
+                    progressBarEl.style.width = `${scrollPercentage}%`;
+                }
+            });
+        }
+
+        // Connect editorial card clicks dynamically to our Modal Controller
+        document.addEventListener("DOMContentLoaded", () => {
+            const editorialCards = document.querySelectorAll('.editorial-card');
+            editorialCards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // Prevent any browser default actions
+                    e.preventDefault();
+                    
+                    const title = card.getAttribute('data-title');
+                    const category = card.getAttribute('data-category');
+                    const date = card.getAttribute('data-date');
+                    const readtime = card.getAttribute('data-readtime');
+                    const content = card.getAttribute('data-content');
+                    const img = card.querySelector('img').src;
+
+                    // Open popup dynamically
+                    openBlogReaderModal(title, date, readtime, category, img, content);
+                });
+            });
+        });
+
+        // Close modal on background overlay click
+        const readerBackdrop = document.getElementById('blogReaderModal');
+        readerBackdrop.addEventListener('click', (e) => {
+            if (e.target === readerBackdrop) closeBlogReaderModal();
+        });
+
+
+        // --- Header Scroll Tracking logic ---
+        const headerWrapper = document.getElementById('header-wrapper');
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('nav-menu');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const hoverPill = document.getElementById('nav-hover-pill');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                headerWrapper.classList.add('scrolled');
+            } else {
+                headerWrapper.classList.remove('scrolled');
+            }
+            resetToActive();
+        });
+
+        // --- Desktop Sliding Hover Pill Indicator ---
+        function positionPill(targetElement) {
+            if (!targetElement) return;
+            hoverPill.style.left = `${targetElement.offsetLeft}px`;
+            hoverPill.style.width = `${targetElement.offsetWidth}px`;
+            hoverPill.style.opacity = '1';
+            hoverPill.style.transform = 'scale(1)';
+        }
+
+        function resetToActive() {
+            const activeLink = document.querySelector('.nav-link.active');
+            if (activeLink && window.innerWidth > 768) {
+                positionPill(activeLink);
+            } else {
+                hoverPill.style.opacity = '0';
+                hoverPill.style.transform = 'scale(0.92)';
+            }
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', (e) => {
+                if (window.innerWidth > 768) {
+                    positionPill(e.target);
+                }
+            });
+        });
+
+        navMenu.addEventListener('mouseleave', () => {
+            resetToActive();
+        });
+
+        // --- Mobile Responsive Menu Drawer ---
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            menuToggle.classList.toggle('is-active');
+            navMenu.classList.toggle('is-active');
+            document.body.style.overflow = navMenu.classList.contains('is-active') ? 'hidden' : '';
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.forEach(item => item.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Mobile layout collapse
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.classList.remove('is-active');
+                navMenu.classList.remove('is-active');
+                document.body.style.overflow = '';
+                
+                resetToActive();
+            });
+        });
+
+        // Initialize nav layout highlights on startup
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(resetToActive, 100);
+        });
+        window.addEventListener('resize', resetToActive);
+
+        // --- Custom Interaction Tracker Cursor Support ---
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+
+        if (window.innerWidth > 1100 && dot && ring) {
+            window.addEventListener('mousemove', (e) => {
+                gsap.to(dot, { x: e.clientX - 10, y: e.clientY - 10, duration: 0.1 });
+                gsap.to(ring, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.2 });
+            });
+
+            const hoverables = document.querySelectorAll('a, button, .nav-logo, .editorial-card, .footer-social-circle, .bio-social-icon, .footer-newsletter-btn, .load-more-btn');
+            hoverables.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    gsap.to(ring, { scale: 1.4, background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.35)', duration: 0.3 });
+                });
+                el.addEventListener('mouseleave', () => {
+                    gsap.to(ring, { scale: 1, background: 'transparent', border: '1px solid rgba(255, 255, 255, 0.3)', duration: 0.3 });
+                });
+            });
+        }
+
+        // --- Magnetic Buttons Effect (Desktop Only) ---
+        if (window.innerWidth > 576 && typeof gsap !== "undefined") {
+            const magnets = document.querySelectorAll('.magnetic');
+            magnets.forEach((el) => {
+                el.addEventListener('mousemove', (e) => {
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    const str = el.getAttribute('data-strength') || 20;
+                    gsap.to(el, { x: x * (str / 100), y: y * (str / 100), duration: 0.6, ease: "power2.out" });
+                });
+                el.addEventListener('mouseleave', () => {
+                    gsap.to(el, { x: 0, y: 0, duration: 1, ease: "elastic.out(1, 0.3)" });
+                });
+            });
+        }
+    </script>
+</body>
+</html>
