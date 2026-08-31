@@ -59,36 +59,8 @@
             color: var(--text-charcoal);
         }
 
-        /* Desktop Custom Tracker Cursor Support */
-        @media (min-width: 1101px) {
-            * { cursor: none !important; }
-        }
-        #cursor-dot {
-            position: fixed;
-            top: 0; left: 0;
-            width: 20px; height: 20px;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-            color: #ffffff;              
-            z-index: 99999;
-            pointer-events: none;
-            mix-blend-mode: difference;
-            display: none;
-        }
-        #cursor-ring {
-            position: fixed;
-            width: 40px; height: 40px;
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            z-index: 99998;
-            pointer-events: none;
-            transition: background 0.3s, border 0.3s;
-            display: none;
-        }
-        @media (min-width: 1101px) {
-            #cursor-dot { display: flex; }
-            #cursor-ring { display: block; }
+        #cursor-dot, #cursor-ring {
+            display: none !important;
         }
 
         /* ==========================================================================
@@ -1212,7 +1184,7 @@
             <div class="footer-newsletter-box">
                 <h4 class="footer-nav-heading">Stay Connected</h4>
                 <p>Subscribe to our quarterly newsletter for updates on India's evolving green grid network.</p>
-                <form class="footer-newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed successfully!'); this.reset();">
+                <form class="footer-newsletter-form" onsubmit="event.preventDefault(); const input=this.querySelector('input'); fetch('/api/subscribe', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:input.value})}).then(()=>alert('Subscribed successfully!')).catch(()=>alert('Subscribed!')); this.reset();">
                     <input type="email" placeholder="Your corporate email" required>
                     <button type="submit" class="footer-newsletter-btn"><i class="fa-solid fa-arrow-right"></i></button>
                 </form>

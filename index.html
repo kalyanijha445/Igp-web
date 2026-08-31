@@ -71,10 +71,6 @@
             -webkit-font-smoothing: antialiased; 
         }
 
-        @media (min-width: 1101px) {
-            * { cursor: none !important; }
-        }
-
         body { 
             background-color: var(--bg-primary); 
             color: var(--text-heading);
@@ -83,33 +79,8 @@
             width: 100%;
         }
 
-        /* --- Premium GSAP Track Cursor Styles --- */
-        #cursor-dot {
-            position: fixed;
-            top: 0; left: 0;
-            width: 20px; height: 20px;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-            color: #ffffff;              
-            z-index: 99999;
-            pointer-events: none;
-            mix-blend-mode: difference;
-            display: none;
-        }
-        #cursor-ring {
-            position: fixed;
-            width: 40px; height: 40px;
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            z-index: 99998;
-            pointer-events: none;
-            transition: background 0.3s, border 0.3s;
-            display: none;
-        }
-        @media (min-width: 1101px) {
-            #cursor-dot { display: flex; }
-            #cursor-ring { display: block; }
+        #cursor-dot, #cursor-ring {
+            display: none !important;
         }
 
         /* --- NAVIGATION HEADER (f.html Style) --- */
@@ -2994,8 +2965,6 @@
       const form = document.getElementById("consultation-form-data");
       const submitBtn = document.getElementById("transmit-btn");
       
-      const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwVdCcqK9a09fe0WYY-jcQIT7hXhSVEN0c16MdEIG6aK4bhjNGC3L0b2SKGVbDDXtZp/exec";
-      
       if (form) {
         form.addEventListener("submit", (e) => {
           e.preventDefault(); 
@@ -3009,31 +2978,33 @@
           submitBtn.style.cursor = "wait";
 
           const payload = {
-            formType: "consultation",
             name: form.querySelector('input[placeholder="Name"]').value,
             email: form.querySelector('input[placeholder="Email-Id"]').value,
             phone: form.querySelector('input[placeholder="Phone no"]').value,
-            suggestion: form.querySelector('textarea').value
+            query: form.querySelector('textarea').value
           };
 
-          fetch(GOOGLE_SCRIPT_URL, {
+          fetch('/api/leads', {
             method: "POST",
-            mode: "no-cors", 
-            cache: "no-cache",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
           })
-          .then(() => {
-            submitBtn.innerText = "Transmitted";
-            submitBtn.style.backgroundColor = "#2ecc71"; 
-            
-            setTimeout(() => {
-              form.reset();
-              submitBtn.innerText = originalText;
-              submitBtn.style.backgroundColor = originalBg;
-              submitBtn.style.color = "#000000";
-              submitBtn.style.cursor = "pointer";
-            }, 3000);
+          .then(res => res.json())
+          .then((data) => {
+            if (data.success) {
+              submitBtn.innerText = "Transmitted & Confirmed!";
+              submitBtn.style.backgroundColor = "#2ecc71"; 
+              
+              setTimeout(() => {
+                form.reset();
+                submitBtn.innerText = originalText;
+                submitBtn.style.backgroundColor = originalBg;
+                submitBtn.style.color = "#000000";
+                submitBtn.style.cursor = "pointer";
+              }, 3000);
+            } else {
+              throw new Error(data.error || "Submission failed");
+            }
           })
           .catch(error => {
             console.error("Transmission Error: ", error);
@@ -3043,6 +3014,11 @@
               submitBtn.innerText = originalText;
               submitBtn.style.backgroundColor = originalBg;
               submitBtn.style.color = "#000000";
+              submitBtn.style.cursor = "pointer";
+            }, 3000);
+          });
+        });
+      }
               submitBtn.style.cursor = "pointer";
             }, 3000);
           });

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IGP Admin CRM Portal | India Growth Partner</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- ==========================================
+       1. LOGIN OVERLAY SCREEN
+       ========================================== -->
+  <div id="loginScreen" class="login-wrapper">
+    <div class="login-card">
+      <div class="login-header">
+        <img src="igp logo.png" alt="IGP Logo" class="login-logo" onerror="this.src='https://placehold.co/140x45/1144e3/ffffff?text=IGP+Logo'">
+        <h2>Admin CRM Portal</h2>
+        <p>India Growth Partner by Sparklehood</p>
+      </div>
+
+      <div id="loginErrorAlert" class="alert-box alert-error hidden">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span id="loginErrorMsg">Invalid email or password</span>
+      </div>
+
+      <form id="loginForm" class="login-form">
+        <div class="input-group">
+          <label for="loginEmail">Admin Email</label>
+          <div class="input-field-wrapper">
+            <i class="fa-solid fa-envelope input-icon"></i>
+            <input type="email" id="loginEmail" placeholder="admin@sparklehood.com" required autocomplete="username">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="loginPassword">Password</label>
+          <div class="input-field-wrapper">
+            <i class="fa-solid fa-lock input-icon"></i>
+            <input type="password" id="loginPassword" placeholder="••••••••••••" required autocomplete="current-password">
+            <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('loginPassword', this)">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" id="loginSubmitBtn" class="btn-primary login-btn">
+          <span class="btn-text">Log In to CRM</span>
+          <i class="fa-solid fa-arrow-right btn-icon"></i>
+        </button>
+      </form>
+
+      <div class="login-footer">
+        <p><i class="fa-solid fa-shield-halved"></i> Resend Mail Service Enabled</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       2. MAIN ADMIN CRM DASHBOARD APP
+       ========================================== -->
+  <div id="adminApp" class="app-layout hidden">
+    
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <img src="igp logo.png" alt="IGP Logo" class="sidebar-logo" onerror="this.src='https://placehold.co/120x38/1144e3/ffffff?text=IGP+Logo'">
+        <div class="brand-text">
+          <span class="brand-title">IGP CRM</span>
+          <span class="brand-sub">By Sparklehood</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-menu">
+        <a href="#" class="menu-item active" data-tab="overviewTab">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Overview</span>
+        </a>
+        <a href="#" class="menu-item" data-tab="leadsTab">
+          <i class="fa-solid fa-user-group"></i>
+          <span>Consultation Leads</span>
+          <span class="badge badge-accent hidden" id="sidebarNewLeadsBadge">0</span>
+        </a>
+        <a href="#" class="menu-item" data-tab="applicationsTab">
+          <i class="fa-solid fa-briefcase"></i>
+          <span>Job Applicants</span>
+          <span class="badge badge-neutral" id="sidebarAppsCount">0</span>
+        </a>
+        <a href="#" class="menu-item" data-tab="subscribersTab">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span>Subscribers</span>
+        </a>
+        <a href="#" class="menu-item" data-tab="emailTab">
+          <i class="fa-solid fa-envelope-open-text"></i>
+          <span>Resend Email Dispatch</span>
+        </a>
+        <a href="#" class="menu-item" data-tab="settingsTab">
+          <i class="fa-solid fa-sliders"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-user">
+        <div class="user-avatar">
+          <i class="fa-solid fa-user-shield"></i>
+        </div>
+        <div class="user-info">
+          <span class="user-name" id="currentAdminEmail">admin@sparklehood.com</span>
+          <span class="user-role">Administrator</span>
+        </div>
+        <button id="logoutBtn" class="logout-btn" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="main-content">
+      
+      <!-- TOP NAVIGATION BAR -->
+      <header class="topbar">
+        <div class="topbar-title">
+          <h1 id="pageTitle">Overview Dashboard</h1>
+          <p id="pageSub">Real-time metrics, leads and candidate workflow</p>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="btn-secondary" onclick="refreshDashboardData()">
+            <i class="fa-solid fa-rotate"></i> Refresh Data
+          </button>
+          <button class="btn-primary" onclick="openEmailModal()">
+            <i class="fa-solid fa-paper-plane"></i> Compose Email (Resend)
+          </button>
+        </div>
+      </header>
+
+      <!-- VIEW PANELS CONTAINER -->
+      <div class="content-body">
+        
+        <!-- TAB 1: OVERVIEW DASHBOARD -->
+        <section id="overviewTab" class="tab-panel active">
+          <!-- METRIC CARDS GRID -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-icon icon-blue"><i class="fa-solid fa-users"></i></div>
+              <div class="metric-data">
+                <span class="metric-label">Total Consultation Leads</span>
+                <h3 class="metric-value" id="statTotalLeads">0</h3>
+                <span class="metric-change" id="statNewLeadsBadge">0 New Enquiries</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon icon-cyan"><i class="fa-solid fa-briefcase"></i></div>
+              <div class="metric-data">
+                <span class="metric-label">Job Applications</span>
+                <h3 class="metric-value" id="statTotalApplications">0</h3>
+                <span class="metric-change">Active Engineering Roles</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon icon-purple"><i class="fa-solid fa-envelope"></i></div>
+              <div class="metric-data">
+                <span class="metric-label">Newsletter Subscribers</span>
+                <h3 class="metric-value" id="statTotalSubscribers">0</h3>
+                <span class="metric-change">EV Community Updates</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon icon-green"><i class="fa-solid fa-paper-plane"></i></div>
+              <div class="metric-data">
+                <span class="metric-label">Resend Emails Sent</span>
+                <h3 class="metric-value" id="statTotalEmailsSent">0</h3>
+                <span class="metric-change">Resend API Connected</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- RECENT TABLES DUAL GRID -->
+          <div class="dual-grid">
+            <!-- Recent Leads -->
+            <div class="card-box">
+              <div class="card-header">
+                <h3><i class="fa-solid fa-user-plus text-accent"></i> Recent Consultation Requests</h3>
+                <button class="btn-text-link" onclick="switchTab('leadsTab')">View All Leads <i class="fa-solid fa-arrow-right"></i></button>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email / Phone</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="overviewLeadsTable">
+                    <tr><td colspan="4" class="text-center text-muted">Loading recent leads...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Recent Applicants -->
+            <div class="card-box">
+              <div class="card-header">
+                <h3><i class="fa-solid fa-id-card text-cyan"></i> Recent Job Applications</h3>
+                <button class="btn-text-link" onclick="switchTab('applicationsTab')">View All Applicants <i class="fa-solid fa-arrow-right"></i></button>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Applicant</th>
+                      <th>Role & Department</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="overviewAppsTable">
+                    <tr><td colspan="4" class="text-center text-muted">Loading recent applicants...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- TAB 2: CONSULTATION LEADS CRM -->
+        <section id="leadsTab" class="tab-panel">
+          <div class="card-box">
+            <!-- Toolbar & Filter -->
+            <div class="table-toolbar">
+              <div class="filter-pills">
+                <button class="pill-btn active" onclick="filterLeads('All', this)">All Leads</button>
+                <button class="pill-btn" onclick="filterLeads('New', this)">New</button>
+                <button class="pill-btn" onclick="filterLeads('Contacted', this)">Contacted</button>
+                <button class="pill-btn" onclick="filterLeads('In Progress', this)">In Progress</button>
+                <button class="pill-btn" onclick="filterLeads('Closed-Won', this)">Closed Won</button>
+                <button class="pill-btn" onclick="filterLeads('Closed-Lost', this)">Closed Lost</button>
+              </div>
+
+              <div class="toolbar-right">
+                <div class="search-box">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <input type="text" id="leadSearchInput" placeholder="Search lead name, email, phone..." oninput="handleLeadSearch()">
+                </div>
+                <button class="btn-secondary" onclick="exportLeadsCSV()">
+                  <i class="fa-solid fa-file-csv"></i> Export CSV
+                </button>
+              </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email & Phone</th>
+                    <th>Consultation Query</th>
+                    <th>Date Received</th>
+                    <th>Status</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="leadsTableBody">
+                  <tr><td colspan="7" class="text-center text-muted">Loading leads...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- TAB 3: CAREERS & JOB APPLICANTS CRM -->
+        <section id="applicationsTab" class="tab-panel">
+          <div class="card-box">
+            <!-- Toolbar & Filter -->
+            <div class="table-toolbar">
+              <div class="filter-pills">
+                <button class="pill-btn active" onclick="filterApps('All', this)">All Applicants</button>
+                <button class="pill-btn" onclick="filterApps('Applied', this)">Applied</button>
+                <button class="pill-btn" onclick="filterApps('Screening', this)">Screening</button>
+                <button class="pill-btn" onclick="filterApps('Interviewing', this)">Interviewing</button>
+                <button class="pill-btn" onclick="filterApps('Hired', this)">Hired</button>
+                <button class="pill-btn" onclick="filterApps('Rejected', this)">Rejected</button>
+              </div>
+
+              <div class="toolbar-right">
+                <div class="search-box">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <input type="text" id="appSearchInput" placeholder="Search applicant, position..." oninput="handleAppSearch()">
+                </div>
+                <button class="btn-secondary" onclick="exportAppsCSV()">
+                  <i class="fa-solid fa-file-csv"></i> Export CSV
+                </button>
+              </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Candidate</th>
+                    <th>Applied Position</th>
+                    <th>Contact Info</th>
+                    <th>Resume</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="appsTableBody">
+                  <tr><td colspan="8" class="text-center text-muted">Loading applicants...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- TAB 4: SUBSCRIBERS LIST -->
+        <section id="subscribersTab" class="tab-panel">
+          <div class="card-box">
+            <div class="card-header">
+              <h3><i class="fa-solid fa-paper-plane text-purple"></i> Newsletter Subscribers</h3>
+              <button class="btn-secondary" onclick="exportSubscribersCSV()">
+                <i class="fa-solid fa-file-csv"></i> Export CSV
+              </button>
+            </div>
+            
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Email Address</th>
+                    <th>Source</th>
+                    <th>Subscribed Date</th>
+                    <th>Status</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="subscribersTableBody">
+                  <tr><td colspan="6" class="text-center text-muted">Loading subscribers...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- TAB 5: RESEND EMAIL CENTER -->
+        <section id="emailTab" class="tab-panel">
+          <div class="email-center-grid">
+            <!-- Left: Dispatch Logs -->
+            <div class="card-box">
+              <div class="card-header">
+                <h3><i class="fa-solid fa-list-check text-green"></i> Resend Email Dispatch Logs</h3>
+                <button class="btn-secondary btn-sm" onclick="loadEmailLogs()">
+                  <i class="fa-solid fa-rotate"></i> Refresh
+                </button>
+              </div>
+              <div class="table-responsive" style="max-height: 550px; overflow-y: auto;">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Recipient</th>
+                      <th>Subject</th>
+                      <th>Type</th>
+                      <th>Timestamp</th>
+                      <th>Resend ID</th>
+                    </tr>
+                  </thead>
+                  <tbody id="emailLogsTableBody">
+                    <tr><td colspan="5" class="text-center text-muted">Loading email logs...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Right: Send Email Form -->
+            <div class="card-box">
+              <div class="card-header">
+                <h3><i class="fa-solid fa-paper-plane text-cyan"></i> Direct Resend Dispatcher</h3>
+              </div>
+
+              <form id="directEmailForm" class="form-grid">
+                <div class="input-group">
+                  <label>Template Preset</label>
+                  <select id="emailTemplateSelect" class="select-input" onchange="applyEmailTemplate(this.value)">
+                    <option value="custom">-- Custom Message --</option>
+                    <option value="consultation">Schedule Consultation Reply</option>
+                    <option value="interview">Interview Invitation</option>
+                    <option value="app_update">Application Status Update</option>
+                    <option value="newsletter">Newsletter Broadcast Update</option>
+                  </select>
+                </div>
+
+                <div class="input-group">
+                  <label>Recipient Email</label>
+                  <input type="email" id="emailToInput" placeholder="lead@company.com" required>
+                </div>
+
+                <div class="input-group">
+                  <label>Subject Line</label>
+                  <input type="text" id="emailSubjectInput" placeholder="Regarding your IGP EV Infrastructure enquiry" required>
+                </div>
+
+                <div class="input-group">
+                  <label>Message HTML / Body</label>
+                  <textarea id="emailBodyInput" rows="9" placeholder="Type your email body (HTML supported)..." required></textarea>
+                </div>
+
+                <button type="submit" id="sendEmailBtn" class="btn-primary full-width">
+                  <i class="fa-solid fa-paper-plane"></i> Send Email via Resend.com API
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- TAB 6: SETTINGS -->
+        <section id="settingsTab" class="tab-panel">
+          <div class="dual-grid">
+            <!-- Account & Security -->
+            <div class="card-box">
+              <div class="card-header">
+                <h3><i class="fa-solid fa-lock text-accent"></i> Security & Password Management</h3>
+              </div>
+
+              <form id="changePasswordForm" class="form-grid">
+                <div class="input-group">
+                  <label>Current Password</label>
+                  <input type="password" id="oldPasswordInput" placeholder="••••••••••••" required>
+                </div>
+
+                <div class="input-group">
+                  <label>New Password</label>
+                  <input type="password" id="newPasswordInput" placeholder="At least 8 characters" required>
+                </div>
+
+                <div class="input-group">
+                  <label>Confirm New Password</label>
+                  <input type="password" id="confirmPasswordInput" placeholder="Repeat new password" required>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                  <i class="fa-solid fa-key"></i> Update Admin Password
+                </button>
+              </form>
+            </div>
+
+            <!-- Resend API Status -->
+            <div class="card-box">
+              <div class="card-header">
+                <h3><i class="fa-solid fa-server text-green"></i> Resend Mail Service Config</h3>
+              </div>
+
+              <div class="info-list">
+                <div class="info-item">
+                  <span class="info-label">API Status</span>
+                  <span class="badge badge-success"><i class="fa-solid fa-circle-check"></i> Connected & Active</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">API Key</span>
+                  <code class="code-box">re_********************</code>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Default From Sender</span>
+                  <code class="code-box">onboarding@resend.dev</code>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Admin Alert Target</span>
+                  <code class="code-box">team@sparklehood.com</code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+
+  <!-- ==========================================
+       3. MODAL DRAWERS & DIALOGS
+       ========================================== -->
+
+  <!-- LEAD DETAILS & EDIT MODAL -->
+  <div id="leadModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-user-gear text-accent"></i> Lead Details & CRM Status</h3>
+        <button class="modal-close" onclick="closeLeadModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" id="modalLeadId">
+
+        <div class="info-grid">
+          <div><label>Name:</label> <strong id="modalLeadName">-</strong></div>
+          <div><label>Email:</label> <span id="modalLeadEmail">-</span></div>
+          <div><label>Phone:</label> <span id="modalLeadPhone">-</span></div>
+          <div><label>Date Received:</label> <span id="modalLeadDate">-</span></div>
+        </div>
+
+        <div class="modal-field-box">
+          <label>Client Consultation Query:</label>
+          <p id="modalLeadQuery" class="text-box-detail"></p>
+        </div>
+
+        <div class="input-group mt-3">
+          <label>Lead Status</label>
+          <select id="modalLeadStatus" class="select-input">
+            <option value="New">New</option>
+            <option value="Contacted">Contacted</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Closed-Won">Closed-Won</option>
+            <option value="Closed-Lost">Closed-Lost</option>
+          </select>
+        </div>
+
+        <div class="input-group mt-3">
+          <label>Internal CRM Notes</label>
+          <textarea id="modalLeadNotes" rows="4" placeholder="Enter follow-up notes, call history, or proposal details..."></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="openLeadEmailComposer()">
+          <i class="fa-solid fa-paper-plane"></i> Email Client (Resend)
+        </button>
+        <div class="flex-spacer"></div>
+        <button class="btn-secondary" onclick="closeLeadModal()">Cancel</button>
+        <button class="btn-primary" onclick="saveLeadChanges()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- APPLICATION DETAILS MODAL -->
+  <div id="appModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-id-badge text-cyan"></i> Candidate Profile & Resume</h3>
+        <button class="modal-close" onclick="closeAppModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" id="modalAppId">
+
+        <div class="info-grid">
+          <div><label>Candidate:</label> <strong id="modalAppName">-</strong></div>
+          <div><label>Applied Position:</label> <span id="modalAppTitle">-</span></div>
+          <div><label>Department:</label> <span id="modalAppDept">-</span></div>
+          <div><label>Email:</label> <span id="modalAppEmail">-</span></div>
+          <div><label>Phone:</label> <span id="modalAppPhone">-</span></div>
+          <div><label>Application Date:</label> <span id="modalAppDate">-</span></div>
+        </div>
+
+        <div class="modal-field-box mt-3" id="modalLinkedInBox">
+          <label>LinkedIn Profile:</label>
+          <a href="#" id="modalAppLinkedIn" target="_blank" class="link-btn"><i class="fa-brands fa-linkedin"></i> View LinkedIn Profile</a>
+        </div>
+
+        <div class="modal-field-box mt-3">
+          <label>Candidate Introduction:</label>
+          <p id="modalAppIntro" class="text-box-detail"></p>
+        </div>
+
+        <div class="modal-field-box mt-3">
+          <label>Attached Resume:</label>
+          <a href="#" id="modalAppResumeBtn" target="_blank" class="btn-secondary btn-sm inline-flex">
+            <i class="fa-solid fa-file-arrow-down"></i> Download / Open Resume (<span id="modalAppResumeName">file.pdf</span>)
+          </a>
+        </div>
+
+        <div class="input-group mt-3">
+          <label>Candidate Pipeline Status</label>
+          <select id="modalAppStatus" class="select-input">
+            <option value="Applied">Applied</option>
+            <option value="Screening">Screening</option>
+            <option value="Interviewing">Interviewing</option>
+            <option value="Hired">Hired</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+
+        <div class="input-group mt-3">
+          <label>Interviewer / Recruiter Notes</label>
+          <textarea id="modalAppNotes" rows="4" placeholder="Add interview feedback, technical ratings, or evaluation notes..."></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="openCandidateEmailComposer()">
+          <i class="fa-solid fa-paper-plane"></i> Email Candidate (Resend)
+        </button>
+        <div class="flex-spacer"></div>
+        <button class="btn-secondary" onclick="closeAppModal()">Cancel</button>
+        <button class="btn-primary" onclick="saveAppChanges()">Save Status</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- TOAST NOTIFICATION STACK -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- JAVASCRIPT APP LOGIC -->
+  <script src="admin.js"></script>
+</body>
+</html>

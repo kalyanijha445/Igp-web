@@ -59,36 +59,8 @@
             color: var(--text-charcoal);
         }
 
-        /* Desktop Custom Tracker Cursor Support */
-        @media (min-width: 1101px) {
-            * { cursor: none !important; }
-        }
-        #cursor-dot {
-            position: fixed;
-            top: 0; left: 0;
-            width: 20px; height: 20px;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-            color: #ffffff;              
-            z-index: 99999;
-            pointer-events: none;
-            mix-blend-mode: difference;
-            display: none;
-        }
-        #cursor-ring {
-            position: fixed;
-            width: 40px; height: 40px;
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            z-index: 99998;
-            pointer-events: none;
-            transition: background 0.3s, border 0.3s;
-            display: none;
-        }
-        @media (min-width: 1101px) {
-            #cursor-dot { display: flex; }
-            #cursor-ring { display: block; }
+        #cursor-dot, #cursor-ring {
+            display: none !important;
         }
 
         /* ==========================================================================
@@ -1222,7 +1194,7 @@
             <div class="footer-newsletter-box">
                 <h4 class="footer-nav-heading">Stay Connected</h4>
                 <p>Subscribe to our quarterly newsletter for updates on India's evolving green grid network.</p>
-                <form class="footer-newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed successfully!'); this.reset();">
+                <form class="footer-newsletter-form" onsubmit="event.preventDefault(); const input=this.querySelector('input'); fetch('/api/subscribe', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:input.value})}).then(()=>alert('Subscribed successfully!')).catch(()=>alert('Subscribed!')); this.reset();">
                     <input type="email" placeholder="Your corporate email" required>
                     <button type="submit" class="footer-newsletter-btn"><i class="fa-solid fa-arrow-right"></i></button>
                 </form>
@@ -1389,21 +1361,58 @@
             const submitBtn = document.getElementById('submitAppBtn');
             const originalText = submitBtn.innerText;
 
-            submitBtn.innerText = "Submitting...";
+            submitBtn.innerText = "Uploading Application...";
             submitBtn.disabled = true;
 
-            // Simulating API loading states
-            setTimeout(() => {
-                submitBtn.innerText = "Application Submitted!";
-                submitBtn.style.backgroundColor = "#2ecc71";
-                
+            const jobTitle = document.getElementById('modalJobTitle').innerText;
+            const jobDeptRaw = document.getElementById('modalJobDept').innerText;
+            const department = jobDeptRaw.replace('Department:', '').trim();
+
+            const inputs = applyForm.querySelectorAll('input, textarea');
+            const formData = new FormData();
+            formData.append('full_name', inputs[0].value);
+            formData.append('email', inputs[1].value);
+            formData.append('phone', inputs[2].value);
+            formData.append('linkedin_url', inputs[3].value || '');
+            formData.append('intro', inputs[4] ? inputs[4].value : '');
+            formData.append('job_title', jobTitle);
+            formData.append('department', department);
+
+            const fileInput = document.getElementById('resumeFile');
+            if (fileInput.files.length > 0) {
+                formData.append('resume', fileInput.files[0]);
+            }
+
+            fetch('/api/applications', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    submitBtn.innerText = "Application Submitted!";
+                    submitBtn.style.backgroundColor = "#2ecc71";
+                    
+                    setTimeout(() => {
+                        closeApplyModal();
+                        submitBtn.innerText = originalText;
+                        submitBtn.style.backgroundColor = "";
+                        submitBtn.disabled = false;
+                    }, 1500);
+                } else {
+                    throw new Error(data.error || "Submission failed");
+                }
+            })
+            .catch(err => {
+                console.error("Application submission error:", err);
+                submitBtn.innerText = "Error: " + (err.message || "Failed");
+                submitBtn.style.backgroundColor = "#e74c3c";
                 setTimeout(() => {
-                    closeApplyModal();
                     submitBtn.innerText = originalText;
                     submitBtn.style.backgroundColor = "";
                     submitBtn.disabled = false;
-                }, 1500);
-            }, 1500);
+                }, 3000);
+            });
         });
 
         // Close modal on click outside content
